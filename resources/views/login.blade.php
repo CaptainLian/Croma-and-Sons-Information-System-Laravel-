@@ -30,16 +30,24 @@
 
   <body class="login-body">
     <div class="container">
-
   		<div id="logoPosition">
   			<img src="image/Chroma600.png" id="chromalogo" /> 
   		</div> <!--logoPosition -->
   		
-        {!! Form::open(['url' => '/', 'method' => 'POST', 'class' => 'form-signin'])   !!}
-          <h2 class="form-signin-heading">sign in now</h2>
-          <div class="login-wrap">
-              <input type="text" class="form-control" placeholder="Username " autofocus required/>
-              <input type="password" class="form-control" placeholder="Password" required/>
+        {!! Form::open(['method' => 'POST', 'class' => 'form-signin'])   !!}
+          <h2 class="form-signin-heading">Croma and Sons</h2>
+          <div class="login-wrap @if($errors->any()) has-error @endif ">
+
+              <input name="username" type="text" class="form-control" placeholder="Username" autofocus value="{!! Input::old('username') !!}"  />
+              @if($errors->has('username'))
+                <p class="help-block">{{ $errors->first('username') }}</p>
+              @endif
+
+              <input name="password" type="password" class="form-control" placeholder="Password" />
+              @if($errors->has('password'))
+                <p class="help-block">{{ $errors->first('password') }}</p>
+              @endif
+
               <!-- 
               <label class="checkbox">
               <input type="checkbox" value="remember-me" /> Remember me
@@ -56,7 +64,7 @@
                         <div class="modal-body">
                             <p>Enter your e-mail address below to reset your password.</p>
                             <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-                        </div><!-- modal-body -->
+                        </div><!-- modal-body --> 
 
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>

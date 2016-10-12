@@ -17,4 +17,7 @@ Route::get('/', ['as' => 'LoginScreen', 'uses' => 'PageController@index']);
 
 
 /* FORMS */
-Route::post('/', ['as' => 'LoginScreenValidation', 'uses' => 'FormValidator@validateLogin']);
+
+Route::post('/', ['as' => 'LoginValidation', 'uses' => 'LoginController@validateLogin']);
+
+Route::get('aguy', ['as' =>'Tester', 'uses' => 'PageController@aguy']);

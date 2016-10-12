@@ -14,4 +14,8 @@ class PageController extends Controller{
     public function index(){
     	return view("login");
     }
+
+    public function aguy(){
+    	return 'AGUY';
+    }
 }
