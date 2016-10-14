@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\BusinessControllers;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
-/*
-* Class for handling Sales related views
-*/
-class SalesPageController extends Controller{
-	
+class SalesController extends Controller
+{
     public function viewDashboard(){
-
+    	return view('SalesPages\dashboard');
     }
 }

@@ -21,3 +21,18 @@ Route::get('/', ['as' => 'LoginScreen', 'uses' => 'PageController@index']);
 Route::post('/', ['as' => 'LoginValidation', 'uses' => 'LoginController@validateLogin']);
 
 Route::get('aguy', ['as' =>'Tester', 'uses' => 'PageController@aguy']);
+
+Route::get('/test', function(){
+	return view ('dashboard');
+});
+
+Route::get('/test1', function(){
+	return view ('Templates\Sales\Master');
+});
+
+
+/* SALES ROUTES */
+Route::get('/sales/dashboard', function(){
+	return view ('SalesPages\dashboard');
+});
+

@@ -12,7 +12,7 @@ use App\Http\Requests;
 class PageController extends Controller{
 
     public function index(){
-    	return view("login");
+    	return view("Login");
     }
 
     public function aguy(){

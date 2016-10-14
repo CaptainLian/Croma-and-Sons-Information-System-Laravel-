@@ -1,0 +1,20 @@
+HTTrack3.48-22+htsswf+htsjava launched on Tue, 23 Aug 2016 11:17:19 at http://thevectorlab.net/flatlab/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" http://thevectorlab.net/flatlab/ -O1 "C:\My Web Sites\Flat Lab" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+11:18:15	Error: 	"Not Found" (404) at link thevectorlab.net/flatlab/img/favicon.png (from thevectorlab.net/flatlab/)
+11:22:40	Warning: 	File not parsed, looks like binary: thevectorlab.net/flatlab/fonts/glyphicons-halflings-regular.woff2
+11:22:40	Warning: 	File not parsed, looks like binary: thevectorlab.net/flatlab/fonts/glyphicons-halflings-regular.ttf
+11:22:40	Warning: 	File not parsed, looks like binary: thevectorlab.net/flatlab/assets/font-awesome/fonts/fontawesome-webfont.ttf?v=4.0.3
+11:22:48	Error: 	"Not Found" (404) at link thevectorlab.net/flatlab/img/favicon.jpg (from thevectorlab.net/flatlab/gallery.html)
+11:23:15	Error: 	"Not Found" (404) at link blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js (from thevectorlab.net/flatlab/file_upload.html)
+11:23:23	Error: 	"Not Found" (404) at link thevectorlab.net/flatlab/mail_compose.html (from thevectorlab.net/flatlab/inbox_details.html)
+11:23:24	Error: 	"Not Found" (404) at link thevectorlab.net/flatlab/assets/data-tables/images/sort_asc_disabled.png (from thevectorlab.net/flatlab/assets/data-tables/DT_bootstrap.css)
+11:23:24	Error: 	"Not Found" (404) at link thevectorlab.net/flatlab/assets/data-tables/images/sort_desc_disabled.png (from thevectorlab.net/flatlab/assets/data-tables/DT_bootstrap.css)
+
+HTTrack Website Copier/3.48-22 mirror complete in 6 minutes 11 seconds : 413 links scanned, 406 files written (10642502 bytes overall) [7683426 bytes received at 20710 bytes/sec], 3689769 bytes transferred using HTTP compression in 117 files, ratio 15%, 31.7 requests per connection
+(6 errors, 3 warnings, 0 messages)

@@ -814,6 +814,13 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     background: #6ccac9;
 }
 
+
+
+.state-overview .green {
+    background: #2de52d;
+}
+
+
 .state-overview .red {
     background: #ff6c60;
 }
