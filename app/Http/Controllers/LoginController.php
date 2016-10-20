@@ -11,6 +11,7 @@ use App\Account;
 use Redirect;
 use Validator;
 use Input;
+use Session;
 
 class LoginController extends Controller{
 
@@ -30,20 +31,41 @@ class LoginController extends Controller{
 						   ->withInput(Input::except('password'));
 		}
 
-
 		$inputPassword = Account::dbEncrypt(Input::get('password'));
 		$account = Account::getAccountWithUsername(Input::get('username'));
-
 		if($inputPassword !== $account->Password){
-			 return Redirect::back()
+			return Redirect::back()
 						   ->withErrors(['password' => 'Incorrect password or username.'])
 						   ->withInput(Input::except('password'));
 		}
 
-		return 'Hello: '.$account->Username;
+		Session::put('username', $account->Username);
+ 		Session::put('active', true);
+		$controller = 'BusinessControllers\\';
+		switch ($account->PositionID) {
+			case 1:
+				$controller .= 'AdminPageController';
+				break;
+			case 2:
+				$controller .= 'SalesPageController';
+				break;
+
+			case 3:
+				$controller .= 'InventoryPageController';
+				break;
+
+			case 4:
+				$controller .= 'ProcurementPageController';
+				break;
+		}
+
+		Session::put('controller', $controller);
+		return Redirect::action($controller.'@viewDashboard');
 	}
 
 	public function logout(Request $request){
-		 
+		 Session::flush();
+
+		 return Redirect::action('PageController@index');
 	}
 }

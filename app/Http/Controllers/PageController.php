@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-/*
-* 
-*/
+use Session;
+use Redirect;
+
 class PageController extends Controller{
 
     public function index(){
-    	return view("Login");
-    }
+    	if(Session::has('active')){
+    		return Redirect::action(Session::get('controller').'@viewDashboard');
+    	}
 
-    public function aguy(){
-    	return 'AGUY';
+    	return view('Login');
     }
 }
