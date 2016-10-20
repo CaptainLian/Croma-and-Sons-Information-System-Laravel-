@@ -15,24 +15,17 @@
 Route::get('/', ['as' => 'LoginScreen', 'uses' => 'PageController@index']);
 
 
-
 /* FORMS */
-
 Route::post('/', ['as' => 'LoginValidation', 'uses' => 'LoginController@validateLogin']);
 
-Route::get('aguy', ['as' =>'Tester', 'uses' => 'PageController@aguy']);
+Route::get('/sales/dashboard', ['as' => 'SalesDashboard', 
+							  'uses' => 'BusinessControllers\SalesPageController@viewDashboard']);
 
-Route::get('/test', function(){
-	return view ('dashboard');
-});
+Route::get('/procurement/dashboard', ['as' => 'ProcurementDashboard',
+									 'uses' => 'BusinessControllers\ProcurementPageController@viewDashboard']);
 
-Route::get('/test1', function(){
-	return view ('Templates\Sales\Master');
-});
+Route::get('/inventory/dashboard', ['as' => 'InventoryDashboard', 
+							      'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
 
-
-/* SALES ROUTES */
-Route::get('/sales/dashboard', function(){
-	return view ('SalesPages\dashboard');
-});
-
+Route::get('/admin/dashboard', ['as' => 'InventoryDashboard', 
+							      'uses' => 'BusinessControllers\AdminPageController@viewDashboard']);
