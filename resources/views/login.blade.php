@@ -8,18 +8,18 @@
     <meta name="description" content="">
     <meta name="author" content="Mosaddek">
    
-    <link rel="shortcut icon" href="image/favicon.ico">
+    <link rel="shortcut icon" href="/image/favicon.ico" />
 
     <title>Croma and Sons</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-reset.css" rel="stylesheet" />
     <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -31,10 +31,10 @@
   <body class="login-body">
     <div class="container">
   		<div id="logoPosition">
-  			<img src="image/Chroma600.png" id="chromalogo" /> 
+  			<img src="/image/Chroma600.png" id="chromalogo" /> 
   		</div> <!--logoPosition -->
   		
-        {!! Form::open(['method' => 'POST', 'class' => 'form-signin'])   !!}
+        {!! Form::open(['method' => 'POST', 'class' => 'form-signin']) !!}
           <h2 class="form-signin-heading">Croma and Sons</h2>
           <div class="login-wrap @if($errors->any()) has-error @endif ">
 
@@ -70,7 +70,6 @@
                             <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
                             <button class="btn btn-success" type="button">Submit</button>
                         </div><!-- modal-footer -->
-
                     </div><!-- modal-content -->
                 </div><!-- modal-dialog -->
             </div><!-- modal fade-->
@@ -81,8 +80,8 @@
     </div><!-- Container -->
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
 
   </body>

@@ -23,3 +23,15 @@ SELECT COUNT(PurchaseOrderID)
  FROM PurchaseOrders
 WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
 							    FROM PurchaseDeliveryReceipts);
+                                
+							
+
+SELECT SUM(Quantity)
+  FROM PurchaseOrderItems
+ WHERE PurchaseOrderID IN(SELECT PurchaseOrderID
+						    FROM PurchaseOrders
+						   WHERE MONTH(DateCreated) = MONTH(CURDATE()));
+
+SELECT PurchaseOrderID
+  FROM PurchaseOrders
+ WHERE MONTH(DateCreated) = MONTH(CURDATE());
