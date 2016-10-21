@@ -22,6 +22,7 @@
 		</header>
 		<div class="panel-body">
 			<div class="tab-content">
+				<!-- Weekly -->
 				<div id="home" class="tab-pane active">
 					<div class="row">
 						<div class="col-sm-12">
@@ -35,7 +36,7 @@
 											<thead>
 												<tr>
 													<th>Material</th>
-													<th>Size</th>
+													<th>Size (TxWxL)</th>
 													<th>Quantity Purchased</th>
 													<th>Quantity Rejected</th>
 													<th>Amount Purchased</th>
@@ -43,38 +44,18 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr class="gradeX">
-													<td>Trident</td>
-													<td>Internet Explorer 4.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeC">
-													<td>Trident</td>
-													<td>Internet Explorer 5.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeC">
-													<td>Trident</td>
-													<td>Internet Explorer 5.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeX">
-													<td>Trident</td>
-													<td>Internet Explorer 4.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
+												
+												
+												@foreach($weekly as $item)
+													<tr>
+														<td>{!! $item->Material !!}</td>
+														<td>{!! $item->Size !!}</td>
+														<td>{!! $item->PurchasedQuantity !!}</td>
+														<td>{!! $item->RejectedQuantity !!}</td>
+														<td>{!! $item->PurchasedAmount !!}</td>
+														<td>{!! $item->RejectedAmount !!}</td>
+													</tr>
+												@endforeach
 											</tbody>
 										</table>
 									</div>
@@ -83,6 +64,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- Monthly -->
 				<div id="about" class="tab-pane">
 					<div class="row">
 						<div class="col-sm-12">
@@ -142,6 +124,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- Yearly -->
 				<div id="profile" class="tab-pane">
 					<div class="row">
 						<div class="col-sm-12">
@@ -160,6 +143,7 @@
 													<th>Total Reject (In Pesos)</th>
 												</tr>
 											</thead>
+
 											<tbody>
 												<tr class="gradeX">
 													<td>Trident</td>

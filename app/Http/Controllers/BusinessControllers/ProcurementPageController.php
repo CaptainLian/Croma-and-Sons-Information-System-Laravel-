@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\CustomerModel;
 use App\DashboardModel;
+use App\ProcurementModel;
 
 use Session;
 
@@ -41,7 +42,13 @@ class ProcurementPageController extends Controller{
     }
 
     public function viewProductPurchaseReport(){
+        $weeklyQuantity = ProcurementModel::getWeeklyQuantityProductPurchase();
 
-        return view('procurement.ProductPurchaseReport');
+        $data = [
+            'weekly' => $weeklyQuantity,
+        ];
+
+        
+        return view('procurement.ProductPurchaseReport')->with($data);
     }
 }

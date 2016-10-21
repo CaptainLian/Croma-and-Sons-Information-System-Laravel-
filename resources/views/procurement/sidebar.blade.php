@@ -23,19 +23,19 @@
 	</a>
 </li>
 <li>
-	<a @if($active == 'SupplierList') class="active"@endif href="ProcurementSupplierList.html">
+	<a @if($active == 'SupplierList') class="active"@endif href="\procurement\SupplierList">
 	<i class="fa fa-file-text"></i>
 	<span>Supplier List</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseReport') class="active" @endif href="ProcurementPurchaseReport.html">
+	<a @if($active == 'PurchaseReport') class="active" @endif href="\procurement\PurchaseReport">
 	<i class="fa fa-file"></i>
 	<span>Purchase Report</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'ProductPurchaseReport') class="active" @endif href="ProcurementProductPurchaseReport.html">
+	<a @if($active == 'ProductPurchaseReport') class="active" @endif href="\procurement\ProductPurchaseReport">
 	<i class="fa fa-file-text"></i>
 	<span>Product Purchase Report</span>
 	</a>
