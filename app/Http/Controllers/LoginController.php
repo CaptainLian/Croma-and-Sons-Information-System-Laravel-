@@ -12,6 +12,7 @@ use Redirect;
 use Validator;
 use Input;
 use Session;
+use View;
 
 class LoginController extends Controller{
 
@@ -60,6 +61,7 @@ class LoginController extends Controller{
 		}
 
 		Session::put('controller', $controller);
+		View::share('name', $account->Firstname.' '.$account->Lastname);
 		return Redirect::action($controller.'@viewDashboard');
 	}
 

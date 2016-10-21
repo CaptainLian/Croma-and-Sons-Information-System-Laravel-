@@ -16,6 +16,6 @@ class PageController extends Controller{
     		return Redirect::action(Session::get('controller').'@viewDashboard');
     	}
 
-    	return view('Login');
+    	return view('/login');
     }
 }
