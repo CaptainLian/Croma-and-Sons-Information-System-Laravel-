@@ -38,12 +38,10 @@
 					<label class="col-sm-1 col-sm-2 control-label">Payment Terms</label>
 					<div class="col-sm-3">
 						<select name="terms" class="form-control m-bot15">
-
 							@foreach($terms as $term)
 								<?php $t = $term->Terms; ?>
 								<option value={{$t}}>{!!$t!!}</option>
 							@endforeach
-
 						</select>
 					</div>
 				</div>

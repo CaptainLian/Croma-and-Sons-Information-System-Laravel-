@@ -9,6 +9,7 @@ SELECT COUNT(SalesInvoiceID) AS 'Amount'
 SELECT * FROM cromadb.purchaserequests;
 
 
+-- Pending Purchase Requests
 SELECT COUNT(RequisitionID)
  FROM PurchaseRequests
 WHERE RequisitionID NOT IN (SELECT RequisitionID
@@ -19,19 +20,14 @@ SELECT COUNT(RequisitionID)
  WHERE RequisitionID IN (SELECT RequisitionID
 						   FROM PurchaseOrders);
 
+-- Pending Purchase Orders
 SELECT COUNT(PurchaseOrderID)
  FROM PurchaseOrders
 WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
 							    FROM PurchaseDeliveryReceipts);
-                                
-							
 
-SELECT SUM(Quantity)
-  FROM PurchaseOrderItems
- WHERE PurchaseOrderID IN(SELECT PurchaseOrderID
-						    FROM PurchaseOrders
-						   WHERE MONTH(DateCreated) = MONTH(CURDATE()));
-
-SELECT PurchaseOrderID
-  FROM PurchaseOrders
- WHERE MONTH(DateCreated) = MONTH(CURDATE());
+-- current week (starting with Sunday) 
+SELECT 
+ COUNT(*) AS rows  
+ FROM PurchaseOrders  
+ WHERE YEARWEEK(DateCreated) = YEARWEEK(CURRENT_DATE) 

@@ -9,7 +9,6 @@
 @endsection
 
 @section('main-content')
-
 	<header class="panel-heading">
 		<h1>Procurement Dashboard</h1>
 		<br>

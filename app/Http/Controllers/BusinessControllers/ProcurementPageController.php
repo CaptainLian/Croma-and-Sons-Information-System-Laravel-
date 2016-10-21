@@ -39,4 +39,9 @@ class ProcurementPageController extends Controller{
 
     	return view('procurement.PurchaseOrder')->with($data);
     }
+
+    public function viewProductPurchaseReport(){
+
+        return view('procurement.ProductPurchaseReport');
+    }
 }
