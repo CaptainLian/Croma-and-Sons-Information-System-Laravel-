@@ -11,7 +11,9 @@
 	| to using a Closure or controller method. Build something great!
 	|
 	*/
-
+	Route::get('/asd',function(){
+		echo 'asd';
+	});
 	/* */
 	Route::get('/', ['as' => 'LoginScreen', 'uses' => 'PageController@index']);
 
