@@ -1,10 +1,4 @@
 
--- Pending Purchase Requests
-SELECT COUNT(RequisitionID)
- FROM PurchaseRequests
-WHERE RequisitionID NOT IN (SELECT RequisitionID
-							FROM PurchaseOrders);
-
 -- Pending Purchase Orders
 SELECT COUNT(PurchaseOrderID)
  FROM PurchaseOrders
