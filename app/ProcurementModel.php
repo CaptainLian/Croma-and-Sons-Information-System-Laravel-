@@ -93,4 +93,43 @@ class ProcurementModel extends Model{
     			   ->where('RequestedQuantity', '>', '0');
     	return $count->first()->count;
     }
+
+
+    public static function createPurchaseOrder($term, $supplier, $address, $rows){
+    	DB::beginTransaction();
+
+    	try{
+    		$id = DB::table('PurchaseOrders')
+	    			->insertGetId([
+	    				'SupplierID' => $supplier,
+	    				'Terms' => $term,
+	    				'Address' => $address,
+	    			]
+    		);
+
+	    	foreach($rows as $row){
+	    		//POID SupplierID WoodTypeID Thickness Width Length Quantity UnitPrice
+	    		$insert = DB::table('PurchaseOrderItems')
+	    		  ->insert(['PurchaseOrderID' => $id,
+	    		  			'SupplierID' => $supplier, 
+	    		  			'WoodTypeID' => $row['woodType'],
+	    		  			'Thickness' => $row['thickness'],
+	    		  			'Width' => $row['width'],
+	    		  			'Length' => $row['length'],
+	    		  			'Quantity' => $row['quantity'],
+	    		  			'UnitPrice' => $row['unitPrice']]);
+	    		  if(!$insert){
+	    		  	DB::rollback();
+    				return false;
+	    		  }
+	    	}
+    	}catch(\Exception $e){
+    		echo $e->getMessage();
+    		DB::rollback();
+    		return false;
+    	}
+
+    	DB::commit();
+    	return true;
+    }
 }

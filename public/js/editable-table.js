@@ -18,14 +18,18 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control columnAdjust10p" value="' + aData[0] + '">';
-                jqTds[1].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[2] + '">';
-                jqTds[3].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[6] + '">';
-                jqTds[7].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[7] + '">';  
+                jqTds[0].innerHTML = '<select name="WoodType[]" class="form-control columnAdjust10p" required"><option></option><option value="1">Kiln Dry</option><option value="2">Sun Dry</option></select>';
+                //jqTds[0].innerHTML = '<input type="text" class="form-control columnAdjust10p" value="' + aData[0] + '">';
+                jqTds[1].innerHTML = '<input name="Thickness[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[1] + '" />';
+                jqTds[2].innerHTML = '<input name="Width[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[2] + '" />';
+                jqTds[3].innerHTML = '<input name="Length[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[3] + '" />';
+                jqTds[4].innerHTML = '<input name="Quantity[]" autocomplete="on" type="number" step="1" min=0 required class="form-control columnAdjust9p" value="' + aData[4] + '" />';
+                
+                //jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[5] + '">';
+                jqTds[5].innerHTML = 'piece';
+
+                jqTds[6].innerHTML = '<input name="UnitPrice[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[6] + '" />';
+                jqTds[7].innerHTML = '<input name="Discount[]" autocomplete="on" min=0 type="number" step="any" class="form-control columnAdjust9p" value="' + aData[7] + '" />';  
                 jqTds[8].innerHTML = aData[8]; 
                 jqTds[9].innerHTML = '<a class="delete" href="">Cancel</a>';
             }

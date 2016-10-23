@@ -9,11 +9,12 @@ use App\Http\Controllers\Controller;
 
 use App\CustomerModel;
 use App\ProcurementModel;
+use App\SupplierModel;
 
 use Session;
 
 class ProcurementPageController extends Controller{
-    
+
     public function viewDashboard(){
         $pendingPurchaseOrderCount = ProcurementModel::getPendingPurchaseOrderCount();
         $countProductNeedProcurement = ProcurementModel::getCountProductsNeedProcurement();
@@ -27,16 +28,16 @@ class ProcurementPageController extends Controller{
     }
 
 
-    public function viewPurchaseOrder(){
+    public function viewCreatePurchaseOrder(){
 
-    	$customers = CustomerModel::getCustomers();
+    	$suppliers = SupplierModel::getSuppliers();
     	$terms = CustomerModel::getTerms();
 
     	$data = [
-    		'customers' => $customers,
+    		'suppliers' => $suppliers,
     		'terms' => $terms,
     	];
-    	return view('procurement.PurchaseOrder')->with($data);
+    	return view('procurement.CreatePurchaseOrder')->with($data);
     }
 
     public function viewProductPurchaseReport(){
@@ -64,5 +65,16 @@ class ProcurementPageController extends Controller{
 
     public function viewDeliveryReceiptSpecific($id){
         echo "DR: $id";
+    }
+
+    public function viewSupplierList(){
+        $suppliers = SupplierModel::getSuppliersDetailed();
+
+        $data =[
+            'suppliers' => $suppliers,
+        ];
+
+        return view('procurement.SupplierList')->with($data);
+
     }
 }

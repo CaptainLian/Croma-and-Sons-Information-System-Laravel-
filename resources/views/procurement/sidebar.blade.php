@@ -5,7 +5,7 @@
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseOrder') class="active" @endif href="\procurement\PurchaseOrder">
+	<a @if($active == 'PurchaseOrder') class="active" @endif href="\procurement\CreatePurchaseOrder">
 		<i class="fa fa-file-text"></i>
 		<span>Create Purchase Order</span>
 	</a>
