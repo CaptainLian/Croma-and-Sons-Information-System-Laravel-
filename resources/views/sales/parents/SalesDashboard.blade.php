@@ -13,20 +13,20 @@
     <title> Croma and Sons</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('css/bootstrap-reset.css')}}" rel="stylesheet">
     <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+    <link href="{{URL::asset('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{URL::asset('css/owl.carousel.css')}}" type="text/css">
 
     <!--right slidebar-->
-    <link href="css/slidebars.css" rel="stylesheet">
+    <link href="{{URL::asset('css/slidebars.css')}}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
 
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('css/style-responsive.css')}}" rel="stylesheet" />
 
 
 
@@ -199,32 +199,32 @@
   </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script src="js/jquery.sparkline.js" type="text/javascript"></script>
+    <script src="{{URL::asset('js/jquery.js')}}"></script>
+    <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+    <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
+    <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
+    <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('js/jquery.sparkline.js')}}" type="text/javascript"></script>
   
-    <script src="js/jquery.customSelect.min.js" ></script>
-    <script src="js/respond.min.js" ></script>  
-    <script src="assets/chart-master/Chart.js"></script>
+    <script src="{{URL::asset('js/jquery.customSelect.min.js')}}" ></script>
+    <script src="{{URL::asset('js/respond.min.js')}}" ></script>  
+    <script src="{{URL::asset('assets/chart-master/Chart.js')}}"></script>
    
    
     <!--right slidebar-->
-    <script src="js/slidebars.min.js"></script>
+    <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
 	
 	
 	
-	  <script src="assets/flot/jquery.flot.js"></script>
-    <script src="assets/flot/jquery.flot.resize.js"></script>
-    <script src="assets/flot/jquery.flot.pie.js"></script>
-    <script src="assets/flot/jquery.flot.stack.js"></script>
-    <script src="assets/flot/jquery.flot.crosshair.js"></script>
+	  <script src="{{URL::asset('assets/flot/jquery.flot.js')}}"></script>
+    <script src="{{URL::asset('assets/flot/jquery.flot.resize.js')}}"></script>
+    <script src="{{URL::asset('assets/flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{URL::asset('assets/flot/jquery.flot.stack.js')}}"></script>
+    <script src="{{URL::asset('assets/flot/jquery.flot.crosshair.js')}}"></script>
 
 
     <!--common script for all pages-->
-    <script src="js/common-scripts.js"></script>
+    <script src="{{URL::asset('js/common-scripts.js')}}"></script>
 
     <!--script for this page-->
 
