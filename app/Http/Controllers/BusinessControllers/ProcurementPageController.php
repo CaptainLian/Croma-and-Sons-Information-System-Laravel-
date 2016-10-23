@@ -13,6 +13,7 @@ use App\ProcurementModel;
 use Session;
 
 class ProcurementPageController extends Controller{
+    
     public function viewDashboard(){
         $pendingPurchaseOrderCount = ProcurementModel::getPendingPurchaseOrderCount();
         $countProductNeedProcurement = ProcurementModel::getCountProductsNeedProcurement();
@@ -55,5 +56,13 @@ class ProcurementPageController extends Controller{
         ];
 
         return view('procurement.DeliveryReceiptInitial')->With($data);
+    }
+
+    public function viewPurchaseOrderSpecific($id){
+        echo "PO: $id";
+    }
+
+    public function viewDeliveryReceiptSpecific($id){
+        echo "DR: $id";
     }
 }

@@ -36,11 +36,8 @@ class ProcurementModel extends Model{
 						                                                                 	AND pdi.Width = Purchased.Width
 						                                                                 	AND pdi.Length = Purchased.Length
 						                                                                  "));
-		if($eh){	
-			return $eh;
-		}
+			return $eh ? $eh : [];
 
-		return [];
 	}
 
 	public static function getPendingPurchaseRequestCount(){
@@ -57,7 +54,6 @@ class ProcurementModel extends Model{
 				   			  ->select('RequisitionID');
 				   })->first();
 		return $count->count;
-
     }
 
     public static function getPendingPurchaseOrderCount(){
@@ -81,9 +77,9 @@ class ProcurementModel extends Model{
 										   FROM (SELECT PurchaseOrderID, DateCreated, SupplierID
 												   FROM PurchaseOrders
 	   											  WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
-																				  FROM PurchaseDeliveryReceipts)) PendingPO JOIN Suppliers s
-																															  ON PendingPO.SupplierID = s.SupplierID;'));
-    	return $pendingPO;
+																				  FROM PurchaseDeliveryReceipts)) PendingPO JOIN Suppliers S
+																															  ON PendingPO.SupplierID = S.SupplierID;'));
+    	return $pendingPO ? $pendingPO: [];
     }
 
     public static function getCountProductsNeedProcurement(){

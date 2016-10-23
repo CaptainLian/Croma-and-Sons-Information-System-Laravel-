@@ -1,5 +1,9 @@
 @extends('procurement.main')
 
+@section('title')
+Procurement Dashboard
+@endsection
+
 @push('css')
 	<link href="/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen">
 @endpush
@@ -26,7 +30,7 @@
 				</div>
 				<div class="value">
 					<h1>{!!$countProductNeedProcurement!!}</h1>
-					<p>Products Require Procurement</p>
+					<p>Products to Procure</p>
 				</div>
 			</section>
 		</div>

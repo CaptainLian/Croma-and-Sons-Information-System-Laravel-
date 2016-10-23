@@ -32,46 +32,23 @@ Pending Purchase Orders
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="gradeX">
-								<td>
-									<a href="ProcurementPurchaseOrderSpecific.html">Trident</a>
-								</td>
-								<td>Internet Explorer 4.0</td>
-								<td>Win 95+</td>
-								<th>
-									<a href="ProcurementEncodeSupplierDeliveryReceipt.html"><button type="button" class="btn btn-success">Encode Delivery Receipt</button></a>
-								</th>
-							</tr>
-							<tr class="gradeC">
-								<td>
-									<a href="ProcurementPurchaseOrderSpecific.html">Trident</a>
-								</td>
-								<td>Internet Explorer 5.0</td>
-								<td>Win 95+</td>
-								<th>
-									<a href="ProcurementEncodeSupplierDeliveryReceipt.html"><button type="button" class="btn btn-success">Encode Delivery Receipt</button></a>
-								</th>
-							</tr>
-							<tr class="gradeC">
-								<td>
-									<a href="ProcurementPurchaseOrderSpecific.html">Trident</a>
-								</td>
-								<td>Internet Explorer 5.0</td>
-								<td>Win 95+</td>
-								<th>
-									<a href="ProcurementEncodeSupplierDeliveryReceipt.html"><button type="button" class="btn btn-success">Encode Delivery Receipt</button></a>
-								</th>
-							</tr>
-							<tr class="gradeC">
-								<td>
-									<a href="ProcurementPurchaseOrderSpecific.html">Trident</a>
-								</td>
-								<td>Internet Explorer 5.0</td>
-								<td>Win 95+</td>
-								<th>
-									<a href="ProcurementEncodeSupplierDeliveryReceipt.html"><button type="button" class="btn btn-success">Encode Delivery Receipt</button></a>
-								</th>
-							</tr>
+							@foreach($pendingPO as $PO)
+								<?php $POID = $PO->POID; ?>
+								<tr>
+									<td>
+										<a href="/procurement/PurchaseOrderSpecific/{!!$POID!!}">{!!$POID!!}</a>
+									</td>
+									<td>
+										{!!$PO->DateCreated!!}
+									</td>
+									<td>
+										{!!$PO->SupplierName!!}
+									</td>
+									<td>	
+										<a href="/procurement/DeliveryReceiptSpecific/{!!$POID!!}" class="btn btn-success" >Encode Delivery Receipt</a>
+									</td>
+								</tr>
+							@endforeach	
 						</tbody>
 					</table>
 				</div>
