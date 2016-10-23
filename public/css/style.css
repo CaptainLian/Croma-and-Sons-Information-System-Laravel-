@@ -23,14 +23,6 @@ Website: http://thevectorlab.net/
 }
 
 
-
-.sb-slidebar .side-title {
-    padding: 10px 15px;
-    text-transform: uppercase;
-    color: #57c8f2
-}
-
-
 .btn-danger {
     background-color: #57c8f2;
     border-color: #57c8f2;
@@ -5601,7 +5593,11 @@ a.guest-on i {
     margin-top: 60px;
     color:#aeb2b7;
 }
-
+.sb-slidebar .side-title {
+    padding: 10px 15px;
+    text-transform: uppercase;
+    color: #FF6C60;
+}
 
 .sb-toggle-right {
     cursor: pointer;
