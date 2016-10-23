@@ -8,22 +8,22 @@
   <meta name="description" content="">
   <meta name="author" content="Mosaddek">
   <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <link rel="shortcut icon" href="img/favicon.html">
+  <link rel="shortcut icon" href="{{URL::asset('img/favicon.html')}}">
 
   <title>Croma and Sons</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/bootstrap-reset.css" rel="stylesheet">
+  <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{URL::asset('css/bootstrap-reset.css')}}" rel="stylesheet">
   <!--external css-->
-  <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <link href="{{URL::asset('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
   <!--right slidebar-->
-  <link href="css/slidebars.css" rel="stylesheet">
+  <link href="{{URL::asset('css/slidebars.css')}}" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet" />
-  <link href="css/invoice-print.css" rel="stylesheet" media="print">
-  <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
+  <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
+  <link href="{{URL::asset('css/style-responsive.css')}}" rel="stylesheet" />
+  <link href="{{URL::asset('css/invoice-print.css')}}" rel="stylesheet" media="print">
+  <link rel="stylesheet" href="{{URL::asset('assets/data-tables/DT_bootstrap.css')}}" />
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -122,29 +122,29 @@
       </section>
 
       <!-- js placed at the end of the document so the pages load faster -->
-      <script src="js/jquery.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-      <script src="js/jquery.scrollTo.min.js"></script>
-      <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-      <script src="js/respond.min.js" ></script>
+      <script src="{{URL::asset('js/jquery.js')}}"></script>
+      <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+      <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
+      <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
+      <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
+      <script src="{{URL::asset('js/respond.min.js')}}" ></script>
 
 
 
-      <script type="text/javascript" src="assets/fuelux/js/spinner.min.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-daterangepicker/moment.min.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-      <script type="text/javascript" src="assets/jquery-mult  i-select/js/jquery.multi-select.js"></script>
-      <script type="text/javascript" src="assets/jquery-multi-select/js/jquery.quicksearch.js"></script>	
-      <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
-      <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/fuelux/js/spinner.min.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-daterangepicker/moment.min.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/jquery-mult  i-select/js/jquery.multi-select.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>	
+      <script type="text/javascript" src="{{URL::asset('assets/data-tables/jquery.dataTables.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script>
 
 
 

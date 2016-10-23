@@ -2,16 +2,16 @@
 
 @section('sidebar')
 
-	@include('sales.chain.sidebar',['active' => 'sof'])
+@include('sales.chain.sidebar',['active' => 'sof'])
 
 @endsection
 
 
 
 @section('csof')
-	
 
-{!! Form::open() !!}
+
+{!! Form::open(['url' => 'sales/salesOrder/create']) !!}
 
 
 
@@ -22,8 +22,8 @@
 		<div class="col-md-3 col-xs-11">
 
 			<div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012"  class="input-append date dpYears">
-				 
-				{!! Form::date('name',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""']) !!}
+
+				{!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""']) !!}
 
 				<span class="input-group-btn add-on">
 					<button class="btn btn-danger" type="button"><i class="fa fa-calendar"></i></button>
@@ -36,72 +36,72 @@
 		</div>
 
 	</div>
+</div>
+
+<div class="row">
+  <div class="form-group">
+
+   {!! Form::label('address','Address',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+
+   <div class="col-sm-3">
+
+    {!! Form::text('address',null,['class' => 'form-control'])!!}
+
+  </div>
+</div>
+
+</div>
+<br>
+
+
+<div class="row">
+  <div class="form-group">
+
+   {!! Form::label('delivery-address','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+   <div class="col-sm-3">
+    {!! Form::text('delivery-address',null,['class' => 'form-control'])!!}
+  </div>
+</div>
+
+</div>
+
+
+<br>
+
+<div class="row">
+
+  {!! Form::label('payment-terms','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+  <div class="col-sm-3">
+   {!! Form::select('size',
+   ['Option1' => 'Option11',
+   'Option2' => 'Option22',
+   'Option3' => 'Option33'],null,
+   ['class' => 'form-control m-bot15']) !!}
+
+
  </div>
 
- <div class="row">
- 	<div class="form-group">
- 		
- 		{!! Form::label('address','Address',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
-
- 		<div class="col-sm-3">
-
- 			{!! Form::text('address',null,['class' => 'form-control'])!!}
-
- 		</div>
- 	</div>
-
- </div>
- <br>
+</div>
 
 
- <div class="row">
- 	<div class="form-group">
- 		
- 		{!! Form::label('delivery-address','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
- 		<div class="col-sm-3">
- 			{!! Form::text('delivery-address',null,['class' => 'form-control'])!!}
- 		</div>
- 	</div>
+<div class="row" id="newUserRow">
+  <div class="form-group" id="toHide1">
+   {!! Form::label('customer-name','Customer Name',['class' => 'col-sm-1 control-label col-lg-1'])!!}
 
- </div>
+   <div class="col-lg-3">
+    <div class="input-group m-bot15">
+     <span class="input-group-btn">
+      <button class="btn btn-white" type="button" id="newUser">New User</button>
+    </span>
+    {!! Form::select('size',
+    ['Option1' => 'Abdul Kair',
+    'Option2' => 'Option22',
+    'Option3' => 'Option33'],null,
+    ['class' => 'form-control m-bot15']) !!}
 
-
- <br>
-
- <div class="row">
- 	 
- 	{!! Form::label('payment-terms','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
- 	<div class="col-sm-3">
- 		{!! Form::select('size',
- 		['Option1' => 'Option11',
- 		 'Option2' => 'Option22',
- 		  'Option3' => 'Option33'],null,
- 		  ['class' => 'form-control m-bot15']) !!}
- 	 
-
- 	</div>
-
- </div>
-
-
- <div class="row" id="newUserRow">
- 	<div class="form-group" id="toHide1">
- 		{!! Form::label('customer-name','Customer Name',['class' => 'col-sm-1 control-label col-lg-1'])!!}
- 		 
- 		<div class="col-lg-3">
- 			<div class="input-group m-bot15">
- 				<span class="input-group-btn">
- 					<button class="btn btn-white" type="button" id="newUser">New User</button>
- 				</span>
- 				{!! Form::select('size',
-			 		['Option1' => 'Abdul Kair',
-			 		 'Option2' => 'Option22',
-			 		  'Option3' => 'Option33'],null,
-			 		  ['class' => 'form-control m-bot15']) !!}
- 				 
- 			</div>
- 		</div>
- 	</div>
+  </div>
+</div>
+</div>
 </div>
 
 
@@ -119,7 +119,7 @@
 	</div>
 </div>
 
-	
+
 
 
 <div class="row invoice-list">
@@ -169,17 +169,16 @@
           <thead>
             <tr>
               <th>Material</th>
-              <th>T</th>
-              <th>W</th>
-              <th>L</th>
+              <th>Thickness(in)</th>
+              <th>Width (in)</th>
+              <th>Length (ft)</th>
               <th>Qty</th>
               <th>Unit</th>
-              <th>B/F</th>
+
               <th>Unit Price</th>
               <th>Discount</th>
-              <th>Amount</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th>Amount</th>              
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -189,63 +188,57 @@
                 'placeholder' => 'Material']) !!}
               </td>
               <td>
-                 {!! Form::text('thickness[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'T']) !!}
+               {!! Form::text('thickness[]',null,['class' => 'form-control m-bot15',
+               'placeholder' => 'T']) !!}
 
-              </td>
-              <td>
-                  {!! Form::text('width[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'W']) !!}
-                 
-              </td>
-              <td>
-                   {!! Form::text('length[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'L']) !!}
-                
-              </td>
-              <td>
-                   {!! Form::text('qty[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'Qty']) !!}
-              
-              </td>
-              <td>
-                 {!! Form::text('unit[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'Input']) !!}
+             </td>
+             <td>
+              {!! Form::text('width[]',null,['class' => 'form-control m-bot15',
+              'placeholder' => 'W']) !!}
 
-               
-              </td>
-              <td>
-                 {!! Form::text('bf[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'B/F']) !!}
-                
-              </td>
-              <td>
-                 {!! Form::text('unitprice[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'Unit Price']) !!}
-                 
-              </td>
-              <td>
-                 {!! Form::text('discount[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'Discount']) !!}
-               
-              </td>
-              <td>
-               {!! Form::text('amount[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'Amount']) !!}
-                
-              </td>
-              <td>
-                <a class="edit" href="javascript:;">Edit</a>
-              </td>
-              <td>
-                <a class="delete" href="javascript:;">Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+            </td>
+            <td>
+             {!! Form::text('length[]',null,['class' => 'form-control m-bot15',
+             'placeholder' => 'L']) !!}
+
+           </td>
+           <td>
+             {!! Form::text('qty[]',null,['class' => 'form-control m-bot15',
+             'placeholder' => 'Qty']) !!}
+
+           </td>
+           <td>
+             {!! Form::text('unit[]',null,['class' => 'form-control m-bot15',
+             'placeholder' => 'Input']) !!}
+
+
+           </td>
+
+           <td>
+             {!! Form::text('unitprice[]',null,['class' => 'form-control m-bot15',
+             'placeholder' => 'Unit Price']) !!}
+
+           </td>
+           <td>
+             {!! Form::text('discount[]',null,['class' => 'form-control m-bot15',
+             'placeholder' => 'Discount']) !!}
+
+           </td>
+           <td>
+             {!! Form::text('amount[]',null,['class' => 'form-control m-bot15',
+             'placeholder' => 'Amount']) !!}
+
+           </td>
+
+           <td>
+
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+ </div>
+</div>
 </section>
 
 
@@ -262,7 +255,10 @@
 </div>
 
 <div class="text-center invoice-btn">
-  <a class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Submit Sales Form </a>
+  {!! Form::button('Submit Sales Form',[
+  "class" => 'btn btn-danger btn-lg fa fa-check',
+  'type' => 'submit']) !!}  
+
 
 </div>
 

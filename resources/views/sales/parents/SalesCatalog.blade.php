@@ -7,16 +7,16 @@
 <link rel="shortcut icon" href="img/favicon.html">
 <title>Croma and Sons</title>
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-reset.css" rel="stylesheet">
+<link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('css/bootstrap-reset.css')}}" rel="stylesheet">
 <!--external css-->
-<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-<link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css">
+<link href="{{URL::asset('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{URL::asset('assets/data-tables/DT_bootstrap.css')}}">
 <!--right slidebar-->
-<link href="css/slidebars.css" rel="stylesheet">
+<link href="{{URL::asset('css/slidebars.css')}}" rel="stylesheet">
 <!-- Custom styles for this template -->
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-responsive.css" rel="stylesheet">
+<link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
+<link href="{{URL::asset('css/style-responsive.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media
     queries -->	
     <!--[if lt IE 9]>
@@ -117,9 +117,7 @@
                     <thead>
                       <tr>
                         <th>Material</th>
-                        <th>T</th>
-                        <th>W</th>
-                        <th>L</th>
+                        <th>Size</th>
                         <th>Sales Price (Per Piece)</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -297,22 +295,22 @@
       <!--footer end-->
     </section>
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
-    <script src="js/respond.min.js"></script>
+    <script src="{{URL::asset('js/jquery.js')}}"></script>
+    <script src="{{URL::asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
+    <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
+    <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+    <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
+    <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
+    <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/data-tables/jquery.dataTables.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script>
+    <script src="{{URL::asset('js/respond.min.js')}}"></script>
     <!--right slidebar-->
-    <script src="js/slidebars.min.js"></script>
+    <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
     <!--common script for all pages-->
-    <script src="js/common-scripts.js"></script>
+    <script src="{{URL::asset('js/common-scripts.js')}}"></script>
     <!--script for this page only-->
-    <script src="js/editable-table.js"></script>
+    <script src="{{URL::asset('js/editable-table.js')}}"></script>
     <!-- END JAVASCRIPTS -->
     <script>
       jQuery(document).ready(function() {

@@ -6,18 +6,26 @@
 
 
 @section('customer-list')
-<tr class="">
-	<td>Jondi Rose</td>
-	<td>Alfred Jondi Rose</td>
-	<td>1234</td>
-	<td class="center">super user</td>
-	<td>2/12/16</td>
-	<td>58888</td>
-	<td>
-		<a class="edit" href="javascript:;">Edit</a>
-	</td>
-	<td>
-		<a class="delete" href="javascript:;">Delete</a>
-	</td>
-</tr>
+	@foreach($customer as $c)
+		<tr class="">
+			<td>{{$c->Name}}</td>
+			<td>{{$c->Address}}</td>
+			<td>{{$c->MobileNumber}}</td>
+			<td>{{$c->ContactPerson}}</td>
+			<td>{{$c->DateCreated}}</td>
+			<td>
+				@foreach($total as $t)
+					@if($c->CustomerID == $t-> CustomerID)
+						{{$t->TOTAL}}
+					@endif
+				@endforeach 
+			</td>
+			<td>
+				<a class="edit" href="javascript:;">Edit</a>
+			</td>
+			<td>
+				<a class="delete" href="javascript:;">Delete</a>
+			</td>
+		</tr>
+	@endforeach
 @endsection

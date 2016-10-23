@@ -6,37 +6,41 @@
 
 
 @section('weekly-sales')
-<tr class="gradeX">
-	<td>Tridenneilt</td>
-	<td>Internet Explorer 4.0</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-</tr>
+	@foreach($weekly as $w)
+		<tr class="gradeX">
+			<td>{{$w->SalesInvoiceID}}</td>
+			<td>{{$w->SalesInvoice.DateCreated}}</td>
+			<td>{{$w->Name}}</td>
+			<td>blank</td>
+			<td>Win 95+</td>
+			<td>Win 95+</td>
+		</tr>
+	@endforeach
 @endsection
 
 @section('monthly-sales')
-<tr class="gradeX">
-	<td>Trident</td>
-	<td>Internet Explorer 4.0</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-</tr>
+	@foreach($monthly as $w)
+		<tr class="gradeX">
+			<td>{{$w->SalesInvoiceID}}</td>
+			<td>{{$w->SalesInvoice.DateCreated}}</td>
+			<td>{{$w->Name}}</td>
+			<td>blank</td>
+			<td>Win 95+</td>
+			<td>Win 95+</td>
+		</tr>
+	@endforeach
 @endsection
 
 
 @section('yearly-sales')
-
-<tr class="gradeX">
-	<td>Trident</td>
-	<td>Internet Explorer 4.0</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-	<td>Win 95+</td>
-</tr>
-
+	@foreach($yearly as $w)
+		<tr class="gradeX">
+			<td>{{$w->SalesInvoiceID}}</td>
+			<td>{{$w->SalesInvoice.DateCreated}}</td>
+			<td>{{$w->Name}}</td>
+			<td>blank</td>
+			<td>Win 95+</td>
+			<td>Win 95+</td>	
+		</tr>
+	@endforeach
 @endsection
