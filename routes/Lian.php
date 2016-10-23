@@ -26,5 +26,9 @@ Route::get('/logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
 
 Route::get('/procurement/PurchaseOrder', ['as' => 'PurchaseOrder', 'uses' => 'BusinessControllers\ProcurementPageController@viewPurchaseOrder']);
 
-Route::get('/procurement/ProductPurchaseReport', ['as' => 'ProductPurchaseReport', 'uses' => 'BusinessControllers\ProcurementPageController@viewProductPurchaseReport' ])
+Route::get('/procurement/ProductPurchaseReport', ['as' => 'ProductPurchaseReport', 'uses' => 'BusinessControllers\ProcurementPageController@viewProductPurchaseReport' ]);
+
+Route::get('/procurement/DeliveryReceipt', ['as' => 'EncodeDeliveryReceipt', 'uses' => 'BusinessControllers\ProcurementPageController@viewEncodeDeliveryReceipt'])
+
+
 ?>

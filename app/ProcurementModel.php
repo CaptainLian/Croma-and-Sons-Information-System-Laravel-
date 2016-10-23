@@ -42,4 +42,59 @@ class ProcurementModel extends Model{
 
 		return [];
 	}
+
+	public static function getPendingPurchaseRequestCount(){
+    	/*
+			SELECT COUNT(RequisitionID)
+ 			  FROM PurchaseRequests
+			 WHERE RequisitionID NOT IN (SELECT RequisitionID
+										  FROM PurchaseOrders);
+    	*/
+		$count = DB::table('PurchaseRequests')
+				   ->select(DB::raw('COUNT(RequisitionID) as count'))
+				   ->whereNotIn('RequisitionID', function($query){
+				   		$query->from('PurchaseOrders')
+				   			  ->select('RequisitionID');
+				   })->first();
+		return $count->count;
+
+    }
+
+    public static function getPendingPurchaseOrderCount(){
+    	/*
+			SELECT COUNT(PurchaseOrderID)
+ 			  FROM PurchaseOrders
+			 WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
+							   			     FROM PurchaseDeliveryReceipts);
+    	*/
+		$count = DB::table('PurchaseOrders')
+				   ->select(DB::raw('COUNT(PurchaseOrderID) as count'))
+				   ->whereNotIn('PurchaseOrderID', function($query){
+				   		$query->from('PurchaseDeliveryReceipts')
+				   			  ->select('PurchaseOrderID');
+				   });
+		return $count->first()->count;
+    }
+
+    public static function getPendingPurchaseOrders(){
+    	$pendingPO = DB::select(DB::raw('SELECT PendingPO.PurchaseOrderID AS POID, PendingPO.DateCreated AS DateCreated, S.Name AS SupplierName
+										   FROM (SELECT PurchaseOrderID, DateCreated, SupplierID
+												   FROM PurchaseOrders
+	   											  WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
+																				  FROM PurchaseDeliveryReceipts)) PendingPO JOIN Suppliers s
+																															  ON PendingPO.SupplierID = s.SupplierID;'));
+    	return $pendingPO;
+    }
+
+    public static function getCountProductsNeedProcurement(){
+    	/*
+		SELECT COUNT(*) AS Amount
+		  FROM CompanyInventory
+	     WHERE RequestedQuantity > 0;
+    	*/
+    	$count = DB::table('CompanyInventory')
+    			   ->select(DB::raw('COUNT(*) AS count'))
+    			   ->where('RequestedQuantity', '>', '0');
+    	return $count->first()->count;
+    }
 }

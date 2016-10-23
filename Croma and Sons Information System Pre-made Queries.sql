@@ -59,4 +59,11 @@ FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQua
                                                                   ON Types.WoodTypeID = Purchased.WoodTypeID;
 
 
- 
+ SELECT COUNT(*) AS Amount
+FROM CompanyInventory
+WHERE RequestedQuantity > 0;
+
+SELECT PurchaseOrderID
+ FROM PurchaseOrders
+WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
+							    FROM PurchaseDeliveryReceipts);

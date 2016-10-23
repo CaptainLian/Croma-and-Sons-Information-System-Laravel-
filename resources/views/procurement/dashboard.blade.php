@@ -13,10 +13,11 @@
 		<h1>Procurement Dashboard</h1>
 		<br>
 		<span class="tools pull-right">
-		<a href="javascript:;" class="fa fa-chevron-down"></a>
-		<a href="javascript:;" class="fa fa-times"></a>
+			<a href="javascript:;" class="fa fa-chevron-down"></a>
+			<a href="javascript:;" class="fa fa-times"></a>
 		</span>
 	</header>
+
 	<div class="row state-overview">
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
@@ -24,8 +25,8 @@
 					<i class="fa fa-user"></i>
 				</div>
 				<div class="value">
-					<h1>{!!$pendingPurchaseRequestCount!!}</h1>
-					<p>Pending Purchase Request</p>
+					<h1>{!!$countProductNeedProcurement!!}</h1>
+					<p>Products Require Procurement</p>
 				</div>
 			</section>
 		</div>
@@ -37,7 +38,7 @@
 				<div class="value">
 				<!-- count -->
 					<h1>{!!$pendingPurchaseOrderCount!!}</h1>
-					<p>Pending Purchase Order</p>
+					<p>Pending Purchase Orders</p>
 				</div>
 			</section>
 		</div>
@@ -69,11 +70,9 @@
 				</section>
 			</div>
 		</div>
-		<div class="row"></div>
 		<!-- page end-->
 	</div>
 	<!--state overview end-->
-
 @endsection
 
 @push('javascript')

@@ -1,5 +1,9 @@
 @extends('procurement.main')
 
+@section('title')
+Product Purchase Report
+@endsection
+
 @section('sidebar')
 	@include('procurement.sidebar', ['active' => 'ProductPurchaseReport']);
 @endsection
