@@ -48,3 +48,5 @@ Route::get('/try',function(){
 });
 
 Route::post('sales/salesOrder/create','SalesOrder@create');
+	require_once 'Lian.php';
+?>
