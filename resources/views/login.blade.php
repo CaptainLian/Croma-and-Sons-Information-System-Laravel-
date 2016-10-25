@@ -38,7 +38,7 @@
           <h2 class="form-signin-heading">Croma and Sons</h2>
           <div class="login-wrap @if($errors->any()) has-error @endif ">
 
-              <input name="username" type="text" class="form-control" placeholder="Username" autofocus value="{!! Input::old('username') !!}"  />
+              <input name="username" type="text" class="form-control" placeholder="Username" autofocus value="{!! Form::old('username') !!}"  />
               @if($errors->has('username'))
                 <p class="help-block">{{ $errors->first('username') }}</p>
               @endif

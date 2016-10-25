@@ -8,9 +8,9 @@ use App\Http\Requests\LoginValidator;
 
 use App\Account;
 
+use Illuminate\Support\Facades\Input as Input;
 use Redirect;
 use Validator;
-use Input;
 use Session;
 use View;
 
@@ -42,27 +42,27 @@ class LoginController extends Controller{
 
 		Session::put('username', $account->Username);
  		Session::put('active', true);
-		$controller = 'BusinessControllers\\';
+		$controller = '';
 		switch ($account->PositionID) {
 			case 1:
-				$controller .= 'AdminPageController';
+				$controller = 'BusinessControllers\AdminPageController@viewDashboard';
 				break;
 			case 2:
-				$controller .= 'SalesPageController';
+				$controller = 'Dashboard@index';
 				break;
 
 			case 3:
-				$controller .= 'InventoryPageController';
+				$controller = 'BusinessControllers\InventoryPageController@viewDashboard';
 				break;
 
 			case 4:
-				$controller .= 'ProcurementPageController';
+				$controller = 'BusinessControllers\ProcurementPageController@viewDashboard';
 				break;
 		}
 
 		Session::put('controller', $controller);
 		View::share('name', $account->Firstname.' '.$account->Lastname);
-		return Redirect::action($controller.'@viewDashboard');
+		return Redirect::action($controller);
 	}
 
 	public function logout(Request $request){

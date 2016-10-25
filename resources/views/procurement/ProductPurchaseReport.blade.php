@@ -32,7 +32,7 @@ Product Purchase Report
 						<div class="col-sm-12">
 							<section class="panel">
 								<header class="panel-heading">
-									<h1>Product Purchase Report</h1>
+									<h1>Product Weekly Purchase Report</h1>
 								</header>
 								<div class="panel-body">
 									<div class="adv-table">
@@ -43,8 +43,8 @@ Product Purchase Report
 													<th>Size (TxWxL)</th>
 													<th>Quantity Purchased</th>
 													<th>Quantity Rejected</th>
-													<th>Amount Purchased</th>
-													<th>Amount Rejected</th>
+													<th>Amount Purchased (Php)</th>
+													<th>Amount Rejected (Php)</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -73,53 +73,36 @@ Product Purchase Report
 					<div class="row">
 						<div class="col-sm-12">
 							<section class="panel">
-								<header class="panel-heading">Sales Report</header>
+								<header class="panel-heading">
+									<div class="row">
+										<h1>Product Monthly Purchase Report</h1>
+									</div>
+									<h6>Of current month {!!date('F')!!}</h6>
+								</header>
 								<div class="panel-body">
 									<div class="adv-table">
 										<table class="display table table-bordered table-striped" id="dynamic-table">
 											<thead>
 												<tr>
-													<th>Invoice #</th>
-													<th>Invoice Date</th>
-													<th></th>
-													<th>Total Amount</th>
-													<th>Total Discount</th>
-													<th>Total Reject (In Pesos)</th>
+													<th>Material</th>
+													<th>Size (TxWxL)</th>
+													<th>Quantity Purchased</th>
+													<th>Quantity Rejected</th>
+													<th>Amount Purchased (Php)</th>
+													<th>Amount Rejected (Php)</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr class="gradeX">
-													<td>Trident</td>
-													<td>Internet Explorer 4.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeC">
-													<td>Trident</td>
-													<td>Internet Explorer 5.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeC">
-													<td>Trident</td>
-													<td>Internet Explorer 5.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeX">
-													<td>Trident</td>
-													<td>Internet Explorer 4.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
+												@foreach($monthly as $item)
+													<tr>
+														<td>{!! $item->Material !!}</td>
+														<td>{!! $item->Size !!}</td>
+														<td>{!! $item->PurchasedQuantity !!}</td>
+														<td>{!! $item->RejectedQuantity !!}</td>
+														<td>{!! $item->PurchasedAmount !!}</td>
+														<td>{!! $item->RejectedAmount !!}</td>
+													</tr>
+												@endforeach
 											</tbody>
 										</table>
 									</div>
@@ -133,54 +116,36 @@ Product Purchase Report
 					<div class="row">
 						<div class="col-sm-12">
 							<section class="panel">
-								<header class="panel-heading">Sales Report</header>
+								<header class="panel-heading">
+									<div class="row">
+										<h1>Product Yearly Purchase Report</h1>
+									</div>
+									<h6>Of current year {!!date('Y')!!}</h6>
+								</header>
 								<div class="panel-body">
 									<div class="adv-table">
 										<table class="display table table-bordered table-striped" id="dynamic-table">
 											<thead>
 												<tr>
-													<th>Invoice #</th>
-													<th>Invoice Date</th>
-													<th></th>
-													<th>Total Amount</th>
-													<th>Total Discount</th>
-													<th>Total Reject (In Pesos)</th>
+													<th>Material</th>
+													<th>Size (TxWxL)</th>
+													<th>Quantity Purchased</th>
+													<th>Quantity Rejected</th>
+													<th>Amount Purchased (Php)</th>
+													<th>Amount Rejected (Php)</th>
 												</tr>
 											</thead>
-
 											<tbody>
-												<tr class="gradeX">
-													<td>Trident</td>
-													<td>Internet Explorer 4.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeC">
-													<td>Trident</td>
-													<td>Internet Explorer 5.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeC">
-													<td>Trident</td>
-													<td>Internet Explorer 5.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
-												<tr class="gradeX">
-													<td>Trident</td>
-													<td>Internet Explorer 4.0</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-													<td>Win 95+</td>
-												</tr>
+												@foreach($yearly as $item)
+													<tr>
+														<td>{!! $item->Material !!}</td>
+														<td>{!! $item->Size !!}</td>
+														<td>{!! $item->PurchasedQuantity !!}</td>
+														<td>{!! $item->RejectedQuantity !!}</td>
+														<td>{!! $item->PurchasedAmount !!}</td>
+														<td>{!! $item->RejectedAmount !!}</td>
+													</tr>
+												@endforeach
 											</tbody>
 										</table>
 									</div>

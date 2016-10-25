@@ -67,3 +67,16 @@ SELECT PurchaseOrderID
  FROM PurchaseOrders
 WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
 							    FROM PurchaseDeliveryReceipts);
+                                
+SELECT PendingPO.PurchaseOrderID AS POID, PendingPO.DateCreated AS DateCreated, S.Name AS SupplierName
+										   FROM (SELECT PurchaseOrderID, DateCreated, SupplierID
+												   FROM PurchaseOrders
+	   											  WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
+																				  FROM PurchaseDeliveryReceipts)) PendingPO JOIN Suppliers S
+																															  ON PendingPO.SupplierID = S.SupplierID;
+									
+							
+SELECT SupplierID AS Supplier, WoodTypeID, Thickness, Width, Length, MIN(CurrentPrice) AS CheapestPrice
+FROM SupplierPrices
+GROUP BY 1, WoodTypeID, Thickness, Width, Length;						
+

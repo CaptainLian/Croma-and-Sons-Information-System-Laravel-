@@ -42,10 +42,16 @@ class ProcurementPageController extends Controller{
 
     public function viewProductPurchaseReport(){
         $weeklyQuantity = ProcurementModel::getWeeklyQuantityProductPurchase();
+        $monthlyQuantity = ProcurementModel::getMonthlyQuantityProductPurchase();
+        $yearlyQuantity = ProcurementModel::getYearlyQuantityProductPurchase();
 
         $data = [
             'weekly' => $weeklyQuantity,
+            'monthly' => $monthlyQuantity,
+           	'yearly' => $yearlyQuantity,
+
         ];
+
         return view('procurement.ProductPurchaseReport')->with($data);
     }
 
@@ -60,11 +66,32 @@ class ProcurementPageController extends Controller{
     }
 
     public function viewPurchaseOrderSpecific($id){
-        echo "PO: $id";
+        $purchaseOrderDetails = ProcurementModel::getPurchaseOrder($id);
+        $purchaseOrderItems = ProcurementModel::getPurchaseOrderItems($id);
+        $supplierDetails = SupplierModel::getSupplierDetails($purchaseOrderDetails->SupplierID);
+
+
+        $data = [
+        	'purchaseOrderDetails' => $purchaseOrderDetails,
+        	'supplierDetails' => $supplierDetails,
+        	'purchaseOrderItems' => $purchaseOrderItems, 
+        ];
+
+        return view('procurement.PurchaseOrderSpecific')->with($data);
     }
 
     public function viewDeliveryReceiptSpecific($id){
-        echo "DR: $id";
+        $purchaseOrderDetails = ProcurementModel::getPurchaseOrder($id);
+        $purchaseOrderItems = ProcurementModel::getPurchaseOrderItems($id);
+        $supplierDetails = SupplierModel::getSupplierDetails($purchaseOrderDetails->SupplierID);
+
+
+        $data = [
+            'purchaseOrderDetails' => $purchaseOrderDetails,
+            'supplierDetails' => $supplierDetails,
+            'purchaseOrderItems' => $purchaseOrderItems, 
+        ];
+        return view('procurement.DeliveryReceiptSpecific')->with($data);
     }
 
     public function viewSupplierList(){
@@ -76,5 +103,13 @@ class ProcurementPageController extends Controller{
 
         return view('procurement.SupplierList')->with($data);
 
+    }
+
+    public function viewPurchaseList(){
+    	return view('procurement.PurchaseList');
+    }
+
+    public function viewPurchaseReport(){
+        return view('procurement.PurchaseReport');
     }
 }

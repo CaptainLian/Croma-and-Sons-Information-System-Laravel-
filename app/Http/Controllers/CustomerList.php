@@ -26,7 +26,6 @@ class CustomerList extends Controller
     				   ->join('SalesOrders','SalesOrders.SalesOrderID','=','SalesOrderItems.SalesOrderID')
     				   ->groupBy('SalesOrders.CustomerID')
     				   ->get();
-    	echo  ($totalPrice);
 
 
 
