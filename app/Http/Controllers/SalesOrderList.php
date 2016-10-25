@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Carbon;
+
 use Illuminate\Support\Facades\DB;
 
 class SalesOrderList extends Controller
@@ -20,6 +22,39 @@ class SalesOrderList extends Controller
     	return view('sales.SDRI',
     		['pendingSalesOrder' => $pendingSalesOrder,
     		 'active' => 'sdri']);
+
+    }
+    public function create($salesID){
+        $now = Carbon::now()->toDateString();
+        $so = DB::table('SalesOrders')
+                ->where('SalesOrderID',$salesID)
+                ->get();
+    
+        $customer = DB::table('Customers')
+                      ->where('CustomerID',$so[0]->CustomerID)
+                      ->get();
+
+        $items = DB::table('SalesOrders')
+                  
+                   ->join('SalesOrderItems','SalesOrderItems.SalesOrderID','=','SalesOrders.SalesOrderID')
+                   ->join('CompanyInventory',function($join){
+                         $join->on('SalesOrderItems.Thickness', '=', 'CompanyInventory.Thickness');
+                            $join->on('SalesOrderItems.Width', '=', 'CompanyInventory.Width');
+                            $join->on('SalesOrderItems.Length', '=', 'CompanyInventory.Length');
+                   })
+                   ->join('REF_WoodTypes as REW','SalesOrderItems.WoodTypeID','=','REW.WoodTypeID')
+
+                   ->get();
+
+                  
+        return view('sales.SDR',['active' => 'sdr',
+            'so' => $so,
+            'now' => $now,
+            'customer' => $customer,
+            'items' => $items]);
+    }
+
+    public function post(Request $request){
 
     }
 }

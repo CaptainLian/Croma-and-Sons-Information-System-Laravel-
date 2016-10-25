@@ -120,30 +120,7 @@
                                       </thead>
                                       <tbody>
                                         @yield('product-weekly')
-                                        <tr class="gradeC">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 5.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeC">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 5.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeX">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 4.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
+                                        @yield('product')
                                       </tbody>
                                     </table>
                                   </div>
@@ -171,38 +148,7 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr class="gradeX">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 4.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeC">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 5.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeC">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 5.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeX">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 4.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
+                                        @yield('product')
                                       </tbody>
                                     </table>
                                   </div>
@@ -230,38 +176,7 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr class="gradeX">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 4.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeC">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 5.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeC">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 5.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
-                                        <tr class="gradeX">
-                                          <td>Trident</td>
-                                          <td>Internet Explorer 4.0</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                          <td>Win 95+</td>
-                                        </tr>
+                                         @yield('product')
                                       </tbody>
                                     </table>
                                   </div>

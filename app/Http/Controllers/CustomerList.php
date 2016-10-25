@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\DB;
 class CustomerList extends Controller
 {
     public function index(){
-    	$customers = DB::table('Customers')
-    				   ->select('Customers.CustomerID','Customers.Address','Customers.Name','Customers.MobileNumber','Customers.ContactPerson','SalesOrders.DateCreated')
-    				   ->leftJoin('SalesOrders', 'Customers.CustomerID','=','SalesOrders.CustomerID')
-    				   ->get();
-    	$totalPrice= DB::table('SalesOrderItems')
+    $customers =DB::select( DB::raw('
+                SELECT Customers.CustomerID as CustomerID,Customers.Address as Address, Customers.Name as Name, Customers.MobileNumber as MobileNumber, Customers.ContactPerson as ContactPerson, Max(SalesOrders.DateCreated) as DateCreated
+                  FROM Customers  left join SalesOrders 
+                                             on Customers.CustomerID = SalesOrders.CustomerID
+                        Group By Customers.CustomerID,Customers.Name,Customers.Address, Customers.MobileNumber, Customers.ContactPerson'));
+        
+   	$totalPrice= DB::table('SalesOrderItems')
     				   ->select(DB::raw('SUM(Quantity*CurrentUnitPrice) AS TOTAL,SalesOrders.CustomerID'))
     				   
     				   ->join('CompanyInventory', function ($join) {
@@ -26,7 +28,7 @@ class CustomerList extends Controller
     				   ->join('SalesOrders','SalesOrders.SalesOrderID','=','SalesOrderItems.SalesOrderID')
     				   ->groupBy('SalesOrders.CustomerID')
     				   ->get();
-    	echo  ($totalPrice);
+
 
 
 

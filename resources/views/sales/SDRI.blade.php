@@ -12,7 +12,7 @@
 			<td>{{$so->DateCreated}}</td>
 			<td>{{$so->Name}}</td>
 			<th>
-				<a href="/sdr"><button type="button" class="btn btn-success">Create DR</button></a>
+				<a href="/sales/createDeliveryReceipt/{{$so->SalesOrderID}}"><button type="button" class="btn btn-success">Create DR</button></a>
 			</th>
 		</tr>
 	@endforeach

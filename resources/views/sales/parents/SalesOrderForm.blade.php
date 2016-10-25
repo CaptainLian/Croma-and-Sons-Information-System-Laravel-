@@ -123,6 +123,28 @@
 
       <!-- js placed at the end of the document so the pages load faster -->
       <script src="{{URL::asset('js/jquery.js')}}"></script>
+      <script >
+
+      $('#editable-sample').on('change','.disc',function(){
+          
+            console.log('asddasd');
+            $('#editable-sample').on('val','.amt',1);
+            
+          
+      });
+
+      $('#editable-sample_new').click(function(){
+        console.log($('#editable-sample').dataTable().fnGetNodes());
+
+
+      });
+      $('#editable-sample').on('keyup','.disc',function(){
+          console.log('nagana');
+      });
+
+      </script>
+      <script src="{{URL::asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
+            <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
       <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
       <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
       <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
@@ -154,14 +176,14 @@
       
 
       <!--this page  script only-->
-      <script src="js/advanced-form-components.js"></script>
+       
 
 
       <!--right slidebar-->
-      <script src="js/slidebars.min.js"></script>
+      <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
 
       <!--common script for all pages-->
-      <script src="js/common-scripts.js"></script>
+      <script src="{{URL::asset('js/common-scripts.js')}}"></script>
 
       <script>
 

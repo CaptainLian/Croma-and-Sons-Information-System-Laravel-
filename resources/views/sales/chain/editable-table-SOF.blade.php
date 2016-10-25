@@ -19,16 +19,16 @@
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control columnAdjust10p" name="material[]" value="' + aData[0] + '">';
+                jqTds[0].innerHTML = "<select  class=\"form-control columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
                 jqTds[1].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="width[]" value="' + aData[2] + '">';
                 jqTds[3].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="length[]" value="' + aData[3] + '">';
                 jqTds[4].innerHTML = '<input type="text" class="form-control columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p"  name="unit[]" value="' + aData[5] + '">';
+                jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
                 jqTds[6].innerHTML = '<input type="text" class="form-control columnAdjust9p"  name="unitprice[]" value="' + aData[6] + '">';
-                jqTds[7].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="discount[]" name="" value="' + aData[7] + '">';  
-                jqTds[8].innerHTML = aData[8]; 
-                jqTds[9].innerHTML = '<a class="delete" href="">Cancel</a>';
+                jqTds[7].innerHTML = '<input type="text" class="form-control disc columnAdjust9p" name="discount[]" name="" value="' + aData[7] + '">';  
+                jqTds[8].innerHTML = '<input type="text" class="form-control amt columnAdjust9p" disabled="" placeholder=\'\' name="amount[]" value="' + aData[8] + '">';
+                jqTds[9].innerHTML = '<a class="delete" href="#">Cancel</a>';
             }
 
             function saveRow(oTable, nRow) {
@@ -42,7 +42,7 @@
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
                 oTable.fnUpdate(jqInputs[7].value, nRow, 7, false);
                 oTable.fnUpdate(jqInputs[8].value, nRow, 8, false);
-                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 9, false);
+                oTable.fnUpdate('<a class="delete" href="#">Delete</a>', nRow, 9, false);
                 oTable.fnDraw();
             }
 
@@ -58,7 +58,7 @@
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
                 oTable.fnUpdate(jqInputs[7].value, nRow, 7, false);
                 oTable.fnUpdate(jqInputs[8].value, nRow, 8, false);
-                oTable.fnUpdate('<a class="edit" href="">Delete</a>', nRow, 9, false);
+                oTable.fnUpdate('<a class="edit" href="#">Delete</a>', nRow, 9, false);
                 oTable.fnDraw();
             }
 
@@ -68,6 +68,7 @@
                 [5, 15, 20, -1],
                     [5, 15, 20, "All"] // change per page values here
                     ],
+
                 // set the initial value
                 "iDisplayLength": 5,
                 "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
@@ -143,12 +144,14 @@
             $('#editable-sample_new').click(function (e) {
                 e.preventDefault();
                 var aiNew = oTable.fnAddData(['', '', '', '','','','','','',
-                    '<a class="cancel" data-mode="new" href="">Cancel</a>'
+                    '<a class="cancel" data-mode="new" href="#">Cancel</a>'
                     ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 editRow(oTable, nRow);
                 nEditing = nRow;
             });
+
+          
 
             $('#editable-sample a.delete').live('click', function (e) {
                 e.preventDefault();
@@ -159,11 +162,15 @@
 
                 var nRow = $(this).parents('tr')[0];
                 oTable.fnDeleteRow(nRow);
-                alert("Deleted! Do not forget to do some ajax to sync with backend :)");
+
+               /* alert("Deleted! Do not forget to do some ajax to sync with backend :)");*/
+
+               alert('Order is deleted!');
             });
 
             $('#editable-sample a.cancel').live('click', function (e) {
                 e.preventDefault();
+                alert('asd');
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
                     oTable.fnDeleteRow(nRow);
@@ -172,6 +179,8 @@
                     nEditing = null;
                 }
             });
+
+            
 
             $('#editable-sample a.edit').live('click', function (e) {
                 e.preventDefault();
@@ -195,6 +204,8 @@
                     nEditing = nRow;
                 }
             });
+
+
         }
 
     };
