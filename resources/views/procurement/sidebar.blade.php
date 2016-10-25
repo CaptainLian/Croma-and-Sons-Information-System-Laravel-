@@ -17,7 +17,7 @@
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseList') class="active" @endif href="ProcurementPurchaseList.html">
+	<a @if($active == 'PurchaseList') class="active" @endif href="\procurement\PurchaseList">
 		<i class="fa fa-file-text"></i>
 		<span>Purchase List</span>
 	</a>

@@ -10,6 +10,13 @@ Pending Purchase Orders
 
 @section('main-content')
 <!-- page start-->
+@if(isset($success))
+	<div class="row">
+		<div class="alert alert-success">
+			<strong>Success!</strong> {!!$success!!}
+		</div>
+	</div>
+@endif
 <div class="row">
 	<div class="col-sm-12">
 		<section class="panel">

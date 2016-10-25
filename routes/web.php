@@ -16,9 +16,6 @@ Route::get('/sales/home','Dashboard@index');
 
 Route::get('/sales/salesOrder','SalesOrder@index');
 
- 
-
-
 Route::get('/sales/deliveryReceiptInitial','SalesOrderList@index');
 
 Route::get('/sales/catalog','SalesCatalog@index');
@@ -48,5 +45,6 @@ Route::get('/try',function(){
 });
 
 Route::post('sales/salesOrder/create','SalesOrder@create');
-	require_once 'Lian.php';
+
+require_once 'Lian.php';
 ?>
