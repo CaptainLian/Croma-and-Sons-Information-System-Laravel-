@@ -18,6 +18,9 @@ Route::get('/sales/salesOrder','SalesOrder@index');
 
 Route::get('/sales/deliveryReceiptInitial','SalesOrderList@index');
 
+Route::get('/sales/createDeliveryReceipt/{salesOrderID}','SalesOrderList@create');
+Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
+
 Route::get('/sales/catalog','SalesCatalog@index');
 
 

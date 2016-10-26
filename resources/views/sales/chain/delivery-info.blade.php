@@ -8,16 +8,14 @@
 		</li>
 	@endif
 
-		<li>Delivery Receipt Number :
-			<strong>123456</strong>
-		</li>
+		 
 	@if($active == 'sdr')
 		<li>Sales Order Number	 :
-			<strong>123456</strong>
+			<strong>{{$so[0]->SalesOrderID}}</strong>
 		</li>
 
 		<li>Orderdate :
-			<strong>123456</strong>
+			<strong>{{$so[0]->DateCreated}}</strong>
 		</li>
 
 	@endif

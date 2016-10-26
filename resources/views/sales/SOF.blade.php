@@ -70,12 +70,9 @@
 
 <div class="row">
 
-  {!! Form::label('payment-terms','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+  {!! Form::label('terms','Terms',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
   <div class="col-sm-3">
-   {!! Form::select('size',
-   ['Option1' => 'Option11',
-   'Option2' => 'Option22',
-   'Option3' => 'Option33'],null,
+   {!! Form::select('terms',$terms,null,
    ['class' => 'form-control m-bot15']) !!}
 
 
@@ -86,17 +83,14 @@
 
 <div class="row" id="newUserRow">
   <div class="form-group" id="toHide1">
-   {!! Form::label('customer-name','Customer Name',['class' => 'col-sm-1 control-label col-lg-1'])!!}
+   {!! Form::label('customerName','Customer Name',['class' => 'col-sm-1 control-label col-lg-1'])!!}
 
    <div class="col-lg-3">
     <div class="input-group m-bot15">
      <span class="input-group-btn">
       <button class="btn btn-white" type="button" id="newUser">New User</button>
     </span>
-    {!! Form::select('size',
-    ['Option1' => 'Abdul Kair',
-    'Option2' => 'Option22',
-    'Option3' => 'Option33'],null,
+    {!! Form::select('customerName',$customers,null,
     ['class' => 'form-control m-bot15']) !!}
 
   </div>
@@ -130,10 +124,9 @@
   <div class="col-lg-4 col-sm-4">
     <h4>SALES ORDER INFORMATION</h4>
     <ul class="unstyled">
-      <li>Sales Number :
-        <strong>69626</strong>
+     
       </li>
-      <li>Order Date : <strong>2013-03-20 </strong></li>
+      <li>Order Date : <strong>{{$now}} </strong></li>
       <li>Prepared By : <strong>John Fisher</strong></li>
     </ul>
   </div>
@@ -142,7 +135,7 @@
 
 <section class="panel">
   <header class="panel-heading">
-    Editable Table
+   Orders
   </header>
   <div class="panel-body">
     <div class="adv-table editable-table ">
@@ -152,16 +145,7 @@
             Add New <i class="fa fa-plus"></i>
           </button>
         </div>
-        <div class="btn-group pull-right">
-          <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
-          </button>
-          <ul class="dropdown-menu pull-right">
-            <li><a href="#">Print</a></li>
-            <li><a href="#">Save as PDF</a></li>
-            <li><a href="#">Export to Excel</a></li>
-          </ul>
-        </div>
-      </div>
+        
       <div class="space15"></div>
 
       <div class="table-responsive">
@@ -184,50 +168,38 @@
           <tbody>
             <tr class="">
               <td>
-                {!! Form::text('material[]',null,['class' => 'form-control m-bot15',
-                'placeholder' => 'Material']) !!}
+                
               </td>
               <td>
-               {!! Form::text('thickness[]',null,['class' => 'form-control m-bot15',
-               'placeholder' => 'T']) !!}
+              
 
              </td>
              <td>
-              {!! Form::text('width[]',null,['class' => 'form-control m-bot15',
-              'placeholder' => 'W']) !!}
+             
 
             </td>
             <td>
-             {!! Form::text('length[]',null,['class' => 'form-control m-bot15',
-             'placeholder' => 'L']) !!}
+             
 
            </td>
            <td>
-             {!! Form::text('qty[]',null,['class' => 'form-control m-bot15',
-             'placeholder' => 'Qty']) !!}
+            
 
            </td>
            <td>
-             {!! Form::text('unit[]',null,['class' => 'form-control m-bot15',
-             'placeholder' => 'Input']) !!}
+             
 
 
            </td>
 
            <td>
-             {!! Form::text('unitprice[]',null,['class' => 'form-control m-bot15',
-             'placeholder' => 'Unit Price']) !!}
-
+             
            </td>
            <td>
-             {!! Form::text('discount[]',null,['class' => 'form-control m-bot15',
-             'placeholder' => 'Discount']) !!}
-
+            
            </td>
            <td>
-             {!! Form::text('amount[]',null,['class' => 'form-control m-bot15',
-             'placeholder' => 'Amount']) !!}
-
+            
            </td>
 
            <td>

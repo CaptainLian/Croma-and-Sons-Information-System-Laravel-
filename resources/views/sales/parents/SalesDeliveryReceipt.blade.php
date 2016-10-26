@@ -143,96 +143,14 @@
                       <th class="">Size</th>
                       <th class="">Unit</th>
                       <th class="">Quantity</th>
-                      <th class="">B/F</th>
+                       
                       <th class="">Unit Price</th>
                       <th class="">Discount</th>    
                       <th>Total</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>LCD Monitor</td>
-                      <td class="hidden-phone">22-12-10</td>
-                      <td class="">$ 1000</td>
-                      <td class="" width="30px">
-
-
-                        <input class="form-control m-bot15" type="text" >
-
-
-                      </td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Laptop</td>
-                      <td class="hidden-phone">22-12-10</td>
-                      <td class="">$1750</td>
-                      <td class="">
-
-
-                        <input class="form-control m-bot15" type="text" >
-
-                      </td>
-                      <td>$1750</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Mouse</td>
-                      <td class="hidden-phone">22-12-10</td>
-                      <td class="">$90</td>
-                      <td class="">
-
-
-
-                        <input class="form-control m-bot15" type="text" >
-
-                      </td>
-                      <td>$270</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Personal Computer</td>
-                      <td class="hidden-phone">22-12-10</td>
-                      <td class="">$1200</td>
-                      <td class="">
-
-
-
-
-                        <input class="form-control m-bot15" type="text" >
-
-                      </td>
-                      <td>$2400</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Printer</td>
-                      <td class="hidden-phone">22-12-10</td>
-                      <td class="">$200</td>
-                      <td class="">
-
-
-                        <input class="form-control m-bot15" type="text" >
-                      </td>
-                      <td>$400</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                      <td>$ 2000</td>
-                    </tr>
+                    @yield('material')                    
                   </tbody>
                 </table>
                 <div class="row">
