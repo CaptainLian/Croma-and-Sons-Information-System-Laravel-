@@ -12,7 +12,7 @@
 	|
 	*/
 
-	Route::group(['prefix' => 'procurement'], function(){
+	Route::group(['prefix' => 'sales'], function(){
 		Route::get('home','Dashboard@index');
 
 		Route::get('salesOrder','SalesOrder@index');
