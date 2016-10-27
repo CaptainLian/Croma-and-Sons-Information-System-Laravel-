@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 class SalesInvoice extends Controller
 {
     public function list(){
+
     	$pd = DB::table('SalesDeliveryReceipts as SDR')
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
     			->join('Customers as C','C.CustomerID','=','SO.CustomerID')
@@ -25,7 +26,14 @@ class SalesInvoice extends Controller
     		 ]);
     }
     public function create($id){
-
-    	return view('sales.SI',['active' => 'si']);
+        $w = DB::table('SalesDeliveryReceipts')
+               ->select('SalesOrderID')
+               ->where('SalesDeliveryReceiptID',$id);
+        $so=DB::table('SalesOrders')
+              ->where('SalesOrderID',$w);
+         print_r($so);
+    	/*return view('sales.SI',
+            ['active' => 'si',
+             'so' => $so]);*/
     }
 }

@@ -18,7 +18,7 @@ class CustomerList extends Controller
                         Group By Customers.CustomerID,Customers.Name,Customers.Address, Customers.MobileNumber, Customers.ContactPerson'));
         
    	$totalPrice= DB::table('SalesOrderItems')
-    				   ->select(DB::raw('SUM(Quantity*CurrentUnitPrice) AS TOTAL,SalesOrders.CustomerID'))
+    				   ->select(DB::raw('SUM(   Quantity*CurrentUnitPrice) AS TOTAL,SalesOrders.CustomerID'))
     				   
     				   ->join('CompanyInventory', function ($join) {
 				            $join->on('SalesOrderItems.Thickness', '=', 'CompanyInventory.Thickness');

@@ -13,7 +13,7 @@ class PageController extends Controller{
 
     public function index(){
     	if(Session::has('active')){
-    		return Redirect::action(Session::get('controller').'@viewDashboard');
+    		return Redirect::action(Session::get('controller'));
     	}
 
     	return view('/login');

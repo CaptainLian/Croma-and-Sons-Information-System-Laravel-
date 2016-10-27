@@ -13,20 +13,22 @@
 @endsection
 
 @section('materials')
+
 	@for($ctr = 0; $ctr < count($items); $ctr++)
+
 		<tr>
 			<td>{{$ctr+1}}</td>
 			<td>{{$items[$ctr]->WoodType}}</td>
 			<td class="hidden-phone">
-			{{ $items[$ctr]->Thickness.'-'.
-			   $items[$ctr]->Width. '-'.
+			{{ $items[$ctr]->Thickness.'/'.
+			   $items[$ctr]->Width. '/'.
 			   $items[$ctr]->Length }}
 			</td>
 			<td class="">pcs</td>
 			<td class="" width="30px">
 
 
-				<input class="form-control m-bot15" type="text" >
+				<input class="form-control m-bot15" value="{{$items[$ctr]->Quantity}}" type="text" >
 
 
 			</td>

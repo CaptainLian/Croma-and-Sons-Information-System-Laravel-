@@ -28,7 +28,7 @@
 	@foreach($weekly as $w)
 		<tr class="gradeX">
 			<td>{{$w->SalesInvoiceID}}</td>
-			<td>{{$w->SalesInvoice.DateCreated}}</td>
+			<td>{{$w->DateCreated}}</td>
 			<td>{{$w->Name}}</td>
 			<td>blank</td>
 			<td>Win 95+</td>
@@ -60,7 +60,7 @@
 	@foreach($monthly as $w)
 		<tr class="gradeX">
 			<td>{{$w->SalesInvoiceID}}</td>
-			<td>{{$w->SalesInvoice.DateCreated}}</td>
+			<td>{{$w->DateCreated}}</td>
 			<td>{{$w->Name}}</td>
 			<td>blank</td>
 			<td>Win 95+</td>
@@ -93,7 +93,7 @@
 	@foreach($yearly as $w)
 		<tr class="gradeX">
 			<td>{{$w->SalesInvoiceID}}</td>
-			<td>{{$w->SalesInvoice.DateCreated}}</td>
+			<td>{{$w->DateCreated}}</td>
 			<td>{{$w->Name}}</td>
 			<td>blank</td>
 			<td>Win 95+</td>

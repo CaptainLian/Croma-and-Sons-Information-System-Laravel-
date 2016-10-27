@@ -16,7 +16,7 @@ class DashboardModel extends Model{
     	*/
 		$count = DB::table('PurchaseRequests')
 				   ->select(DB::raw('COUNT(RequisitionID) as count'))
-				   ->whereIn('RequisitionID', function($query){
+				   ->whereNotIn('RequisitionID', function($query){
 				   		$query->from('PurchaseOrders')
 				   			  ->select('RequisitionID');
 				   })->first();
@@ -33,11 +33,11 @@ WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
     	*/
 		$count = DB::table('PurchaseOrders')
 				   ->select(DB::raw('COUNT(PurchaseOrderID) as count'))
-				   ->whereIn('PurchaseOrderID', function($query){
+				   ->whereNotIn('PurchaseOrderID', function($query){
 				   		$query->from('PurchaseDeliveryReceipts')
 				   			  ->select('PurchaseOrderID');
-				   })->first();
-		return $count->count;
+				   });
+		return $count->first()->count;
 
     }
 }

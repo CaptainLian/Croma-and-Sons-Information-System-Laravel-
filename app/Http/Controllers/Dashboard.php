@@ -13,21 +13,15 @@ use Illuminate\Support\Facades\DB;
 class Dashboard extends Controller
 {
     public function index(){
-
-    	$orders = DB::table('SalesOrders')
-    				->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=',"SalesDeliveryReceipts.SalesOrderID")
-    				->count("SalesOrders.SalesOrderID");
-
-    	$deliveredOrders = DB::table('SalesDeliveryReceipts')
-    						 ->join('SalesInvoice','SalesInvoice.SalesDeliveryReceiptID','=',"SalesDeliveryReceipts.SalesDeliveryReceiptID")
-    						 ->count("SalesDeliveryReceipts.SalesDeliveryReceiptID");
-    	
-    	$pendingOrders = $orders - $deliveredOrders;
+    	$pendingOrders = DB::table('SalesOrders')
+                           ->where('SalesOrderStatusID',1)
+                           ->count();
+                           
 
     	// Subject to change
     	$approvedSalesOrder = DB::table('SalesOrders')
                                 ->where('SalesOrders.SalesOrderStatusID','2')
-    							->count('SalesOrders.SalesOrderID');
+    							->count();
 
     
     	$pendingDeliveryReceipts = DB::table('SalesDeliveryReceipts')

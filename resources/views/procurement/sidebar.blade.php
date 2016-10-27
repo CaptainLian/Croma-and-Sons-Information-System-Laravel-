@@ -1,43 +1,43 @@
 <li>
 	<a @if($active == 'Dashboard') class="active" @endif href="\procurement\dashboard">
-	<i class="fa fa-dashboard"></i>
-	<span>Dashboard</span>
+		<i class="fa fa-dashboard"></i>
+		<span>Dashboard</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseOrder') class="active" @endif href="\procurement\PurchaseOrder">
-	<i class="fa fa-file-text"></i>
-	<span>Create Purchase Order</span>
+	<a @if($active == 'PurchaseOrder') class="active" @endif href="\procurement\CreatePurchaseOrder">
+		<i class="fa fa-file-text"></i>
+		<span>Create Purchase Order</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'DeliveryReceipt') class="active" @endif href="ProcurementDeliveryReceiptInitial.html">
-	<i class="fa fa-file-text"></i>
-	<span>Encode Supplier Delivery Receipt</span>
+	<a @if($active == 'DeliveryReceipt') class="active" @endif href="\procurement\DeliveryReceipt">
+		<i class="fa fa-file-text"></i>
+		Encode Supplier Delivery Receipt
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseList') class="active" @endif href="ProcurementPurchaseList.html">
-	<i class="fa fa-file-text"></i>
-	<span>Purchase List</span>
+	<a @if($active == 'PurchaseList') class="active" @endif href="\procurement\PurchaseList">
+		<i class="fa fa-file-text"></i>
+		<span>Purchase List</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'SupplierList') class="active"@endif href="ProcurementSupplierList.html">
-	<i class="fa fa-file-text"></i>
-	<span>Supplier List</span>
+	<a @if($active == 'SupplierList') class="active"@endif href="\procurement\SupplierList">
+		<i class="fa fa-file-text"></i>
+		<span>Supplier List</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseReport') class="active" @endif href="ProcurementPurchaseReport.html">
-	<i class="fa fa-file"></i>
-	<span>Purchase Report</span>
+	<a @if($active == 'PurchaseReport') class="active" @endif href="\procurement\PurchaseReport">
+		<i class="fa fa-file"></i>
+		<span>Purchase Report</span>
 	</a>
 </li>
 <li>
-	<a @if($active == 'ProductPurchaseReport') class="active" @endif href="ProcurementProductPurchaseReport.html">
-	<i class="fa fa-file-text"></i>
-	<span>Product Purchase Report</span>
+	<a @if($active == 'ProductPurchaseReport') class="active" @endif href="\procurement\ProductPurchaseReport">
+		<i class="fa fa-file-text"></i>
+		<span><font size="2.2%">Product Purchase Report</font></span>
 	</a>
 </li>
 
