@@ -57,7 +57,6 @@ Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 		return view('sales.SII');
 	});
 
-	require_once 'Lian.php';
+Route::post('sales/salesOrder/create','SalesOrder@create');
 
-
-/*Routes::post('/sales','SalesOrder@check');*/
+require_once 'Lian.php';
