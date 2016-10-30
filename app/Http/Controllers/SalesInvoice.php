@@ -25,7 +25,14 @@ class SalesInvoice extends Controller
     		 ]);
     }
     public function create($id){
-
-    	return view('sales.SI',['active' => 'si']);
+        $w = DB::table('SalesDeliveryReceipts')
+               ->select('SalesOrderID')
+               ->where('SalesDeliveryReceiptID',$id);
+        $so=DB::table('SalesOrders')
+              ->where('SalesOrderID',$w); 
+         print_r($so);
+    	/*return view('sales.SI',
+            ['active' => 'si',
+             'so' => $so]);*/
     }
 }

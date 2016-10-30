@@ -17,13 +17,18 @@
 
 		Route::get('salesOrder','SalesOrder@index');
 
-		Route::get('deliveryReceiptInitial','SalesOrderList@index');
 
-		Route::get('createDeliveryReceipt/{salesOrderID}','SalesOrderList@create');
-		Route::post('deliveryReceiptInitial','SalesOrderList@post');
+Route::post('sales/salesOrder/check','SalesOrder@check'); 
 
-		Route::get('catalog','SalesCatalog@index');
+Route::post('sales/salesOrder/create','SalesOrder@create');
 
+
+
+Route::get('/sales/deliveryReceiptInitial','SalesOrderList@index');
+
+Route::get('/sales/createDeliveryReceipt/{salesOrderID}','SalesOrderList@create');
+
+Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 
 		Route::get('invoice','SalesInvoice@list');
 
@@ -54,4 +59,5 @@
 
 	require_once 'Lian.php';
 
-?>
+
+/*Routes::post('/sales','SalesOrder@check');*/
