@@ -30,7 +30,7 @@ class SalesInvoice extends Controller
                ->select('SalesOrderID')
                ->where('SalesDeliveryReceiptID',$id);
         $so=DB::table('SalesOrders')
-              ->where('SalesOrderID',$w);
+              ->where('SalesOrderID',$w); 
          print_r($so);
     	/*return view('sales.SI',
             ['active' => 'si',
