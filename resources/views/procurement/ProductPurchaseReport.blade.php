@@ -41,10 +41,11 @@ Product Purchase Report
 												<tr>
 													<th>Material</th>
 													<th>Size (TxWxL)</th>
-													<th>Quantity Purchased</th>
+													<th>Quantity Delivered</th>
 													<th>Quantity Rejected</th>
-													<th>Amount Purchased (Php)</th>
+													<th>Total Quantity</th>
 													<th>Amount Rejected (Php)</th>
+													<th>Amount Purchased (Php)</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -52,12 +53,13 @@ Product Purchase Report
 												
 												@foreach($weekly as $item)
 													<tr>
-														<td>{!! $item->Material !!}</td>
-														<td>{!! $item->Size !!}</td>
-														<td>{!! $item->PurchasedQuantity !!}</td>
-														<td>{!! $item->RejectedQuantity !!}</td>
-														<td>{!! $item->PurchasedAmount !!}</td>
-														<td>{!! $item->RejectedAmount !!}</td>
+														<td align="center">{!! $item->Material !!}</td>
+														<td align="center">{!! $item->Size !!}</td>
+														<td align="right">{!! $item->QuantityOrdered !!}</td>
+														<td align="right">{!! $item->QuantityRejected !!}</td>
+														<td align="right">{!! $item->TotalQuantity !!}</td>
+														<td align="right">{!! $item->AmountRejected !!}</td>
+														<td align="right">{!! $item->AmountPurchased !!}</td>
 													</tr>
 												@endforeach
 											</tbody>
@@ -86,21 +88,23 @@ Product Purchase Report
 												<tr>
 													<th>Material</th>
 													<th>Size (TxWxL)</th>
-													<th>Quantity Purchased</th>
+													<th>Quantity Delivered</th>
 													<th>Quantity Rejected</th>
-													<th>Amount Purchased (Php)</th>
+													<th>Total Quantity</th>
 													<th>Amount Rejected (Php)</th>
+													<th>Amount Purchased (Php)</th>
 												</tr>
 											</thead>
 											<tbody>
 												@foreach($monthly as $item)
 													<tr>
-														<td>{!! $item->Material !!}</td>
-														<td>{!! $item->Size !!}</td>
-														<td>{!! $item->PurchasedQuantity !!}</td>
-														<td>{!! $item->RejectedQuantity !!}</td>
-														<td>{!! $item->PurchasedAmount !!}</td>
-														<td>{!! $item->RejectedAmount !!}</td>
+														<td align="center">{!! $item->Material !!}</td>
+														<td align="center">{!! $item->Size !!}</td>
+														<td align="right">{!! $item->QuantityOrdered !!}</td>
+														<td align="right">{!! $item->QuantityRejected !!}</td>
+														<td align="right">{!! $item->TotalQuantity !!}</td>
+														<td align="right">{!! $item->AmountRejected !!}</td>
+														<td align="right">{!! $item->AmountPurchased !!}</td>
 													</tr>
 												@endforeach
 											</tbody>
@@ -129,21 +133,23 @@ Product Purchase Report
 												<tr>
 													<th>Material</th>
 													<th>Size (TxWxL)</th>
-													<th>Quantity Purchased</th>
+													<th>Quantity Delivered</th>
 													<th>Quantity Rejected</th>
-													<th>Amount Purchased (Php)</th>
+													<th>Total Quantity</th>
 													<th>Amount Rejected (Php)</th>
+													<th>Amount Purchased (Php)</th>
 												</tr>
 											</thead>
 											<tbody>
 												@foreach($yearly as $item)
 													<tr>
-														<td>{!! $item->Material !!}</td>
-														<td>{!! $item->Size !!}</td>
-														<td>{!! $item->PurchasedQuantity !!}</td>
-														<td>{!! $item->RejectedQuantity !!}</td>
-														<td>{!! $item->PurchasedAmount !!}</td>
-														<td>{!! $item->RejectedAmount !!}</td>
+														<td align="center">{!! $item->Material !!}</td>
+														<td align="center">{!! $item->Size !!}</td>
+														<td align="right">{!! $item->QuantityOrdered !!}</td>
+														<td align="right">{!! $item->QuantityRejected !!}</td>
+														<td align="right">{!! $item->TotalQuantity !!}</td>
+														<td align="right">{!! $item->AmountRejected !!}</td>
+														<td align="right">{!! $item->AmountPurchased !!}</td>
 													</tr>
 												@endforeach
 											</tbody>

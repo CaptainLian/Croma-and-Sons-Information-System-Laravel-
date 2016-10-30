@@ -131,9 +131,9 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 
 							<td>{!!$item->Quantity!!}</td>
 
-							<td><input type="number" min=0 required name="QuantityRejected[]" value={!!$item->Quantity!!} /></td>
+							<td><input type="number" min=0 required name="QuantityReceived[]" value={!!$item->Quantity!!} /></td>
 
-							<td><input type="number" min=0 required name="QuantityReceived[]" value=0 /></td>
+							<td><input type="number" min=0 required name="QuantityRejected[]" value=0 /></td>
 
 							<td>{!!$item->BoardFeet!!}</td>
 

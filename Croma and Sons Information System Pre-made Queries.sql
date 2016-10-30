@@ -78,5 +78,69 @@ SELECT PendingPO.PurchaseOrderID AS POID, PendingPO.DateCreated AS DateCreated, 
 							
 SELECT SupplierID AS Supplier, WoodTypeID, Thickness, Width, Length, MIN(CurrentPrice) AS CheapestPrice
 FROM SupplierPrices
-GROUP BY 1, WoodTypeID, Thickness, Width, Length;						
+GROUP BY 1, WoodTypeID, Thickness, Width, Length;	
+
+
+
+SELECT *
+FROM Suppliers;					
+
+SELECT * 
+  FROM PurchaseDeliveryReceipts DR JOIN PurchaseDeliveryItems DRI
+									 ON DR.PurchaseDeliveryReceiptID = DRI.PurchaseDeliveryReceiptID;
+-- Material	Size	Quantity Purchased	Quantity Rejected	Amount Purchased	Amount Rejected
+
+SELECT *
+FROM (SELECT *
+	   FROM PurchaseOrders
+	  WHERE PurchaseOrderID IN (SELECT DISTINCT PurchaseOrderID
+								  FROM PurchaseDeliveryItems)) PO JOIN (SELECT *
+																		  FROM PurchaseDeliveryItems
+																		 WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+																											   FROM PurchaseDeliveryReceipts
+																											  WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))) DR
+																	ON PO.PurchaseOrderID = DR.PurchaseOrderID
+;
+
+
+-- PRODUCT PURCHASE REPORT
+
+-- Weekly
+SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
+FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
+	    FROM PurchaseDeliveryItems 
+	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										     FROM PurchaseDeliveryReceipts
+										    WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
+                                          
+     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
+														 ON DR.WoodTypeID = wt.WoodTypeID;
+
+SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
+FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
+	    FROM PurchaseDeliveryItems 
+	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										     FROM PurchaseDeliveryReceipts
+										    WHERE YEAR(DateDelivered) = YEAR(CURDATE())
+											  AND MONTH(DateDelivered) = MONTH(CURDATE()))
+                                          
+     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
+														 ON DR.WoodTypeID = wt.WoodTypeID;
+
+SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
+FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
+	    FROM PurchaseDeliveryItems 
+	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										     FROM PurchaseDeliveryReceipts
+										    WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
+                                          
+     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
+														 ON DR.WoodTypeID = wt.WoodTypeID;
+                                                         
+
+
+
+
+
+
 
