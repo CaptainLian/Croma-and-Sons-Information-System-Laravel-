@@ -6,6 +6,7 @@ Procurement Dashboard
 
 @push('css')
 	<link href="/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="/css/highchars.css" />
 @endpush
 
 @section('sidebar')
@@ -52,24 +53,15 @@ Procurement Dashboard
 		<div class="row">
 			<div class="col-lg-6">
 				<section class="panel">
-					<header class="panel-heading">
-						<div class="row"> 
-							<h3>Reject vs Total Purchases</h3>
-						</div>
-						<font size="2%" align="center">(of current month: <u>{!!date('F')!!}</u>)</font>
-					</header>
 					<div class="panel-body">
-						<div id="graph2" class="chart"></div>
+						<div id="graph1"></div>
 					</div>
 				</section>
 			</div>
 			<div class="col-lg-6">
 				<section class="panel">
-					<header class="panel-heading">
-						<h3>Monthly Procurement</h3>
-					</header>
 					<div class="panel-body">
-						<div id="chart-2" class="chart"></div>
+						<div id="graph2" class="chart"></div>
 					</div>
 				</section>
 			</div>
@@ -80,48 +72,181 @@ Procurement Dashboard
 @endsection
 
 @push('javascript')
-	<script>
-		var failed  = 30;
-		var success = 50;
+	<script src="/js/highcharts.js"></script>
+	<script src="/modules/exporting.js"></script>
+	<script src="/modules/data.js"></script>
+	<script src="/modules/drilldown.js"></script>
 
-		var data = [
-            {
-                label: "United States",
-                data: [[1990, 18.9], [1991, 18.7], [1992, 18.4], [1993, 19.3], [1994, 19.5], [1995, 19.3], [1996, 19.4], [1997, 20.2], [1998, 19.8], [1999, 19.9], [2000, 20.4], [2001, 20.1], [2002, 20.0], [2003, 19.8], [2004, 20.4]]
-            },
-            {
-                label: "Germany",
-                data: [[1990, 12.4], [1991, 11.2], [1992, 10.8], [1993, 10.5], [1994, 10.4], [1995, 10.2], [1996, 10.5], [1997, 10.2], [1998, 10.1], [1999, 9.6], [2000, 9.7], [2001, 10.0], [2002, 9.7], [2003, 9.8], [2004, 9.79]]
-            },
-            {
-                label: "Denmark",
-                data: [[1990, 9.7], [1991, 12.1], [1992, 10.3], [1993, 11.3], [1994, 11.7], [1995, 10.6], [1996, 12.8], [1997, 10.8], [1998, 10.3], [1999, 9.4], [2000, 8.7], [2001, 9.0], [2002, 8.9], [2003, 10.1], [2004, 9.80]]
-            },
-            {
-                label: "Sweden",
-                data: [[1990, 5.8], [1991, 6.0], [1992, 5.9], [1993, 5.5], [1994, 5.7], [1995, 5.3], [1996, 6.1], [1997, 5.4], [1998, 5.4], [1999, 5.1], [2000, 5.2], [2001, 5.4], [2002, 6.2], [2003, 5.9], [2004, 5.89],]
-            },
-           
-        ];
+	<script >
+		$(function () {
+		    // Create the chart
+		    Highcharts.chart('graph1', {
+		        chart: {
+		            type: 'pie'
+		        },
+		        title: {
+		            text: 'Browser market shares. January, 2015 to May, 2015'
+		        },
+		        subtitle: {
+		            text: 'Click the slices to view versions. Source: netmarketshare.com.'
+		        },
+		        plotOptions: {
+		            series: {
+		                dataLabels: {
+		                    enabled: true,
+		                    format: '{point.name}: {point.y:.1f}%'
+		                }
+		            }
+		        },
 
+		        tooltip: {
+		            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+		        },
+		        series: [{
+		            name: 'Brands',
+		            colorByPoint: true,
+		            data: [{
+		                name: 'Microsoft Internet Explorer',
+		                y: 56.33,
+		                drilldown: 'Microsoft Internet Explorer'
+		            }, {
+		                name: 'Chrome',
+		                y: 24.03,
+		                drilldown: 'Chrome'
+		            }, {
+		                name: 'Firefox',
+		                y: 10.38,
+		                drilldown: 'Firefox'
+		            }, {
+		                name: 'Safari',
+		                y: 4.77,
+		                drilldown: 'Safari'
+		            }, {
+		                name: 'Opera',
+		                y: 0.91,
+		                drilldown: 'Opera'
+		            }, {
+		                name: 'Proprietary or Undetectable',
+		                y: 0.2,
+		                drilldown: null
+		            }]
+		        }],
+		        drilldown: {
+		            series: [{
+		                name: 'Microsoft Internet Explorer',
+		                id: 'Microsoft Internet Explorer',
+		                data: [
+		                    ['v11.0', 24.13],
+		                    ['v8.0', 17.2],
+		                    ['v9.0', 8.11],
+		                    ['v10.0', 5.33],
+		                    ['v6.0', 1.06],
+		                    ['v7.0', 0.5]
+		                ]
+		            }, {
+		                name: 'Chrome',
+		                id: 'Chrome',
+		                data: [
+		                    ['v40.0', 5],
+		                    ['v41.0', 4.32],
+		                    ['v42.0', 3.68],
+		                    ['v39.0', 2.96],
+		                    ['v36.0', 2.53],
+		                    ['v43.0', 1.45],
+		                    ['v31.0', 1.24],
+		                    ['v35.0', 0.85],
+		                    ['v38.0', 0.6],
+		                    ['v32.0', 0.55],
+		                    ['v37.0', 0.38],
+		                    ['v33.0', 0.19],
+		                    ['v34.0', 0.14],
+		                    ['v30.0', 0.14]
+		                ]
+		            }, {
+		                name: 'Firefox',
+		                id: 'Firefox',
+		                data: [
+		                    ['v35', 2.76],
+		                    ['v36', 2.32],
+		                    ['v37', 2.31],
+		                    ['v34', 1.27],
+		                    ['v38', 1.02],
+		                    ['v31', 0.33],
+		                    ['v33', 0.22],
+		                    ['v32', 0.15]
+		                ]
+		            }, {
+		                name: 'Safari',
+		                id: 'Safari',
+		                data: [
+		                    ['v8.0', 2.56],
+		                    ['v7.1', 0.77],
+		                    ['v5.1', 0.42],
+		                    ['v5.0', 0.3],
+		                    ['v6.1', 0.29],
+		                    ['v7.0', 0.26],
+		                    ['v6.2', 0.17]
+		                ]
+		            }, {
+		                name: 'Opera',
+		                id: 'Opera',
+		                data: [
+		                    ['v12.x', 0.34],
+		                    ['v28', 0.24],
+		                    ['v27', 0.17],
+		                    ['v29', 0.16]
+		                ]
+		            }]
+		        }
+		    });
+		});
+
+
+		$(function () {
+		    Highcharts.chart('graph2', {
+		        title: {
+		            text: 'Monthly Total Purchases in Pesos',
+		            x: -20 //center
+		        },
+		        xAxis: {
+		            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+		                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'Purchases (Php)'
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }]
+		        },
+		        tooltip: {
+		            valueSuffix: 'Pesos'
+		        },
+		        legend: {
+		            layout: 'vertical',
+		            align: 'right',
+		            verticalAlign: 'middle',
+		            borderWidth: 0
+		        },
+		        series: [{
+		            name: 'Purchases',
+		            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+		        }]
+		    });
+		});
 	</script>
-	<script src="/assets/chart-master/Chart.js"></script>
-	<!--right slidebar-->
-	
-	<script src="/assets/flot/jquery.flot.js"></script>
-	<script src="/assets/flot/jquery.flot.resize.js"></script>
-	<script src="/assets/flot/jquery.flot.pie.js"></script>
-	<script src="/assets/flot/jquery.flot.stack.js"></script>
-	<script src="/assets/flot/jquery.flot.crosshair.js"></script>
-	<!--script for this page-->
-	<script src="/js/count.js"></script>
-	<script src="/js/flot-chart2.js"></script>
 
-	
+	<!--
 	<script>
 		//custom select box    
         $(function(){
             $('select.styled').customSelect();
         });
 	</script>
+
+	-->
 @endpush

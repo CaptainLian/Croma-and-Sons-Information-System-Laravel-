@@ -61,6 +61,11 @@
                         mConfig = merge(pane.defaultBackgroundOptions, config);
 
 
+                        if (config.backgroundColor) {
+                            mConfig.backgroundColor = config.backgroundColor;
+                        }
+                        mConfig.color = mConfig.backgroundColor; // due to naming in plotBands
+
 
                         firstAxis.options.plotBands.unshift(mConfig);
                         axisUserOptions.plotBands = axisUserOptions.plotBands || []; // #3176
@@ -88,6 +93,21 @@
             defaultBackgroundOptions: {
                 className: 'highcharts-pane',
                 shape: 'circle',
+
+                borderWidth: 1,
+                borderColor: '#cccccc',
+                backgroundColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, '#ffffff'],
+                        [1, '#e6e6e6']
+                    ]
+                },
 
                 from: -Number.MAX_VALUE, // corrected to axis min
                 innerRadius: 0,
@@ -703,11 +723,13 @@
          */
         seriesType('arearange', 'area', {
 
+            lineWidth: 1,
+
             marker: null,
             threshold: null,
             tooltip: {
 
-                pointFormat: '<span class="highcharts-color-{series.colorIndex}">\u25CF</span> {series.name}: <b>{point.low}</b> - <b>{point.high}</b><br/>'
+                pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: <b>{point.low}</b> - <b>{point.high}</b><br/>' // eslint-disable-line no-dupe-keys
 
             },
             trackByArea: true,
@@ -1147,7 +1169,11 @@
                 borderRadius: 3,
                 crop: false,
                 verticalAlign: 'top',
-                zIndex: 2
+                zIndex: 2,
+
+                // Presentational
+                borderWidth: 1,
+                borderColor: '#cccccc'
 
             },
             dial: {
@@ -1157,10 +1183,18 @@
                 // baseLength: '70%' // of radius
                 // rearLength: '10%'
 
+                // backgroundColor: '#000000',
+                // borderColor: '#cccccc',
+                // borderWidth: 0
+
 
             },
             pivot: {
-                //radius: 5
+                //radius: 5,
+
+                //borderWidth: 0
+                //borderColor: '#cccccc',
+                //backgroundColor: '#000000'
 
             },
             tooltip: {
@@ -1268,6 +1302,13 @@
                             .add(series.group);
 
 
+                        // Presentational attributes
+                        point.graphic.attr({
+                            stroke: dialOptions.borderColor || 'none',
+                            'stroke-width': dialOptions.borderWidth || 0,
+                            fill: dialOptions.backgroundColor || '#000000'
+                        });
+
                     }
                 });
 
@@ -1286,6 +1327,13 @@
                         .translate(center[0], center[1])
                         .add(series.group);
 
+
+                    // Presentational attributes
+                    series.pivot.attr({
+                        'stroke-width': pivotOptions.borderWidth || 0,
+                        stroke: pivotOptions.borderColor || '#cccccc',
+                        fill: pivotOptions.backgroundColor || '#000000'
+                    });
 
                 }
             },
@@ -1379,7 +1427,7 @@
             threshold: null,
             tooltip: {
 
-                pointFormat: '<span class="highcharts-color-{point.colorIndex}">\u25CF</span> <b> {series.name}</b><br/>' +
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {series.name}</b><br/>' + // eslint-disable-line no-dupe-keys
                     'Maximum: {point.high}<br/>' +
                     'Upper quartile: {point.q3}<br/>' +
                     'Median: {point.median}<br/>' +
@@ -1388,6 +1436,22 @@
 
             },
             whiskerLength: '50%',
+
+            fillColor: '#ffffff',
+            lineWidth: 1,
+            //medianColor: null,
+            medianWidth: 2,
+            states: {
+                hover: {
+                    brightness: -0.3
+                }
+            },
+            //stemColor: null,
+            //stemDashStyle: 'solid'
+            //stemWidth: null,
+
+            //whiskerColor: null,
+            whiskerWidth: 2
 
 
             // Prototype members
@@ -1398,6 +1462,20 @@
             },
             pointValKey: 'high', // defines the top of the tracker
 
+
+            /**
+             * Get presentational attributes
+             */
+            pointAttribs: function(point) {
+                var options = this.options,
+                    color = (point && point.color) || this.color;
+
+                return {
+                    'fill': point.fillColor || options.fillColor || color,
+                    'stroke': options.lineColor || color,
+                    'stroke-width': options.lineWidth || 0
+                };
+            },
 
 
             /**
@@ -1459,6 +1537,12 @@
                         shapeArgs = point.shapeArgs; // the box
 
 
+                    var boxAttr,
+                        stemAttr = {},
+                        whiskersAttr = {},
+                        medianAttr = {},
+                        color = point.color || series.color;
+
 
                     if (point.plotY !== undefined) {
 
@@ -1494,6 +1578,32 @@
                                 .addClass('highcharts-boxplot-median')
                                 .add(graphic);
 
+
+
+
+                            // Stem attributes
+                            stemAttr.stroke = point.stemColor || options.stemColor || color;
+                            stemAttr['stroke-width'] = pick(point.stemWidth, options.stemWidth, options.lineWidth);
+                            stemAttr.dashstyle = point.stemDashStyle || options.stemDashStyle;
+                            point.stem.attr(stemAttr);
+
+                            // Whiskers attributes
+                            if (whiskerLength) {
+                                whiskersAttr.stroke = point.whiskerColor || options.whiskerColor || color;
+                                whiskersAttr['stroke-width'] = pick(point.whiskerWidth, options.whiskerWidth, options.lineWidth);
+                                point.whiskers.attr(whiskersAttr);
+                            }
+
+                            if (doQuartiles) {
+                                boxAttr = series.pointAttribs(point);
+                                point.box.attr(boxAttr);
+                            }
+
+
+                            // Median attributes
+                            medianAttr.stroke = point.medianColor || options.medianColor || color;
+                            medianAttr['stroke-width'] = pick(point.medianWidth, options.medianWidth, options.lineWidth);
+                            point.medianShape.attr(medianAttr);
 
 
                         }
@@ -1617,6 +1727,8 @@
          *****************************************************************************/
         seriesType('errorbar', 'boxplot', {
 
+            color: '#000000',
+
             grouping: false,
             linkedTo: ':previous',
             tooltip: {
@@ -1680,6 +1792,16 @@
             dataLabels: {
                 inside: true
             },
+
+            lineWidth: 1,
+            lineColor: '#333333',
+            dashStyle: 'dot',
+            borderColor: '#333333',
+            states: {
+                hover: {
+                    lineWidthPlus: 0 // #3126
+                }
+            }
 
 
             // Prototype members
@@ -1842,6 +1964,28 @@
             },
 
 
+            /**
+             * Postprocess mapping between options and SVG attributes
+             */
+            pointAttribs: function(point, state) {
+
+                var upColor = this.options.upColor,
+                    attr;
+
+                // Set or reset up color (#3710, update to negative)
+                if (upColor && !point.options.color) {
+                    point.color = point.y > 0 ? upColor : null;
+                }
+
+                attr = seriesTypes.column.prototype.pointAttribs.call(this, point, state);
+
+                // The dashStyle option in waterfall applies to the graph, not
+                // the points
+                delete attr.dashstyle;
+
+                return attr;
+            },
+
 
             /**
              * Return an empty path initially, because we need to know the stroke-width in order 
@@ -1980,6 +2124,8 @@
             },
             drawGraph: function() {
 
+                this.options.fillColor = this.color; // Hack into the fill logic in area.drawGraph
+
                 seriesTypes.area.prototype.drawGraph.call(this);
             },
             drawLegendSymbol: LegendSymbolMixin.drawRectangle,
@@ -2024,6 +2170,10 @@
             // displayNegative: true,
             marker: {
 
+                // fillOpacity: 0.5,
+                lineColor: null, // inherit from series.color
+                lineWidth: 1,
+
                 // Avoid offset in Point.setState
                 radius: null,
                 states: {
@@ -2060,6 +2210,18 @@
             zoneAxis: 'z',
             markerAttribs: null,
 
+
+            pointAttribs: function(point, state) {
+                var markerOptions = this.options.marker,
+                    fillOpacity = pick(markerOptions.fillOpacity, 0.5),
+                    attr = Series.prototype.pointAttribs.call(this, point, state);
+
+                if (fillOpacity !== 1) {
+                    attr.fill = color(attr.fill).setOpacity(fillOpacity).get('rgba');
+                }
+
+                return attr;
+            },
 
 
             /**
