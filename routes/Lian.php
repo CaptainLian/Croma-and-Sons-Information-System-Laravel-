@@ -9,8 +9,7 @@ Route::post('/', ['as' => 'LoginValidation', 'uses' => 'LoginController@validate
 Route::get('/sales/dashboard', ['as' => 'SalesDashboard', 
 							  'uses' => 'BusinessControllers\SalesPageController@viewDashboard']);
 
-Route::get('/inventory/dashboard', ['as' => 'InventoryDashboard', 
-							      'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
+
 
 Route::get('/admin/dashboard', ['as' => 'InventoryDashboard', 
 							      'uses' => 'BusinessControllers\AdminPageController@viewDashboard']);
@@ -44,4 +43,9 @@ Route::group(['prefix' => 'procurement'], function(){
 
 	Route::post('CreateDeliveryReceipt', ['as' => 'DeliveryReceiptInput', 'uses' => 'BusinessControllers\ProcurementFormController@inputDeliveryReceipt']);
 });
+
+Route::group(['prefix' => 'inventory'], function(){
+	Route::get('dashboard', ['as' => 'InventoryDashboard', 'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
+});
+
 ?>
