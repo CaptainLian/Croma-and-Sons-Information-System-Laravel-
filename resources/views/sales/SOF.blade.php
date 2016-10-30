@@ -37,40 +37,9 @@
 
 	</div>
 </div>
-
-<div class="row">
-  <div class="form-group">
-
-   {!! Form::label('address','Address',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
-
-   <div class="col-sm-3">
-
-    {!! Form::text('address',null,['class' => 'form-control'])!!}
-
-  </div>
-</div>
-
-</div>
-<br>
-
-
-<div class="row">
-  <div class="form-group">
-
-   {!! Form::label('delivery-address','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
-   <div class="col-sm-3">
-    {!! Form::text('delivery-address',null,['class' => 'form-control'])!!}
-  </div>
-</div>
-
-</div>
-
-
-<br>
-
 <div class="row">
 
-  {!! Form::label('terms','Terms',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+{!! Form::label('terms','Payment Terms',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
   <div class="col-sm-3">
    {!! Form::select('terms',$terms,null,
    ['class' => 'form-control m-bot15']) !!}
@@ -97,6 +66,40 @@
 </div>
 </div>
 </div>
+<!-- 
+<div class="row">
+  <div class="form-group">
+
+   {!! Form::label('address','Address',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+
+   <div class="col-sm-3">
+
+    {!! Form::text('address',null,['class' => 'form-control'])!!}
+
+  </div>
+</div>
+
+</div> -->
+<br>
+
+
+<div class="row">
+  <div class="form-group">
+
+   {!! Form::label('delivery-address','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+   <div class="col-sm-3">
+    {!! Form::text('delivery-address',null,['class' => 'form-control'])!!}
+  </div>
+</div>
+
+</div>
+
+
+<br>
+
+
+
+
 
 
 
@@ -124,28 +127,28 @@
   <div class="col-lg-4 col-sm-4">
     <h4>SALES ORDER INFORMATION</h4>
     <ul class="unstyled">
-     
-      </li>
-      <li>Order Date : <strong>{{$now}} </strong></li>
-      <li>Prepared By : <strong>John Fisher</strong></li>
-    </ul>
-  </div>
+
+    </li>
+    <li>Order Date : <strong>{{$now}} </strong></li>
+    <li>Prepared By : <strong>John Fisher</strong></li>
+  </ul>
+</div>
 
 </div>
 
 <section class="panel">
   <header class="panel-heading">
    Orders
-  </header>
-  <div class="panel-body">
-    <div class="adv-table editable-table ">
-      <div class="clearfix">
-        <div class="btn-group">
-          <button id="editable-sample_new" class="btn green">
-            Add New <i class="fa fa-plus"></i>
-          </button>
-        </div>
-        
+ </header>
+ <div class="panel-body">
+  <div class="adv-table editable-table ">
+    <div class="clearfix">
+      <div class="btn-group">
+        <button id="editable-sample_new" class="btn green">
+          Add New <i class="fa fa-plus"></i>
+        </button>
+      </div>
+
       <div class="space15"></div>
 
       <div class="table-responsive">
@@ -160,57 +163,50 @@
               <th>Unit</th>
 
               <th>Unit Price</th>
-              <th>Discount</th>
-              <th>Amount</th>              
+                      
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr class="">
               <td>
-                
+
               </td>
               <td>
-              
 
-             </td>
-             <td>
-             
 
-            </td>
-            <td>
-             
+              </td>
+              <td>
 
-           </td>
-           <td>
+
+              </td>
+              <td>
+
+
+              </td>
+              <td>
+
+
+              </td>
+              <td>
+
+
+
+              </td>
+
+              <td>
+
+              </td>
+              <td>
+
+              </td>
             
-
-           </td>
-           <td>
-             
-
-
-           </td>
-
-           <td>
-             
-           </td>
-           <td>
-            
-           </td>
-           <td>
-            
-           </td>
-
-           <td>
-
-           </td>
-         </tr>
-       </tbody>
-     </table>
-   </div>
- </div>
-</div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>
 
 
@@ -218,10 +214,10 @@
 <div class="row">
   <div class="col-lg-4 invoice-block pull-right">
     <ul class="unstyled amounts">
-      <li><strong>Sub - Total amount :</strong> $6820</li>
-      <li><strong>Discount :</strong> 10%</li>
+      <li><strong>Sub - Total amount :</strong> <a id='sub'></a></li>
+      <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',null,['style'=>'width:40px', 'id' => 'dis']) !!}</li>
       <li><strong>VAT :</strong> -----</li>
-      <li><strong>Grand Total :</strong> $6138</li>
+      <li ><strong> Total : </strong><a id="tot"></a></li>
     </ul>
   </div>
 </div>
@@ -229,7 +225,8 @@
 <div class="text-center invoice-btn">
   {!! Form::button('Submit Sales Form',[
   "class" => 'btn btn-danger btn-lg fa fa-check',
-  'type' => 'submit']) !!}  
+  'type' => 'submit',
+  'style' => 'font-weight:100;font-size:16px;font-family:FontAwesome']) !!}  
 
 
 </div>

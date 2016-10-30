@@ -16,12 +16,17 @@ Route::get('/sales/home','Dashboard@index');
 
 Route::get('/sales/salesOrder','SalesOrder@index');
 
- 
+
+Route::post('sales/salesOrder/check','SalesOrder@check'); 
+
+Route::post('sales/salesOrder/create','SalesOrder@create');
+
 
 
 Route::get('/sales/deliveryReceiptInitial','SalesOrderList@index');
 
 Route::get('/sales/createDeliveryReceipt/{salesOrderID}','SalesOrderList@create');
+
 Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 
 Route::get('/sales/catalog','SalesCatalog@index');
@@ -50,4 +55,6 @@ Route::get('/try',function(){
 	return view('sales.SII');
 });
 
-Route::post('sales/salesOrder/create','SalesOrder@create');
+
+
+/*Routes::post('/sales','SalesOrder@check');*/

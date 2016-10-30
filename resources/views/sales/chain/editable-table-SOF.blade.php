@@ -18,17 +18,17 @@
 
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
+
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = "<select  class=\"form-control columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
-                jqTds[1].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="width[]" value="' + aData[2] + '">';
-                jqTds[3].innerHTML = '<input type="text" class="form-control columnAdjust9p" name="length[]" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<input type="text" class="form-control columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
+                jqTds[0].innerHTML = "<select  class=\"form-control material columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
+                jqTds[1].innerHTML = '<input type="text" class="form-control thickness columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
+                jqTds[2].innerHTML = '<input type="text" class="form-control width columnAdjust9p" name="width[]" value="' + aData[2] + '">';
+                jqTds[3].innerHTML = '<input type="text" class="form-control length columnAdjust9p" name="length[]" value="' + aData[3] + '">';
+                jqTds[4].innerHTML = '<input type="text" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
                 jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<input type="text" class="form-control columnAdjust9p"  name="unitprice[]" value="' + aData[6] + '">';
-                jqTds[7].innerHTML = '<input type="text" class="form-control disc columnAdjust9p" name="discount[]" name="" value="' + aData[7] + '">';  
-                jqTds[8].innerHTML = '<input type="text" class="form-control amt columnAdjust9p" disabled="" placeholder=\'\' name="amount[]" value="' + aData[8] + '">';
-                jqTds[9].innerHTML = '<a class="delete" href="#">Cancel</a>';
+                jqTds[6].innerHTML = '<input type="text" class="form-control price columnAdjust9p"  name="unitprice[]" value="' + aData[6] + '">';
+               
+                jqTds[7].innerHTML = '<a class="delete" href="#">Cancel</a>';
             }
 
             function saveRow(oTable, nRow) {
@@ -40,9 +40,8 @@
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
                 oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
-                oTable.fnUpdate(jqInputs[7].value, nRow, 7, false);
-                oTable.fnUpdate(jqInputs[8].value, nRow, 8, false);
-                oTable.fnUpdate('<a class="delete" href="#">Delete</a>', nRow, 9, false);
+               
+                oTable.fnUpdate('<a class="delete" href="#">Delete</a>', nRow, 7, false);
                 oTable.fnDraw();
             }
 
@@ -56,9 +55,8 @@
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
                 oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
-                oTable.fnUpdate(jqInputs[7].value, nRow, 7, false);
-                oTable.fnUpdate(jqInputs[8].value, nRow, 8, false);
-                oTable.fnUpdate('<a class="edit" href="#">Delete</a>', nRow, 9, false);
+                
+                oTable.fnUpdate('<a class="edit" href="#">Delete</a>', nRow, 7, false);
                 oTable.fnDraw();
             }
 
@@ -80,7 +78,7 @@
                         "sNext": "Next"
                     }
                 },
-                "aoColumnDefs": [{
+               /* "aoColumnDefs": [{
                     'bSortable': false,
                     'sWidth': "10%",
                     'aTargets': [0]
@@ -118,22 +116,12 @@
 
 
                     'sWidth': "9%",
-                    'aTargets': [7]
-                },{
-
-
-                    'sWidth': "9%",
-                    'aTargets': [8]
-                },{
-
-
-                    'sWidth': "9%",
                     'aTargets': [9]
                 }
 
                 
 
-                ]
+                ]*/
             });
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
