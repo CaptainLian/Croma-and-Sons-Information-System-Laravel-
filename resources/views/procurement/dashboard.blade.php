@@ -116,6 +116,8 @@ Procurement Dashboard
 	<!--script for this page-->
 	<script src="/js/count.js"></script>
 	<script src="/js/flot-chart2.js"></script>
+
+	
 	<script>
 		//custom select box    
         $(function(){
