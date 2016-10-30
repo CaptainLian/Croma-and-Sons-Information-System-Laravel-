@@ -34,19 +34,17 @@ class SalesOrderList extends Controller
                       ->where('CustomerID',$so[0]->CustomerID)
                       ->get();
 
-        $items = DB::table('SalesOrders')
-                  
-                   ->join('SalesOrderItems','SalesOrderItems.SalesOrderID','=','SalesOrders.SalesOrderID')
-                   ->join('CompanyInventory',function($join){
+        $items = DB::table('SalesOrderItems')
+                   ->leftJoin('CompanyInventory',function($join){
                          $join->on('SalesOrderItems.Thickness', '=', 'CompanyInventory.Thickness');
                             $join->on('SalesOrderItems.Width', '=', 'CompanyInventory.Width');
                             $join->on('SalesOrderItems.Length', '=', 'CompanyInventory.Length');
+                            $join->on('SalesOrderItems.WoodTypeID', '=', 'CompanyInventory.WoodTypeID');
                    })
                    ->join('REF_WoodTypes as REW','SalesOrderItems.WoodTypeID','=','REW.WoodTypeID')
-
+                   ->where('SalesOrderID',$salesID)
                    ->get();
 
-                  
         return view('sales.SDR',['active' => 'sdr',
             'so' => $so,
             'now' => $now,

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 class SalesInvoice extends Controller
 {
     public function list(){
+
     	$pd = DB::table('SalesDeliveryReceipts as SDR')
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
     			->join('Customers as C','C.CustomerID','=','SO.CustomerID')

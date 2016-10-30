@@ -150,7 +150,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @yield('material')                    
+                    @yield('materials')                    
                   </tbody>
                 </table>
                 <div class="row">
