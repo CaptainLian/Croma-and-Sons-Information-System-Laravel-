@@ -146,9 +146,7 @@
         $('#editable-sample tr').each(function(){
         if(ctrErr > 0){
           if(error[ctrErr - 1] == 'X'){
-            console.log(error[ctrErr]);
-            console.log('right');
-            console.log(ctrErr);
+            
             ctrVal = 0
             $(this).find('td').each(function(){
               if(ctrVal > -1 && ctrVal < 4){
@@ -157,10 +155,10 @@
                 }else{
                   $(this).addClass('has-success');
                 }
+              }else if(ctrVal == 5){
+
               }else if(ctrVal == 6){
-                console.log('pumask');
-                console.log(ctrErr);
-                console.log(prices[ctrErr-1][0]['CurrentUnitPrice']);
+                 
                 $(this).find('input').val(prices[ctrErr-1][0]['CurrentUnitPrice']);
               }
               ctrVal++;
@@ -171,9 +169,7 @@
               ctrVal++;
             });*/
           }else{
-            console.log(error[ctrErr]);
-            console.log('wrong');
-            console.log(ctrErr);
+            
             ctrVal = 0;
             $(this).find('td').each(function(){
               if(ctrVal > -1 && ctrVal < 4){
@@ -241,36 +237,39 @@
           }
 */
           $('#editable-sample').on('change','.quan',function(){
-              ctrVal = 0;
+              ctrVal = 0;           
               $('.quan').each(function(){
-                console.log('HMM');
-                console.log(stock);
-                console.log(stock[1][ctrVal]['StockQuantity']);
+               
+                /*console.log(stock);
+                console.log(stock.length);
+                console.log(stock[0]);*/
+                /*console.log(stock[ctrVal][0]['StockQuantity']);*/
                 console.log($(this).val());
-                if($(this).val() > parseInt(stock[1][ctrVal]['StockQuantity'])){
-                   
-                  if($(this).parent().hasClass('has-success')){
-                    
-                     $(this).removeClass('has-success').parent().addClass('has-error');
-                  }else{
-                    $(this).parent().addClass('has-error');
+                if(stock[ctrVal+1] instanceof Array){
+
+                   if($(this).val() > parseInt(stock[ctrVal+1][0]['StockQuantity'])){
+                    if($(this).parent().hasClass('has-success')){
+                      
+                       $(this).parent().removeClass('has-success').addClass('has-error');
+                    }else{
+                      $(this).parent().addClass('has-error');
                   }
+                  }else{
+                    
+                    if($(this).parent().hasClass('has-error')){
+                       $(this).parent().removeClass('has-error').addClass('has-success');
+                    }else{
+                      $(this).parent().addClass('has-success');
+                    }
 
 
-                }else{
-                  console.log('rome');
-                if($(this).parent().hasClass('has-error')){
-                   $(this).parent().removeClass('has-error').addClass('has-success');
-                }else{
-                  $(this).parent().addClass('has-success');
-                }
 
-
+                  }
 
                 }
 
                 ctrVal++;
-              });
+            });
           });
            $.ajax({
             type: "POST",

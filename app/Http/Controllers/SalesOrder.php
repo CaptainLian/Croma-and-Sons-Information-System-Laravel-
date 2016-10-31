@@ -144,7 +144,7 @@ class SalesOrder extends Controller
                  
                 array_push($error,$ctr);
                 array_push($prices,' ');
-                array_push($stock,' ');
+                array_push($stock,'-1');
             }
 
         }
