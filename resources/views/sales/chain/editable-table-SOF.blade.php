@@ -21,12 +21,12 @@
 
                 var jqTds = $('>td', nRow);
                 jqTds[0].innerHTML = "<select  class=\"form-control material columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
-                jqTds[1].innerHTML = '<input type="text" class="form-control thickness columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control width columnAdjust9p" name="width[]" value="' + aData[2] + '">';
-                jqTds[3].innerHTML = '<input type="text" class="form-control length columnAdjust9p" name="length[]" value="' + aData[3] + '">';
+                jqTds[1].innerHTML = '<input type="text" class="form-control thick columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
+                jqTds[2].innerHTML = '<input type="text" class="form-control wid columnAdjust9p" name="width[]" value="' + aData[2] + '">';
+                jqTds[3].innerHTML = '<input type="text" class="form-control len columnAdjust9p" name="length[]" value="' + aData[3] + '">';
                 jqTds[4].innerHTML = '<input type="text" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
                 jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<input type="text" class="form-control price columnAdjust9p"  name="unitprice[]" value="' + aData[6] + '">';
+                jqTds[6].innerHTML = '<input type="text" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';
                
                 jqTds[7].innerHTML = '<a class="delete" href="#">Cancel</a>';
             }
