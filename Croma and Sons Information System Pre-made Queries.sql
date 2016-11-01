@@ -163,3 +163,6 @@ SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.
 																					ON dr.PurchaseOrderID = po.PurchaseOrderID
 																				  JOIN Suppliers s
 																					ON s.SupplierID = po.SupplierID;
+                                                                                    
+                                                                                    
+SELECT CONCAT(YEAR('2016-01-01'), '-', MONTHNAME('2016-01-01'), '-', DAY('2016-01-01'));

@@ -153,8 +153,11 @@ Procurement Dashboard
 		$(function () {
 		    Highcharts.chart('graph2', {
 		        title: {
-		            text: 'Monthly Total Purchases in Pesos',
+		            text: 'Monthly Purchases in ₱esos',
 		            //x: -20 //center
+		        },
+		        subtitle:{
+		        	text: 'Of this current year {!!date('Y')!!}'
 		        },
 		        xAxis: {
 		            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -164,14 +167,9 @@ Procurement Dashboard
 		            title: {
 		                text: 'Purchases (Php)'
 		            },
-		            plotLines: [{
-		                value: 0,
-		                width: 1,
-		                color: '#808080'
-		            }]
 		        },
 		        tooltip: {
-		            valueSuffix: 'Pesos'
+		            valueSuffix: ' ₱'
 		        },
 		        legend: {
 		            layout: 'vertical',

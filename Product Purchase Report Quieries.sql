@@ -70,6 +70,7 @@ FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM
 GROUP BY 1
 ORDER BY 1;
 
-SELECT DISTINCT MONTHNAME(DateDelivered)
-FROM PurchaseDeliveryReceipts;
+  SELECT DISTINCT DATE_FORMAT(DateDelivered, '%b') AS Month
+    FROM PurchaseDeliveryReceipts
+ORDER BY 1 DESC;
                                                 
