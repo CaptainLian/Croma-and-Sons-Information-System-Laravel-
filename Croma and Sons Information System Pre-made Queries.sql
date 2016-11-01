@@ -142,5 +142,34 @@ FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, S
 
 
 
+SELECT *
+  FROM PurchaseDeliveryReceipts
+ WHERE MONTH(DateDelivered) = MONTH(CURDATE()); 
+ 
+ 
+SELECT *
+   FROM PurchaseDeliveryItems
+  WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										FROM PurchaseDeliveryReceipts
+									   WHERE MONTH(DateDelivered) = MONTH(CURDATE()));
+       
+SELECT IFNULL(SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)), 0) AS Accept, IFNULL(SUM(IFNULL(RejectedQuantity, 0)), 0) AS Reject
+  FROM PurchaseDeliveryItems dr
+ WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+									   FROM PurchaseDeliveryReceipts
+									  WHERE MONTH(DateDelivered) = MONTH(CURDATE()));
+
+
+SELECT s.Name, d.Accept, d.Reject
+  FROM (SELECT po.SupplierID AS SupplierID, SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)) AS Accept, SUM(IFNULL(RejectedQuantity, 0)) AS Reject
+	      FROM PurchaseDeliveryItems dr JOIN PurchaseOrders po
+										  ON dr.PurchaseOrderID = po.PurchaseOrderID
+		 WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+											   FROM PurchaseDeliveryReceipts
+											  WHERE MONTH(DateDelivered) = MONTH(CURDATE()))
+		 GROUP BY po.SupplierID) d JOIN Suppliers s
+									ON d.SupplierID = s.SupplierID;
+
+
 
 

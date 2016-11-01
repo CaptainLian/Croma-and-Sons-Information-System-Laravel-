@@ -11,7 +11,7 @@
 			<!-- user login dropdown start-->
 			<li class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-				<span class="username">{{ $name }}</span>
+				<span class="username">@if(Session::has('active')) {!!Session::get('username')!!} @else Procurement Manager @endif </span>
 				<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu extended logout">

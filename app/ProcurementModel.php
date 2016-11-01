@@ -112,6 +112,32 @@ FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM
     	return $pendingPO ? $pendingPO: [];
     }
 
+    public static function getProcurementRatio(){
+    	$eh = DB::select("SELECT IFNULL(SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)), 0) AS Accept, IFNULL(SUM(IFNULL(RejectedQuantity, 0)), 0) AS Reject
+  FROM PurchaseDeliveryItems dr
+ WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+									   FROM PurchaseDeliveryReceipts
+									  WHERE MONTH(DateDelivered) = MONTH(CURDATE()));");
+
+    	return $eh[0];
+    }
+
+    public static function getProcurementRatioSuppliers(){
+    	$eh = DB::select("SELECT s.Name, d.Accept, d.Reject
+  FROM (SELECT po.SupplierID AS SupplierID, SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)) AS Accept, SUM(IFNULL(RejectedQuantity, 0)) AS Reject
+	      FROM PurchaseDeliveryItems dr JOIN PurchaseOrders po
+										  ON dr.PurchaseOrderID = po.PurchaseOrderID
+		 WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+											   FROM PurchaseDeliveryReceipts
+											  WHERE MONTH(DateDelivered) = MONTH(CURDATE()))
+		 GROUP BY po.SupplierID) d JOIN Suppliers s
+									ON d.SupplierID = s.SupplierID;");
+    	
+    	return $eh ? $eh : [];
+    }
+
+
+
     public static function getCountProductsNeedProcurement(){
     	/*
 		SELECT COUNT(*) AS Amount
@@ -219,5 +245,4 @@ FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM
     	DB::commit();
     	return true;
     }
-
 }

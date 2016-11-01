@@ -18,12 +18,27 @@ class ProcurementPageController extends Controller{
     public function viewDashboard(){
         $pendingPurchaseOrderCount = ProcurementModel::getPendingPurchaseOrderCount();
         $countProductNeedProcurement = ProcurementModel::getCountProductsNeedProcurement();
+        $procurementRatio = ProcurementModel::getProcurementRatio();
+        $procurementRatioSuppliers = ProcurementModel::getProcurementRatioSuppliers();
+
+        $procurementRatioSuppliersAccept = [];
+        $procurementRatioSuppliersReject = [];
+
+       
+
+        foreach($procurementRatioSuppliers as $supplier){
+            $procurementRatioSuppliersAccept[] = [$supplier->Name, $supplier->Accept];
+            $procurementRatioSuppliersReject[] = [$supplier->Name, $supplier->Reject];
+        }
 
         $data =[
             'pendingPurchaseOrderCount' => $pendingPurchaseOrderCount,
             'countProductNeedProcurement' => $countProductNeedProcurement,
-
+            'procurementRatio' => $procurementRatio,
+            'procurementRatioSuppliersAccept' => $procurementRatioSuppliersAccept,
+            'procurementRatioSuppliersReject' => $procurementRatioSuppliersReject,
         ];
+
     	return view('procurement.dashboard')->with($data);
     }
 

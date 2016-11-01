@@ -46,6 +46,6 @@ class Account extends Authenticatable{
     }
 
 	public static function dbEncrypt($string){
-		return DB::select('select password(?) AS \'encrypt\' ', [$string])[0]->encrypt;
+		return DB::select('select SHA2(?, 512) AS \'encrypt\' ', [$string])[0]->encrypt;
 	}		
 }
