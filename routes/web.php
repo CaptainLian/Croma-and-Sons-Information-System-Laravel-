@@ -32,8 +32,10 @@ Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 
 		Route::get('invoice','SalesInvoice@list');
 
-		Route::get('invoice/{sdrid}', 'SalesInvoice@create');
+Route::post('/sales/catalog/add','SalesCatalog@add');
 
+
+Route::get('/sales/invoice','SalesInvoice@list');
 
 		Route::get('productReport',function(){
 			return view('sales.PSR',['active' => 'psr']);
@@ -47,7 +49,7 @@ Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 			return view('sales.SDR',['active' => 'sdri']);
 		});
 
-		Route::get('report','SalesReport@index');
+Route::post('/sales/customerlist/add','CustomerList@add');
 
 		Route::post('salesOrder/create','SalesOrder@create');
 	});
@@ -59,3 +61,4 @@ Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 
 require_once 'Lian.php';
 /*Routes::post('/sales','SalesOrder@check');*/
+

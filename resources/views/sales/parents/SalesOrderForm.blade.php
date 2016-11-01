@@ -125,9 +125,12 @@
       <!-- js placed at the end of the document so the pages load faster -->
       <script src="{{URL::asset('js/jquery.js')}}"></script>
       <script >
+      quantity = [];  
+      price = [];
+      stock = [];  
       token = $('meta[name="csrf-token"]').attr('content');
 
-       price = [],quantity = [];
+       
      /* var subtotal = array();
       var quan = array();*/
 /*      $('#editable-sample').on('change','.disc',function(){
@@ -137,35 +140,81 @@
             
           
       });*/
-      /*function check(){
-        if({{{ isset($temp) or 'false'}}}){
-            console.log('asdasdasd');
+      function check(error, prices){
+            
+        ctrErr = 0;
+        $('#editable-sample tr').each(function(){
+        if(ctrErr > 0){
+          if(error[ctrErr - 1] == 'X'){
+            
+            ctrVal = 0
+            $(this).find('td').each(function(){
+              if(ctrVal > -1 && ctrVal < 4){
+               if($(this).hasClass('has-error')){
+                   $(this).removeClass('has-error').addClass('has-success');
+                }else{
+                  $(this).addClass('has-success');
+                }
+              }else if(ctrVal == 5){
 
+              }else if(ctrVal == 6){
+                 
+                $(this).find('input').val(prices[ctrErr-1][0]['CurrentUnitPrice']);
+              }
+              ctrVal++;
+            });
+            /*ctrVal = 0;
+            $('.material')each(function{
 
+              ctrVal++;
+            });*/
+          }else{
+            
+            ctrVal = 0;
+            $(this).find('td').each(function(){
+              if(ctrVal > -1 && ctrVal < 4){
+                if($(this).hasClass('has-success')){
+                   $(this).removeClass('has-success').addClass('has-error');
+                }else{
+                  $(this).addClass('has-error');
+                }
+               
+              }
+              ctrVal++;
+            });
+          }
         }
-        console.log('asd');
-        setTimeout(check,3000);
-      }
-      setTimeout(check,3000);*/
+        ctrErr++;
+       });
+      }    
 
-
+        
+       /* console.log('asd');*/
+       /* setTimeout(check,3000);*/
+      
+  
 
      
 
-       $('#editable-sample').on('change','.length, .thickness, .width',function(){   
+       $('#editable-sample').on('change','.len, .thick, .wid, .material',function(){   
           lg = [];
           width = [];
           thickness = [];
           quantity = [];
-          $('.length').each(function(){
-             
+          material = []
+          console.log(lg.lenth);
+          $('.len').each(function(){
+             console.log($(this).val());
+             if($(this).val() == ''){
+              lg.push(' ');
+             }
             lg.push($(this).val());                  
           });      
-          $('.width').each(function(){
+          $('.wid').each(function(){
              
             width.push($(this).val());                  
           });
-          $('.thickness').each(function(){
+          $('.thick').each(function(){
              
             thickness.push($(this).val());                  
           });
@@ -174,16 +223,70 @@
              
             quantity.push($(this).val());                  
           });
+          $('.material').each(function(){
+             
+            material.push($(this).val());                  
+          });
+
+          /*for(ctr=0;ctr<lg.length;ctr++){
+            console.log('start');
+            console.log(thickness[ctr]);
+            console.log(lg[ctr]);
+            console.log(width[ctr]);
+             console.log('end');
+          }
+*/
+          $('#editable-sample').on('change','.quan',function(){
+              ctrVal = 0;           
+              $('.quan').each(function(){
+               
+                /*console.log(stock);
+                console.log(stock.length);
+                console.log(stock[0]);*/
+                /*console.log(stock[ctrVal][0]['StockQuantity']);*/
+                console.log($(this).val());
+                if(stock[ctrVal+1] instanceof Array){
+
+                   if($(this).val() > parseInt(stock[ctrVal+1][0]['StockQuantity'])){
+                    if($(this).parent().hasClass('has-success')){
+                      
+                       $(this).parent().removeClass('has-success').addClass('has-error');
+                    }else{
+                      $(this).parent().addClass('has-error');
+                  }
+                  }else{
+                    
+                    if($(this).parent().hasClass('has-error')){
+                       $(this).parent().removeClass('has-error').addClass('has-success');
+                    }else{
+                      $(this).parent().addClass('has-success');
+                    }
 
 
+
+                  }
+
+                }
+
+                ctrVal++;
+            });
+          });
            $.ajax({
             type: "POST",
             url : '/sales/salesOrder/check',
             data : {'_token' : token , 'width':width,
             'length' : lg, 'thickness': thickness,
-            'quantity': quantity}
-          })
-           /*.done(function() {
+            'quantity': quantity, 'material' : material},
+            success:function(response){
+              console.log('json');
+              console.log((response));
+              check(response['error'],response['prices']);
+              stock = response['stock'];
+              console.log(stock);
+
+            }
+          })/*
+           .done(function() {
             alert( "second success" );
           })
           .fail(function(xhr, status, error) {
@@ -191,10 +294,8 @@
             console.log(status);
             alert(error);
             alert( "error" );
-          })
-          .always(function() {
-            alert( "finished" );
-          });*/
+          })*/
+       
 
 
 
@@ -205,32 +306,30 @@
 
 
       });
-      $('#editable-sample').on('change','.price',function(){   
-          price = [];           
-          $('.price').each(function(){
-            console.log($(this).val());
-            price.push($(this).val());
-            compute();
-           
-          });          
-      });
-       $('#editable-sample').on('change','.quan',function(){              
-          quantity = [];
+      
+      $('#editable-sample').on('change','.quan',function(){              
+          quantity = [];  
+          console.log('quan');
           $('.quan').each(function(){
             console.log($(this).val());
             quantity.push($(this).val());
             console.log(quantity.length);
-            compute();
+             
            
-          });          
+          });   
+          price = []; 
+          $('.price').each(function(){
+            console.log('price');
+            console.log($(this).val());
+            price.push($(this).val());
+            console.log(price.length);
+           
+           
+          });    
+           compute();
       });
 
-      $('#editable-sample').on('keydown','.price, .quanx',function(){
-      /*  console.log($(this).val());
-        $("#GT").html($(this).val()*$('.quan').val());
-*/
-
-      });
+      
       $('#dis').change(function(){
       /*  console.log($(this).val());     */   
           compute();

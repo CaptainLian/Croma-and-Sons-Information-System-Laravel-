@@ -38,4 +38,29 @@ class CustomerList extends Controller
     		'customer' => $customers,
     		'total' => $totalPrice]);
     }
+
+    public function add(Request $request){
+        $item = $request->input('json');
+
+        /*DB::beginTransaction();*/        
+        
+        $var = DB::table('Customers')
+              ->insert([
+              'Name' => $item[0],
+              'Address' => $item[1],
+              'MobileNumber' => $item[2],
+              'ContactPerson' => $item[3]]);
+        echo 'neil';
+        if($var){
+            echo 'Success';
+        }else{
+            echo 'Failed';
+        }
+     
+      
+
+
+       /*DB::commit();*/
+   
+    }
 }

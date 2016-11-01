@@ -11,6 +11,8 @@ use Carbon;
 
 use Illuminate\Support\Facades\DB;
 
+
+
 class SalesOrder extends Controller
 {
 
@@ -25,7 +27,7 @@ class SalesOrder extends Controller
         $now = Carbon::now()->toDateString();
 
       
-
+       
     	return view('sales.SOF',
     		['active' => 'sof',
     		 'customers' => $customer,
@@ -109,18 +111,60 @@ class SalesOrder extends Controller
         $length = $request->input('length');
         $thickness = $request->input('thickness');
         $quantity = $request->input('quantity');
+        $material = $request->input('material');
 
-        $error = array();
+        $error = array(count($width));
+        $prices = array(count($width));
+        $stock = array(count($width));
 
-        /*for*/
+        for($ctr = 0; $ctr < count($width); $ctr++){
+            $temp2 = DB::table('CompanyInventory')
+                       ->select('CurrentUnitPrice')
+                       ->where([
+                        ['Length',intval($length[$ctr])],
+                         ['Width',intval($width[$ctr])],
+                         ['Thickness',intval($thickness[$ctr])],
+                         ['WoodtypeID',intval($material[$ctr])]
+                        ])->get();
+           $temp3 = DB::table('CompanyInventory')
+                       ->select('StockQuantity')
+                       ->where([
+                        ['Length',intval($length[$ctr])],
+                         ['Width',intval($width[$ctr])],
+                         ['Thickness',intval($thickness[$ctr])],
+                         ['WoodtypeID',intval($material[$ctr])]
+                        ])->get();
 
+            if($temp2 <> '[]'){                            
+                array_push($error,'X');
+                array_push($prices,$temp2);
+                array_push($stock,$temp3);
+
+            }else{
+                 
+                array_push($error,$ctr);
+                array_push($prices,' ');
+                array_push($stock,'-1');
+            }
+
+        }
+         
+
+        
+        /*
+        var_dump($width);
+        var_dump($length);
+        var_dump($thickness);*/
         $temp = true;
-        return view('sales.SOF',
+        return response()->json(['error' => $error, 'prices' => $prices,'stock' => $stock ]);
+                /*return view('sales.SOF',
             ['active' => 'sof',
              'customers' => $customer,
              'terms' => $terms,
               'now' => $now,
-              'temp' => $temp]);
+              'temp' => $temp,
+              'error' => $error,
+              'prices' => $prices]);*/
 
     }
 
