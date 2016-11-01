@@ -9,7 +9,9 @@
 	@foreach($catalog as $c)
 		<tr class="">
 			<td>{{$c->WoodType}}</td>
-			<td>{{$c->Thickness}} / {{$c->Width}} / {{$c->Length}} </td>
+			<td>{{$c->Thickness}} </td>
+			<td>{{$c->Width}}</td>
+			<td>{{$c->Length}}</td>
 			<td>
 				<input class="form-control" id="disabledInput" type="text" placeholder="{{$c->CurrentUnitPrice}}" disabled="">
 			</td>
@@ -21,4 +23,8 @@
 			</td>
 		</tr>
 	@endforeach
+@endsection
+
+@section('editable')
+	@include('sales.chain.editable-table-SC')
 @endsection

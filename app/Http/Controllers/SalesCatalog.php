@@ -14,12 +14,44 @@ class SalesCatalog extends Controller
    		$catalog = DB::table('CompanyInventory')
    					 ->select('WoodType','Thickness','Width','Length','CurrentUnitPrice')
    					 ->join('REF_WoodTypes','CompanyInventory.WoodTypeID','=','REF_WoodTypes.WoodTypeID')
-   					 ->where('StockQuantity','>','0')
+   					 /*->where('StockQuantity','>','0')*/
    					 ->get();
    		 
 
    		return view('sales.SC',
    			['active' => 'sc',
    			 'catalog' => $catalog]);
+   }
+
+   public function add(Request $request){
+      $item = $request->input('json');
+
+       /*DB::beginTransaction();*/
+      $wood = DB::table('REF_WoodTypes')
+                 ->select('WoodTypeID')
+                 ->where('WoodType',$item[0])
+                 ->pluck('WoodTypeID');
+      if($wood <> '[]'){
+         $var = DB::table('CompanyInventory')
+                  ->insert([
+                  'WoodTypeID' => $wood[0],
+                  'Thickness' => $item[1],
+                  'Width' => $item[2],
+                  'Length' => $item[3],
+                  'CurrentUnitPrice' => $item[4]]);
+         if($var){
+            echo 'Success';
+         }else{
+            echo 'Failed';
+         }
+      }else{
+
+      }
+
+      
+
+
+       /*DB::commit();*/
+
    }
 }

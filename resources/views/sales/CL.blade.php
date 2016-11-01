@@ -12,7 +12,6 @@
 			<td>{{$c->Address}}</td>
 			<td>{{$c->MobileNumber}}</td>
 			<td>{{$c->ContactPerson}}</td>
-			<td>{{$c->DateCreated}}</td>
 			<td>
 				@foreach($total as $t)
 					@if($c->CustomerID == $t-> CustomerID)
@@ -28,4 +27,8 @@
 			</td>
 		</tr>
 	@endforeach
+@endsection
+
+@section('editable')
+	@include('sales.chain.editable-table-CL')
 @endsection

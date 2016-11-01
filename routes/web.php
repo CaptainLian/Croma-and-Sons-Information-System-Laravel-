@@ -31,6 +31,8 @@ Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 
 Route::get('/sales/catalog','SalesCatalog@index');
 
+Route::post('/sales/catalog/add','SalesCatalog@add');
+
 
 Route::get('/sales/invoice','SalesInvoice@list');
 
@@ -44,6 +46,7 @@ Route::get('/sales/productReport',function(){
 
 Route::get('/sales/customerlist','CustomerList@index');
 
+Route::post('/sales/customerlist/add','CustomerList@add');
 
 Route::get('/sales/createDeliveryReceipt',function(){
 	return view('sales.SDR',['active' => 'sdri']);
@@ -58,3 +61,4 @@ Route::get('/try',function(){
 
 
 /*Routes::post('/sales','SalesOrder@check');*/
+
