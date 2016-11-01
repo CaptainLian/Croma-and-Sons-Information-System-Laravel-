@@ -24,8 +24,6 @@ class ProcurementPageController extends Controller{
         $procurementRatioSuppliersAccept = [];
         $procurementRatioSuppliersReject = [];
 
-       
-
         foreach($procurementRatioSuppliers as $supplier){
             $procurementRatioSuppliersAccept[] = [$supplier->Name, $supplier->Accept];
             $procurementRatioSuppliersReject[] = [$supplier->Name, $supplier->Reject];
@@ -125,6 +123,16 @@ class ProcurementPageController extends Controller{
     }
 
     public function viewPurchaseReport(){
-        return view('procurement.PurchaseReport');
+        $weeklyPurchase = ProcurementModel::getPurchaseReportWeekly();
+        $monthlyPurchase = ProcurementModel::getPurchaseReportMonthly();
+        $yearlyPurchase = ProcurementModel::getPurchaseReportYearly();
+
+        $data = [
+            'weekly' => $weeklyPurchase,
+            'monthly' => $monthlyPurchase,
+            'yearly' => $yearlyPurchase,
+        ];
+        
+        return view('procurement.PurchaseReport')->with($data);
     }
 }

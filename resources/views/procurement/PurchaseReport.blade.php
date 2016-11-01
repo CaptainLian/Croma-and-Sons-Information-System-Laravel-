@@ -21,212 +21,141 @@ Purchase Report
 @endpush
 
 @section('main-content')
-  <!-- page start-->
-        <section class="panel">
-          <header class="panel-heading tab-bg-dark-navy-blue ">
-            <ul class="nav nav-tabs">
-              <li class="active">
-                <a data-toggle="tab" href="#home">Weekly</a>
-              </li>
-              <li class="">
-                <a data-toggle="tab" href="#about">Monthly</a>
-              </li>
-              <li class="">
-                <a data-toggle="tab" href="#profile">Yearly</a>
-              </li>
-            </ul>
-          </header>
-          <div class="panel-body">
-            <div class="tab-content">
-              <div id="home" class="tab-pane active">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <section class="panel">
-                      <header class="panel-heading">
-                        <h1>Purchase Report</h1>
-                      </header>
-                      <div class="panel-body">
-                        <div class="adv-table">
-                          <table class="display table table-bordered table-striped" id="dynamic-table">
-                            <thead>
-                              <tr>
-                                <th>Delivery Receipt #</th>
-                                <th>Delivery Receipt Date</th>
-                                <th>Supplier</th>
-                                <th>Total Amount</th>
-                                <th>Total Discount</th>
-                                <th>Total Reject (In Pesos)</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="gradeX">
-                                <td>
-                                  <a href="ProcurementDeliveryReceiptSpecific.html">Trident</a>
-                                </td>
-                                <td>Internet Explorer 4.0</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                              </tr>
-                              <tr class="gradeC">
-                                <td>
-                                  <a href="ProcurementDeliveryReceiptSpecific.html">Trident</a>
-                                </td>
-                                <td>Internet Explorer 5.0</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                              </tr>
-                              <tr class="gradeC">
-                                <td>
-                                  <a href="ProcurementDeliveryReceiptSpecific.html">Trident</a>
-                                </td>
-                                <td>Internet Explorer 5.0</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                              </tr>
-                              <tr class="gradeX">
-                                <td><a href="ProcurementDeliveryReceiptSpecific.html">Trident</a></td>
-                                <td>Internet Explorer 4.0</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                                <td>Win 95+</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
+<!-- page start-->
+<section class="panel">
+  <header class="panel-heading tab-bg-dark-navy-blue ">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a data-toggle="tab" href="#home">Weekly</a>
+      </li>
+      <li class="">
+        <a data-toggle="tab" href="#about">Monthly</a>
+      </li>
+      <li class="">
+        <a data-toggle="tab" href="#profile">Yearly</a>
+      </li>
+    </ul>
+  </header>
+  <div class="panel-body">
+    <div class="tab-content">
+      <div id="home" class="tab-pane active">
+        <div class="row">
+          <div class="col-sm-12">
+            <section class="panel">
+              <header class="panel-heading">
+                <h1>Weekly Purchase Report</h1> <br />
+                For this current week
+              </header>
+              <div class="panel-body">
+                <div class="adv-table">
+                  <table class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                      <tr>
+                        <th>Delivery Receipt #</th>
+                        <th>Delivery Date (Year-Month-Day)</th>
+                        <th>Supplier</th>
+                        <th>Purchased Amount (Php)</th>
+                        <th>Discount</th>
+                        <th>Rejected Amount (Php)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($weekly as $item)
+                        <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                        <td>{!!$item->DeliveryDate!!}</td>
+                        <td>{!!$item->Supplier!!}</td>
+                        <td>{!!$item->PurchasedAmount!!}</td>
+                        <td>{!!$item->Discount!!}</td>
+                        <td>{!!$item->RejectedAmount!!}</td>
+                      @endforeach
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div id="about" class="tab-pane">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <section class="panel">
-                    <header class="panel-heading">Sales Report</header>
-                    <div class="panel-body">
-                      <div class="adv-table">
-                        <table class="display table table-bordered table-striped" id="dynamic-table">
-                          <thead>
-                            <tr>
-                              <th>Invoice #</th>
-                              <th>Invoice Date</th>
-                              <th></th>
-                              <th>Total Amount</th>
-                              <th>Total Discount</th>
-                              <th>Total Reject (In Pesos)</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr class="gradeX">
-                              <td>Trident</td>
-                              <td>Internet Explorer 4.0</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                            </tr>
-                            <tr class="gradeC">
-                              <td>Trident</td>
-                              <td>Internet Explorer 5.0</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                            </tr>
-                            <tr class="gradeC">
-                              <td>Trident</td>
-                              <td>Internet Explorer 5.0</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                            </tr>
-                            <tr class="gradeX">
-                              <td>Trident</td>
-                              <td>Internet Explorer 4.0</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                              <td>Win 95+</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </div>
-            <div id="profile" class="tab-pane">
-              <div class="row">
-                <div class="col-sm-12">
-                  <section class="panel">
-                  <header class="panel-heading">Sales Report</header>
-                  <div class="panel-body">
-                    <div class="adv-table">
-                      <table class="display table table-bordered table-striped" id="dynamic-table">
-                        <thead>
-                          <tr>
-                            <th>Invoice #</th>
-                            <th>Invoice Date</th>
-                            <th></th>
-                            <th>Total Amount</th>
-                            <th>Total Discount</th>
-                            <th>Total Reject (In Pesos)</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="gradeX">
-                            <td>Trident</td>
-                            <td>Internet Explorer 4.0</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                          </tr>
-                          <tr class="gradeC">
-                            <td>Trident</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                          </tr>
-                          <tr class="gradeC">
-                            <td>Trident</td>
-                            <td>Internet Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                          </tr>
-                          <tr class="gradeX">
-                            <td>Trident</td>
-                            <td>Internet Explorer 4.0</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                            <td>Win 95+</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </div>
+            </section>
           </div>
         </div>
       </div>
-    </section>
-    <!-- page end-->
+      <div id="about" class="tab-pane">
+        <div class="row">
+          <div class="col-sm-12">
+            <section class="panel">
+              <header class="panel-heading">
+                <h1>Monthly Purchase Report</h1> <br />
+                For this current month {!!date('F')!!}
+              </header>
+              <div class="panel-body">
+                <div class="adv-table">
+                  <table class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                      <tr>
+                        <th>Delivery Receipt #</th>
+                        <th>Delivery Date (Year-Month-Day)</th>
+                        <th>Supplier</th>
+                        <th>Purchased Amount (Php)</th>
+                        <th>Discount</th>
+                        <th>Rejected Amount (Php)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($monthly as $item)
+                        <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                        <td>{!!$item->DeliveryDate!!}</td>
+                        <td>{!!$item->Supplier!!}</td>
+                        <td>{!!$item->PurchasedAmount!!}</td>
+                        <td>{!!$item->Discount!!}</td>
+                        <td>{!!$item->RejectedAmount!!}</td>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div id="profile" class="tab-pane">
+        <div class="row">
+          <div class="col-sm-12">
+            <section class="panel">
+            <header class="panel-heading">
+                <h1>Monthly Purchase Report</h1> <br />
+                For this current year {!!date('Y')!!}
+              </header>
+            <div class="panel-body">
+              <div class="adv-table">
+                <table class="display table table-bordered table-striped" id="dynamic-table">
+                  <thead>
+                      <tr>
+                        <th>Delivery Receipt #</th>
+                        <th>Delivery Date (Year-Month-Day)</th>
+                        <th>Supplier</th>
+                        <th>Purchased Amount (Php)</th>
+                        <th>Discount</th>
+                        <th>Rejected Amount (Php)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($yearly as $item)
+                        <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                        <td>{!!$item->DeliveryDate!!}</td>
+                        <td>{!!$item->Supplier!!}</td>
+                        <td>{!!$item->PurchasedAmount!!}</td>
+                        <td>{!!$item->Discount!!}</td>
+                        <td>{!!$item->RejectedAmount!!}</td>
+                      @endforeach
+                    </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- page end-->
 @endsection
 
 @push('javascript')

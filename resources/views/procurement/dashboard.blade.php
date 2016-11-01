@@ -74,10 +74,11 @@ Procurement Dashboard
 @endsection
 
 @push('javascript')
-	<script src="/js/highcharts.js"></script>
-	<script src="/modules/exporting.js"></script>
-	<script src="/modules/data.js"></script>
-	<script src="/modules/drilldown.js"></script>
+	<script src="/js/highcharts.src.js"></script>
+	<script src="/modules/exporting.src.js"></script>
+	<script src="/modules/data.src.js"></script>
+	<script src="/modules/drilldown.src.js"></script>
+	<script src="/modules/no-data-to-display.src.js"></script>
 
 	<script >
 
@@ -153,7 +154,7 @@ Procurement Dashboard
 		    Highcharts.chart('graph2', {
 		        title: {
 		            text: 'Monthly Total Purchases in Pesos',
-		            x: -20 //center
+		            //x: -20 //center
 		        },
 		        xAxis: {
 		            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',

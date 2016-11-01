@@ -64,5 +64,12 @@ FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM
 														 ON DR.WoodTypeID = wt.WoodTypeID;
                                                          
 
-                                                         
-                                                         
+  SELECT MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount
+    FROM PurchaseDeliveryItems di JOIN PurchaseDeliveryReceipts dr
+								    ON di.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+GROUP BY 1
+ORDER BY 1;
+
+SELECT DISTINCT MONTHNAME(DateDelivered)
+FROM PurchaseDeliveryReceipts;
+                                                

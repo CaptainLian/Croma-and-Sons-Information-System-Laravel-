@@ -74,76 +74,8 @@ SELECT PendingPO.PurchaseOrderID AS POID, PendingPO.DateCreated AS DateCreated, 
 	   											  WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
 																				  FROM PurchaseDeliveryReceipts)) PendingPO JOIN Suppliers S
 																															  ON PendingPO.SupplierID = S.SupplierID;
-									
-							
-SELECT SupplierID AS Supplier, WoodTypeID, Thickness, Width, Length, MIN(CurrentPrice) AS CheapestPrice
-FROM SupplierPrices
-GROUP BY 1, WoodTypeID, Thickness, Width, Length;	
-
-
-
 SELECT *
-FROM Suppliers;					
-
-SELECT * 
-  FROM PurchaseDeliveryReceipts DR JOIN PurchaseDeliveryItems DRI
-									 ON DR.PurchaseDeliveryReceiptID = DRI.PurchaseDeliveryReceiptID;
--- Material	Size	Quantity Purchased	Quantity Rejected	Amount Purchased	Amount Rejected
-
-SELECT *
-FROM (SELECT *
-	   FROM PurchaseOrders
-	  WHERE PurchaseOrderID IN (SELECT DISTINCT PurchaseOrderID
-								  FROM PurchaseDeliveryItems)) PO JOIN (SELECT *
-																		  FROM PurchaseDeliveryItems
-																		 WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-																											   FROM PurchaseDeliveryReceipts
-																											  WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))) DR
-																	ON PO.PurchaseOrderID = DR.PurchaseOrderID
-;
-
-
--- PRODUCT PURCHASE REPORT
-
--- Weekly
-SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
-FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
-	    FROM PurchaseDeliveryItems 
-	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-										     FROM PurchaseDeliveryReceipts
-										    WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
-                                          
-     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
-														 ON DR.WoodTypeID = wt.WoodTypeID;
-
-SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
-FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
-	    FROM PurchaseDeliveryItems 
-	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-										     FROM PurchaseDeliveryReceipts
-										    WHERE YEAR(DateDelivered) = YEAR(CURDATE())
-											  AND MONTH(DateDelivered) = MONTH(CURDATE()))
-                                          
-     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
-														 ON DR.WoodTypeID = wt.WoodTypeID;
-
-SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
-FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', 'Length') AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
-	    FROM PurchaseDeliveryItems 
-	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-										     FROM PurchaseDeliveryReceipts
-										    WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
-                                          
-     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
-														 ON DR.WoodTypeID = wt.WoodTypeID;
-                                                         
-
-
-
-
-
-SELECT *
-  FROM PurchaseDeliveryReceipts
+  FROM PurchaseDeliveryReceipts 
  WHERE MONTH(DateDelivered) = MONTH(CURDATE()); 
  
  
@@ -170,6 +102,64 @@ SELECT s.Name, d.Accept, d.Reject
 		 GROUP BY po.SupplierID) d JOIN Suppliers s
 									ON d.SupplierID = s.SupplierID;
 
+-- Needed products
+SELECT *
+FROM CompanyInventory
+WHERE RequestedQuantity > 0;
+
+SELECT *
+  FROM PurchaseDeliveryReceipts
+ WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE());
+ 
+SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+  FROM PurchaseDeliveryItems
+ WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+									  FROM PurchaseDeliveryReceipts
+								     WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
+GROUP BY WoodTypeID, Thickness, Width, Length;
 
 
+-- Purchase Report
+-- Weekly
+SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.DateDelivered AS DeliveryDate, dri.PurchasedAmount, dr.Discount, dri.RejectedAmount
+  FROM (SELECT PurchaseDeliveryReceiptID, PurchaseOrderID, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+		  FROM PurchaseDeliveryItems
+	     WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										       FROM PurchaseDeliveryReceipts
+										      WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
+	GROUP BY PurchaseDeliveryReceiptID, WoodTypeID, Thickness, Width, Length) dri JOIN PurchaseDeliveryReceipts dr
+																					ON dri.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+																				  JOIN PurchaseOrders po
+																					ON dr.PurchaseOrderID = po.PurchaseOrderID
+																				  JOIN Suppliers s
+																					ON s.SupplierID = po.SupplierID;
 
+-- Purchase Report
+-- Monthly
+SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.DateDelivered AS DeliveryDate, dri.PurchasedAmount, dr.Discount, dri.RejectedAmount
+  FROM (SELECT PurchaseDeliveryReceiptID, PurchaseOrderID, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+		  FROM PurchaseDeliveryItems
+	     WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										       FROM PurchaseDeliveryReceipts
+										      WHERE YEAR(DateDelivered) = YEAR(CURDATE())
+                                                AND MONTH(DateDelivered) = MONTH(CURDATE()))
+	GROUP BY PurchaseDeliveryReceiptID, WoodTypeID, Thickness, Width, Length) dri JOIN PurchaseDeliveryReceipts dr
+																					ON dri.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+																				  JOIN PurchaseOrders po
+																					ON dr.PurchaseOrderID = po.PurchaseOrderID
+																				  JOIN Suppliers s
+																					ON s.SupplierID = po.SupplierID;
+-- Purchase Report
+-- Yearly
+SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.DateDelivered AS DeliveryDate, dri.PurchasedAmount, dr.Discount, dri.RejectedAmount
+  FROM (SELECT PurchaseDeliveryReceiptID, PurchaseOrderID, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+		  FROM PurchaseDeliveryItems
+	     WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										       FROM PurchaseDeliveryReceipts
+										      WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
+	GROUP BY PurchaseDeliveryReceiptID, WoodTypeID, Thickness, Width, Length) dri JOIN PurchaseDeliveryReceipts dr
+																					ON dri.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+																				  JOIN PurchaseOrders po
+																					ON dr.PurchaseOrderID = po.PurchaseOrderID
+																				  JOIN Suppliers s
+																					ON s.SupplierID = po.SupplierID;
