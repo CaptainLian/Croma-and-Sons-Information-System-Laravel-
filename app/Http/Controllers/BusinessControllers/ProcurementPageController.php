@@ -16,11 +16,14 @@ use Session;
 class ProcurementPageController extends Controller{
 
     public function viewDashboard(){
+        /* Retrieve information */
         $pendingPurchaseOrderCount = ProcurementModel::getPendingPurchaseOrderCount();
         $countProductNeedProcurement = ProcurementModel::getCountProductsNeedProcurement();
         $procurementRatio = ProcurementModel::getProcurementRatio();
         $procurementRatioSuppliers = ProcurementModel::getProcurementRatioSuppliers();
+        $monthlyProcurement = ProcurementModel::getMonthlyProcurementOfCurrentYear();
 
+        /* Process information */
         $procurementRatioSuppliersAccept = [];
         $procurementRatioSuppliersReject = [];
 
@@ -29,14 +32,25 @@ class ProcurementPageController extends Controller{
             $procurementRatioSuppliersReject[] = [$supplier->Name, $supplier->Reject];
         }
 
+        $months = [];
+        $monthlyExpense = [];
+
+        foreach($monthlyProcurement AS $month){
+            $months[] = $month->Month;
+            $monthlyExpense[] = $month->PurchaseAmount;
+        }
+
         $data =[
             'pendingPurchaseOrderCount' => $pendingPurchaseOrderCount,
             'countProductNeedProcurement' => $countProductNeedProcurement,
             'procurementRatio' => $procurementRatio,
             'procurementRatioSuppliersAccept' => $procurementRatioSuppliersAccept,
             'procurementRatioSuppliersReject' => $procurementRatioSuppliersReject,
+            'months' => $months,
+            'monthlyExpense' => $monthlyExpense,
         ];
 
+        /* Send information */
     	return view('procurement.dashboard')->with($data);
     }
 
@@ -115,7 +129,6 @@ class ProcurementPageController extends Controller{
         ];
 
         return view('procurement.SupplierList')->with($data);
-
     }
 
     public function viewPurchaseList(){

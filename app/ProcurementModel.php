@@ -311,4 +311,19 @@ class ProcurementModel extends Model{
     	DB::commit();
     	return true;
     }
+
+    public static function getMonthlyProcurementOfCurrentYear(){
+    	/*
+			SELECT MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount
+    FROM PurchaseDeliveryItems di JOIN PurchaseDeliveryReceipts dr
+								    ON di.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+GROUP BY 1;
+    	*/
+
+		$eh = DB::table('PurchaseDeliveryItems')
+				->select(DB::raw("MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount"))
+				->join('PurchaseDeliveryReceipts', 'PurchaseDeliveryItems.PurchaseDeliveryReceiptID' ,'=','PurchaseDeliveryReceipts.PurchaseDeliveryReceiptID')
+				->groupBy(DB::raw(1));
+		return $eh->get();
+    }
 }

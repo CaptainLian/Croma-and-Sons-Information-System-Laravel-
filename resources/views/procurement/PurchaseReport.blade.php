@@ -61,12 +61,14 @@ Purchase Report
                     </thead>
                     <tbody>
                       @foreach($weekly as $item)
-                        <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
-                        <td>{!!$item->DeliveryDate!!}</td>
-                        <td>{!!$item->Supplier!!}</td>
-                        <td>{!!$item->PurchasedAmount!!}</td>
-                        <td>{!!$item->Discount!!}</td>
-                        <td>{!!$item->RejectedAmount!!}</td>
+                        <tr>
+                          <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td>{!!$item->DeliveryDate!!}</td>
+                          <td>{!!$item->Supplier!!}</td>
+                          <td>{!!$item->PurchasedAmount!!}</td>
+                          <td>{!!$item->Discount!!}</td>
+                          <td>{!!$item->RejectedAmount!!}</td>
+                        </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -99,12 +101,14 @@ Purchase Report
                     </thead>
                     <tbody>
                       @foreach($monthly as $item)
-                        <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
-                        <td>{!!$item->DeliveryDate!!}</td>
-                        <td>{!!$item->Supplier!!}</td>
-                        <td>{!!$item->PurchasedAmount!!}</td>
-                        <td>{!!$item->Discount!!}</td>
-                        <td>{!!$item->RejectedAmount!!}</td>
+                        <tr>
+                          <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td>{!!$item->DeliveryDate!!}</td>
+                          <td>{!!$item->Supplier!!}</td>
+                          <td>{!!$item->PurchasedAmount!!}</td>
+                          <td>{!!$item->Discount!!}</td>
+                          <td>{!!$item->RejectedAmount!!}</td>
+                        </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -137,12 +141,14 @@ Purchase Report
                     </thead>
                     <tbody>
                       @foreach($yearly as $item)
-                        <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
-                        <td>{!!$item->DeliveryDate!!}</td>
-                        <td>{!!$item->Supplier!!}</td>
-                        <td>{!!$item->PurchasedAmount!!}</td>
-                        <td>{!!$item->Discount!!}</td>
-                        <td>{!!$item->RejectedAmount!!}</td>
+                        <tr>
+                          <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td>{!!$item->DeliveryDate!!}</td>
+                          <td>{!!$item->Supplier!!}</td>
+                          <td>{!!$item->PurchasedAmount!!}</td>
+                          <td>{!!$item->Discount!!}</td>
+                          <td>{!!$item->RejectedAmount!!}</td>
+                        </tr>
                       @endforeach
                     </tbody>
                 </table>
@@ -171,5 +177,5 @@ Purchase Report
 	<script src="/js/common-scripts.js"></script>
 	<!-- Mirrored from thevectorlab.net/flatlab/dynamic_table.html
 	by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Aug 2016 03:21:13 GMT
--->
+  -->
 @endpush

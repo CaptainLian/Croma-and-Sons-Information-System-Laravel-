@@ -31,7 +31,7 @@ SELECT *
 										      WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
 GROUP BY WoodTypeID, Thickness, Width, Length) DR;
 
--- Weekly
+-- WeeklyUntitled Folder
 SELECT WoodType, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
 FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
 	    FROM PurchaseDeliveryItems 
@@ -67,8 +67,7 @@ FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM
   SELECT MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount
     FROM PurchaseDeliveryItems di JOIN PurchaseDeliveryReceipts dr
 								    ON di.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
-GROUP BY 1
-ORDER BY 1;
+GROUP BY 1;
 
   SELECT DISTINCT DATE_FORMAT(DateDelivered, '%b') AS Month
     FROM PurchaseDeliveryReceipts
