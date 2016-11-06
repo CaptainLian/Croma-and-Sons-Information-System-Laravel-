@@ -1,3 +1,10 @@
+
+::selection {
+    background: #57c8f2;
+    color: #fff;
+}
+
+
 .adv-table table.display thead th {
     border-bottom: 2px solid #FFF;
     padding: 10px;

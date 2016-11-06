@@ -81,7 +81,9 @@
 
 		<!--common script for all pages-->
 		<script src="/js/common-scripts.js"></script>
-
+		<script src="/js/respond.min.js"></script>
+		<script src="/js/slidebars.min.js"></script>
+		
 		@stack('javascript')
 		
 		<!-- Mirrored from thevectorlab.net/flatlab/index.html by HTTrack

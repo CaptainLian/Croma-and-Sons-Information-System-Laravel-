@@ -217,7 +217,7 @@ class ProcurementModel extends Model{
     }
 
 
-    public static function createPurchaseOrder($term, $supplier, $address, $deliveryDate, $rows){
+    public static function createPurchaseOrder($term, $supplier, $address, $deliveryDate, $discount, $rows){
     	DB::beginTransaction();
 
     	try{
@@ -227,6 +227,7 @@ class ProcurementModel extends Model{
 	    				'Terms' => $term,
 	    				'DeliveryAddress' => $address,
 	    				'RequestedDeliveryDate' => $deliveryDate,
+	    				'Discount' => $discount,
 	    			]
     		);
 
@@ -240,13 +241,12 @@ class ProcurementModel extends Model{
 				    		  			'Width' => $row['width'],
 				    		  			'Length' => $row['length'],
 				    		  			'Quantity' => $row['quantity'],
-				    		  			'UnitPrice' => $row['unitPrice'],
-				    		  			'Discount' => $row['discount']]);
+				    		  			'UnitPrice' => $row['unitPrice']]);
 	    	}
     	}catch(\Exception $e){
     		//echo '<script> console.log('.$e->getMessage().')</script>';
     		//echo 'FAILED DUE TO EXCEPTION';
-    		//echo $e->getMessage();
+    		echo $e->getMessage();
     		DB::rollback();
     		return false;
     	}
@@ -321,7 +321,7 @@ GROUP BY 1;
     	*/
 
 		$eh = DB::table('PurchaseDeliveryItems')
-				->select(DB::raw("MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount"))
+				->select(DB::raw("MONTHNAME(DateDelivered)							 AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount"))
 				->join('PurchaseDeliveryReceipts', 'PurchaseDeliveryItems.PurchaseDeliveryReceiptID' ,'=','PurchaseDeliveryReceipts.PurchaseDeliveryReceiptID')
 				->groupBy(DB::raw(1));
 		return $eh->get();

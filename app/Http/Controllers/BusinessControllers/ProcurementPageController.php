@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\CustomerModel;
 use App\ProcurementModel;
 use App\SupplierModel;
+use \stdClass;
 
 use Session;
 
@@ -85,8 +86,35 @@ class ProcurementPageController extends Controller{
     public function viewEncodeDeliveryReceipt(){
         $pendingPO = ProcurementModel::getPendingPurchaseOrders();
 
+        $pendingPODetails = [];
+
+        foreach($pendingPO as $po){
+            $PODetail = ProcurementModel::getPurchaseOrder($po->POID);
+
+            $pendingPODetails[$po->POID] = new stdClass();
+            $pendingPODetails[$po->POID]->Terms = $PODetail->Terms;
+            $pendingPODetails[$po->POID]->DeliveryAddress = $PODetail->DeliveryAddress;
+            $pendingPODetails[$po->POID]->RequestedDeliveryDate = $PODetail->RequestedDeliveryDate;
+            $pendingPODetails[$po->POID]->DateCreated = $PODetail->DateCreated;
+            $pendingPODetails[$po->POID]->Discount = $PODetail->Discount;
+
+            $supplierDetail = SupplierModel::getSupplierDetails($PODetail->SupplierID);
+            $pendingPODetails[$po->POID]->SupplierName = $supplierDetail->Name;
+            $pendingPODetails[$po->POID]->SupplierAddress = $supplierDetail->Address;
+            $pendingPODetails[$po->POID]->Landline = $supplierDetail->Landline;
+
+            $POItems = ProcurementModel::getPurchaseOrderItems($po->POID);
+
+             $pendingPODetails[$po->POID]->items = [];
+
+            foreach($POItems as $item){
+                 $pendingPODetails[$po->POID]->items[] = $item;
+            }
+        }
+
         $data = [
             'pendingPO' => $pendingPO,
+            'pendingPODetails' => $pendingPODetails,
         ];
 
         return view('procurement.DeliveryReceiptInitial')->With($data);

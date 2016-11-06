@@ -5,7 +5,6 @@ Procurement Dashboard
 @endsection
 
 @push('css')
-	<link href="/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="/css/highchars.css" />
 @endpush
 
@@ -27,7 +26,7 @@ Procurement Dashboard
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
 				<div class="symbol blue">
-					<i class="fa fa-user"></i>
+					<i class="fa fa-file"></i>
 				</div>
 				<div class="value">
 					<h1>{!!$countProductNeedProcurement!!}</h1>
@@ -38,7 +37,7 @@ Procurement Dashboard
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
 				<div class="symbol blue">
-					<i class="fa fa-user"></i>
+					<i class="fa fa-file-text-o"></i>
 				</div>
 				<div class="value">
 				<!-- count -->
@@ -61,7 +60,7 @@ Procurement Dashboard
 			<div class="col-lg-6">
 				<section class="panel">
 					<div class="panel-body">
-						<div id="graph2" class="chart"></div>
+						<div style="height: 400;" id="graph2" class="chart"></div>
 
 
 					</div>

@@ -26,6 +26,8 @@ class ProcurementFormController extends Controller{
     	$supplier = Input::get('supplier');
     	$address = Input::get('address');
         $deliveryDate = Input::get('deliveryDate');
+
+        $discount = Input::get('discount');
     	//table rows
     	$woodTypes = Input::get('WoodType');
     	$thicknesses = Input::get('Thickness');
@@ -33,7 +35,6 @@ class ProcurementFormController extends Controller{
     	$lengths = Input::get('Length');
     	$quantities = Input::get('Quantity');
     	$unitPrices = Input::get('UnitPrice');
-    	$discounts = Input::get('Discount');
 
     	$rows = [];
 
@@ -83,14 +84,8 @@ class ProcurementFormController extends Controller{
     		$count++;
     	}
 
-    	$count = 0;
-    	foreach($discounts as $discount){
-    		$rows[$count]['discount'] = $discount;
 
-    		$count++;
-    	}
-
-    	$status = ProcurementModel::createPurchaseOrder($term, $supplier, $address, $deliveryDate, $rows);
+    	$status = ProcurementModel::createPurchaseOrder($term, $supplier, $address, $deliveryDate, $discount, $rows);
  
     	if(!$status){
             //echo 'ADASDASDADASDAS';
@@ -98,6 +93,7 @@ class ProcurementFormController extends Controller{
             return Redirect::back()
     						->withErrors(['error' => 'An unexpected error occured.'])
     						->withInput(Input::all());
+            
             
             //return mysql_errno() ? "true" : "false";
     	}
@@ -201,8 +197,35 @@ class ProcurementFormController extends Controller{
 
         $pendingPO = ProcurementModel::getPendingPurchaseOrders();
 
+        $pendingPODetails = [];
+
+        foreach($pendingPO as $po){
+            $PODetail = ProcurementModel::getPurchaseOrder($po->POID);
+
+            $pendingPODetails[$po->POID] = new stdClass();
+            $pendingPODetails[$po->POID]->Terms = $PODetail->Terms;
+            $pendingPODetails[$po->POID]->DeliveryAddress = $PODetail->DeliveryAddress;
+            $pendingPODetails[$po->POID]->RequestedDeliveryDate = $PODetail->RequestedDeliveryDate;
+            $pendingPODetails[$po->POID]->DateCreated = $PODetail->DateCreated;
+            $pendingPODetails[$po->POID]->Discount = $PODetail->Discount;
+
+            $supplierDetail = SupplierModel::getSupplierDetails($PODetail->SupplierID);
+            $pendingPODetails[$po->POID]->SupplierName = $supplierDetail->Name;
+            $pendingPODetails[$po->POID]->SupplierAddress = $supplierDetail->Address;
+            $pendingPODetails[$po->POID]->Landline = $supplierDetail->Landline;
+
+            $POItems = ProcurementModel::getPurchaseOrderItems($po->POID);
+
+             $pendingPODetails[$po->POID]->items = [];
+
+            foreach($POItems as $item){
+                 $pendingPODetails[$po->POID]->items[] = $item;
+            }
+        }
+
         $data = [
             'pendingPO' => $pendingPO,
+            'pendingPODetails' => $pendingPODetails,
             'success' => 'Delivery receipt successfully created.',
         ];
 

@@ -13,15 +13,18 @@
 <li>
 	<a @if($active == 'DeliveryReceipt') class="active" @endif href="\procurement\DeliveryReceipt">
 		<i class="fa fa-file-text"></i>
-		Encode Supplier Delivery Receipt
+		Receive Purchase Order
 	</a>
 </li>
+<!--
 <li>
 	<a @if($active == 'PurchaseList') class="active" @endif href="\procurement\PurchaseList">
 		<i class="fa fa-file-text"></i>
 		<span>Purchase List</span>
 	</a>
 </li>
+-->
+
 <li>
 	<a @if($active == 'SupplierList') class="active"@endif href="\procurement\SupplierList">
 		<i class="fa fa-file-text"></i>
@@ -31,13 +34,14 @@
 <li>
 	<a @if($active == 'PurchaseReport') class="active" @endif href="\procurement\PurchaseReport">
 		<i class="fa fa-file"></i>
-		<span>Purchase Report</span>
+		<span>Purchase History</span>
 	</a>
 </li>
+<!--
 <li>
 	<a @if($active == 'ProductPurchaseReport') class="active" @endif href="\procurement\ProductPurchaseReport">
 		<i class="fa fa-file-text"></i>
 		<span><font size="2.2%">Product Purchase Report</font></span>
 	</a>
 </li>
-
+-->
