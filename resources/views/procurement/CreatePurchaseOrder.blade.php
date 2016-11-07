@@ -157,55 +157,12 @@ Create Purchase Order
 										<th>Quantity</th>
 										<th>Unit</th>
 										<th>Unit Price</th>
-										<th>Discount</th>
 										<th>Amount</th>
 										<th></th>
 									</tr>
 								</thead>
 								
 								<tbody>
-									<tr>
-										<td>
-											<select name="WoodType[]" class="form-control columnAdjust10p" required">
-												<option></option>
-												<option value="1">Kiln Dry</option>
-												<option value="2">Sun Dry</option>
-											</select>
-										</td>
-
-										<td>
-											<input name="Thickness[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
-										</td>
-
-										<td>
-											<input name="Width[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
-										</td>
-
-										<td>
-											<input name="Length[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
-
-										</td>
-
-										<td>
-											<input name="Quantity[]" autocomplete="on" type="number" step="1" min=0 required class="form-control columnAdjust9p" />
-										</td>
-
-										<td>
-											piece
-										</td>
-
-										<td>
-											<input name="UnitPrice[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
-										</td>
-
-										<td>
-											<input name="Unused[]" autocomplete="on" min=0 type="number" step="any" class="form-control columnAdjust9p" />
-										</td>
-
-										<td>
-											
-										</td>
-									</tr>
 									
 								</tbody>
 							</table>
@@ -264,7 +221,7 @@ Create Purchase Order
     <script src="/js/dynamic_table_init.js"></script>
    
     <!--script for this page only-->
-    <script src="/js/editable-table.js"></script>
+    <script src="/js/editable-table6.js"></script>
 	<!--this page script only-->
 	<!--right slidebar-->
 	
