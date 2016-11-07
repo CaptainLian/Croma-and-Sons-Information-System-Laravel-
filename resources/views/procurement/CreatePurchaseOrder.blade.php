@@ -172,6 +172,7 @@ Create Purchase Order
 												<option value="2">Sun Dry</option>
 											</select>
 										</td>
+
 										<td>
 											<input name="Thickness[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
 										</td>
@@ -183,10 +184,6 @@ Create Purchase Order
 										<td>
 											<input name="Length[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
 
-										</td>
-
-										<td>
-											<input name="Length[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" />
 										</td>
 
 										<td>
