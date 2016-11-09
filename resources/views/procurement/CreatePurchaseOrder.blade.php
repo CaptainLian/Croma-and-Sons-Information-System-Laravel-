@@ -200,7 +200,7 @@ Create Purchase Order
 @endsection
 
 @push('javascript')
-
+	
 	<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
