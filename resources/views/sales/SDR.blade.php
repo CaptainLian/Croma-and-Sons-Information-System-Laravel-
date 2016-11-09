@@ -25,17 +25,16 @@
 			   $items[$ctr]->Length }}
 			</td>
 			<td class="">pcs</td>
-			<td class="" width="30px">
+			<td class="pcs" width="30px">
+				{{$items[$ctr]->Quantity}}
 
-
-				<input class="form-control m-bot15" value="{{$items[$ctr]->Quantity}}" type="text" >
+				 
 
 
 			</td>
 			 
-			<td>{{  $items[$ctr]->CurrentUnitPrice }}</td>
-			<td>?</td>
-			<td></td>
+			<td class="price">{{  $items[$ctr]->CurrentUnitPrice }}</td>
+			 
 		</tr>
 	@endfor
 @endsection

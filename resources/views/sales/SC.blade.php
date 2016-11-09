@@ -13,7 +13,8 @@
 			<td>{{$c->Width}}</td>
 			<td>{{$c->Length}}</td>
 			<td>
-				<input class="form-control" id="disabledInput" type="text" placeholder="{{$c->CurrentUnitPrice}}" disabled="">
+				{{$c->CurrentUnitPrice}}
+				 
 			</td>
 			<td>
 				<a class="edit" href="javascript:;">Edit</a>
