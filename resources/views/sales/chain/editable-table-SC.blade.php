@@ -1,4 +1,5 @@
 <script>
+var status = 'none';
 var EditableTable = function () {
 
     return {
@@ -16,9 +17,21 @@ var EditableTable = function () {
                 oTable.fnDraw();
             }
 
+            function editPriceRow(oTable, nRow) {
+                var aData = oTable.fnGetData(nRow);
+                var jqTds = $('>td', nRow);                
+                jqTds[0].innerHTML =  '<input disabled="" type="text" class="form-control small" value="' + aData[0] + '">' ;
+                jqTds[1].innerHTML =  '<input disabled="" type="text" class="form-control small" value="' + aData[1] + '">' ; ;
+                jqTds[2].innerHTML =  '<input disabled="" type="text" class="form-control small" value="' + aData[2] + '">' ; ;
+                jqTds[3].innerHTML =  '<input disabled="" type="text" class="form-control small" value="' + aData[3] + '">' ; ;
+                jqTds[4].innerHTML = '<input type="text" class="form-control small" value="' + aData[4] + '">'; 
+                jqTds[5].innerHTML = '<a class="edit" href="">Save</a>';
+                jqTds[6].innerHTML = '<a class="delete" href="">Cancel</a>';
+
+            }
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
-                var jqTds = $('>td', nRow);
+                var jqTds = $('>td', nRow);                
                 jqTds[0].innerHTML = '<input type="text" class="form-control small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
@@ -26,9 +39,13 @@ var EditableTable = function () {
                 jqTds[4].innerHTML = '<input type="text" class="form-control small" value="' + aData[4] + '">'; 
                 jqTds[5].innerHTML = '<a class="edit" href="">Save</a>';
                 jqTds[6].innerHTML = '<a class="delete" href="">Cancel</a>';
+
             }
 
             function saveRow(oTable, nRow) {
+                /*$(nRow).find('td').each(function(){
+                    console.log('asd');
+                });*/
                 var jqInputs = $('input', nRow);
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
@@ -85,8 +102,11 @@ var EditableTable = function () {
                     '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
                     ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
+                status = 'add';
+                console.log('new'+status);
                 editRow(oTable, nRow);
                 nEditing = nRow;
+               
             });
 
             $('#editable-sample a.delete').live('click', function (e) {
@@ -115,6 +135,11 @@ var EditableTable = function () {
             $('#editable-sample a.edit').live('click', function (e) {
                 e.preventDefault();
 
+                if(status == 'none'){
+                    status = 'edit';
+                }
+                console.log(status);
+
                 /* Get the row as a parent of the link that was clicked on */
 
                 var nRow = $(this).parents('tr')[0];
@@ -123,7 +148,7 @@ var EditableTable = function () {
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(oTable, nEditing);
-                    editRow(oTable, nRow);
+                    editPriceRow(oTable, nRow);
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
@@ -131,30 +156,48 @@ var EditableTable = function () {
 
                     nEditing = null;
                     var json = [];
+                   
                     var ctr = 0;
+
                     $(nRow).find('td').each (function(){
-                      // do your cool stuff
+                       
                       if( ctr < 5)
                         json.push($(this).text());
+                      
                       ctr++;
-                      console.log(json);
+                     /* console.log(json);
                       console.log('Pumasok');
-                      console.log($(this).text());
+                      console.log($(this).val());*/
                     }); 
-
+                     
+                    console.log('New');
+                    console.log(json);
                     token = $('meta[name="csrf-token"]').attr('content');
                     alert("Updated! Do not forget to do some ajax to sync with backend :)");
-                    $.ajax({
-                        type:'POST',
-                        url:'/sales/catalog/add',
-                        data: {'json' : json, '_token':token},
-                        success:function(response){
-                            console.log(response);
-                        }
-                    });
+                    if(status == 'add'){
+                        $.ajax({
+                            type:'POST',
+                            url:'/sales/catalog/add',
+                            data: {'json' : json, '_token':token},
+                            success:function(response){
+                                console.log(response);
+                            }
+                        });
+                    }else if(status == 'edit'){
+                        console.log('edit to');
+                        $.ajax({
+                            type:'POST',
+                            url:'/sales/catalog/edit',
+                            data: {'json' : json, '_token':token},
+                            success:function(response){
+                                console.log(response);
+                            }
+                        });
+                    }
+                    status = 'none';
                 } else {
                     /* No edit in progress - let's start one */
-                    editRow(oTable, nRow);
+                    editPriceRow(oTable, nRow);
                     nEditing = nRow;
                 }
             });

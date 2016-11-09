@@ -32,6 +32,7 @@ Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 Route::get('/sales/catalog','SalesCatalog@index');
 
 Route::post('/sales/catalog/add','SalesCatalog@add');
+Route::post('/sales/catalog/edit','SalesCatalog@edit');
 
 
 Route::get('/sales/invoice','SalesInvoice@list');

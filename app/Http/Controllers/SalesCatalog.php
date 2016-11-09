@@ -54,4 +54,46 @@ class SalesCatalog extends Controller
        /*DB::commit();*/
 
    }
+   public function edit(Request $request){
+      $item = $request->input('json');
+
+       /*DB::beginTransaction();*/
+      $wood = DB::table('REF_WoodTypes')
+                 ->select('WoodTypeID')
+                 ->where('WoodType',$item[0])
+                 ->pluck('WoodTypeID');
+      $update = DB::table('REF_WoodTypes')                 
+                 ->where('WoodType',$wood,
+                          'Thickness',$item[1],
+                          'Width',$item[2],
+                          'Length',$item[3])
+                 ->update(['CurrentUnitPrice',$item[4]]);
+       if($update){
+            echo 'Success';
+         }else{
+            echo 'Failed';
+         }          
+      /*if($wood <> '[]'){
+         $var = DB::table('CompanyInventory')
+                  ->insert([
+                  'WoodTypeID' => $wood[0],
+                  'Thickness' => $item[1],
+                  'Width' => $item[2],
+                  'Length' => $item[3],
+                  'CurrentUnitPrice' => $item[4]]);
+         if($var){
+            echo 'Success';
+         }else{
+            echo 'Failed';
+         }
+      }else{
+
+      }*/
+
+      
+
+
+       /*DB::commit();*/
+
+   }
 }
