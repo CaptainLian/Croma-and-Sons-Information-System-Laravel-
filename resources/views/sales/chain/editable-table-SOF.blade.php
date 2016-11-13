@@ -12,23 +12,23 @@
                 for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
                     oTable.fnUpdate(aData[i], nRow, i, false);
                 }
-
+ 
                 oTable.fnDraw();
+                 
             }
 
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
 
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = "<select  class=\"form-control material columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
-                jqTds[1].innerHTML = '<input type="text" class="form-control thick columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control wid columnAdjust9p" name="width[]" value="' + aData[2] + '">';
-                jqTds[3].innerHTML = '<input type="text" class="form-control len columnAdjust9p" name="length[]" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<input type="text" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<input type="text" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';
-               
-                jqTds[7].innerHTML = '<a class="delete" href="#">Cancel</a>';
+                jqTds[0].innerHTML = "<select style='width:100%'   class=\"form-control material columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
+                jqTds[1].innerHTML = '<input  style="width:100%" type="text" class="form-control thick columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
+                jqTds[2].innerHTML = '<input type="text" style="width:100%" class="form-control wid columnAdjust9p" name="width[]" value="' + aData[2] + '">';
+                jqTds[3].innerHTML = '<input type="text" style="width:100%" class="form-control len columnAdjust9p" name="length[]" value="' + aData[3] + '">';
+                jqTds[4].innerHTML = '<input type="text" style="width:100%" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
+                jqTds[5].innerHTML = '<input type="text" style="width:100%"  class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
+                jqTds[6].innerHTML = '<input type="text" style="width:100%" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';               
+                jqTds[7].innerHTML = '<a style="width:100%"  class="delete" href="#">Cancel</a>';
             }
 
             function saveRow(oTable, nRow) {
@@ -42,6 +42,7 @@
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
                
                 oTable.fnUpdate('<a class="delete" href="#">Delete</a>', nRow, 7, false);
+
                 oTable.fnDraw();
             }
 
@@ -63,9 +64,9 @@
             var oTable = $('#editable-sample').dataTable({
                 "fnAdjustColumnSizing" : false,
                 "aLengthMenu": [
-                [5, 15, 20, -1],
+                    [5, 15, 20, -1],
                     [5, 15, 20, "All"] // change per page values here
-                    ],
+                ],
 
                 // set the initial value
                 "iDisplayLength": 5,
@@ -78,50 +79,49 @@
                         "sNext": "Next"
                     }
                 },
-               /* "aoColumnDefs": [{
-                    'bSortable': false,
-                    'sWidth': "10%",
-                    'aTargets': [0]
-                },{
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'sWidth': "10%",
+                        'aTargets': [0]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [1]
-                },{
+                        'sWidth': "9%",
+                        'aTargets': [1]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [2]
-                },{
+                        'sWidth': "9%",
+                        'aTargets': [2]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [3]
-                },{
+                        'sWidth': "9%",
+                        'aTargets': [3]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [4]
-                },{
+                        'sWidth': "9%",
+                        'aTargets': [4]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [5]
-                },{
+                        'sWidth': "9%",
+                        'aTargets': [5]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [6]
-                },{
+                        'sWidth': "9%",
+                        'aTargets': [6]
+                    },{
 
 
-                    'sWidth': "9%",
-                    'aTargets': [9]
-                }
-
+                        'sWidth': "9%",
+                        'aTargets': [7]
+                    }
                 
 
-                ]*/
+                ]
             });
 
             jQuery('#editable-sample_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input
@@ -135,7 +135,7 @@
                     '<a class="cancel" data-mode="new" href="#">Cancel</a>'
                     ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
-                editRow(oTable, nRow);
+                 editRow(oTable, nRow);
                 nEditing = nRow;
             });
 
@@ -191,6 +191,7 @@
                     editRow(oTable, nRow);
                     nEditing = nRow;
                 }
+
             });
 
 

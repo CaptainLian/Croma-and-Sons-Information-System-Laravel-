@@ -92,7 +92,7 @@
                   <div class="col-lg-3 col-sm-6">
                       <section class="panel">
                           <div class="symbol blue">
-                              <i class="fa fa-user"></i>
+                              <i class="fa fa-file-o"></i>
                           </div>
                           <div class="value">
                               <h1 class="count">
@@ -105,7 +105,7 @@
                   <div class="col-lg-3 col-sm-6">
                       <section class="panel">
                           <div class="symbol green">
-                              <i class="fa fa-tags"></i>
+                              <i class="fa fa-file-text-o"></i>
                           </div>
                           <div class="value">
                               <h1 class=" count2">
@@ -118,7 +118,7 @@
                   <div class="col-lg-3 col-sm-6">
                       <section class="panel">
                           <div class="symbol yellow">
-                              <i class="fa fa-shopping-cart"></i>
+                              <i class="fa fa-truck "></i>
                           </div>
                           <div class="value">
                               <h1 class=" count3">
@@ -133,48 +133,43 @@
 			  
 			  
 					  
-					  <div class="flot-chart">
-                  <!-- page start-->
+              <div>
+                <!-- page start-->
                 
-                  <div class="row">
-				  
-				  
-				    <div class="col-lg-6">
-                          <section class="panel">
-                              <header class="panel-heading">
-                                  Success vs Failed
-                              </header>
-                              <div class="panel-body">
-                                  <div id="graph2" class="chart"></div>
-                              </div>
-                          </section>
-                      </div>
-				  
-                      <div class="col-lg-6">
-                          <section class="panel">
-                              <header class="panel-heading">
-                                  Monthly Sales
-                              </header>
-                              <div class="panel-body">
-                                  <div id="chart-2" class="chart"></div>
-                              </div>
-                          </section>
-                      </div>
-                      
-                  </div>
-                  
-                  <div class="row">
-                     
-                    
-                  </div>
-                 
-                  <!-- page end-->
-              </div>
-			  
+                
+
+
+                  <div class="col-lg-6">
+                    <section class="panel">
+                      <header class="panel-heading">
+                       Sales Reject Ratio
+                     </header>
+                     <div class="panel-body">
+                      <div  id="piechart1" ></div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="col-lg-6">
+                  <section class="panel">
+                    <header class="panel-heading">
+                      Monthly Sales
+                    </header>
+                    <div class="panel-body">
+                      <div id="linegraph"  ></div>
+                    </div>
+                  </section>
+                </div>
+
+               
+
+              <!-- page end-->
+            </div>
+
               <!--state overview end-->
 
               
-           
+
               
          
 
@@ -200,28 +195,32 @@
 
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{URL::asset('js/jquery.js')}}"></script>
-    <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+<script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
     <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
+     <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
+    <!-- 
     <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
-    <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
+   
     <script src="{{URL::asset('js/jquery.sparkline.js')}}" type="text/javascript"></script>
   
     <script src="{{URL::asset('js/jquery.customSelect.min.js')}}" ></script>
     <script src="{{URL::asset('js/respond.min.js')}}" ></script>  
     <script src="{{URL::asset('assets/chart-master/Chart.js')}}"></script>
-   
+    -->
    
     <!--right slidebar-->
     <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
 	
 	
-	
-	  <script src="{{URL::asset('assets/flot/jquery.flot.js')}}"></script>
+	 <script src="{{URL::asset('js/highcharts.js')}}"></script>
+   <script src="{{URL::asset('assets/flot/jquery.flot.js')}}"></script>
+	  <!-- 
     <script src="{{URL::asset('assets/flot/jquery.flot.resize.js')}}"></script>
-    <script src="{{URL::asset('assets/flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{URL::asset('assets/flot/jquery.flot.pie.js')}}"></script> -->
+    <!-- 
     <script src="{{URL::asset('assets/flot/jquery.flot.stack.js')}}"></script>
     <script src="{{URL::asset('assets/flot/jquery.flot.crosshair.js')}}"></script>
-
+ -->
 
     <!--common script for all pages-->
     <script src="{{URL::asset('js/common-scripts.js')}}"></script>
@@ -232,21 +231,186 @@
       @yield('count')
 
     </script>
-	   <script>
-      @yield('main-chart') 
-     </script>
-
-	
+	   
   <script>
 
-     
+   $(function () {
+
+    $(document).ready(function () {
+      $('#linegraph').highcharts({
+          title: {
+            text: '',
+            x: -20 //center
+          },
+          subtitle: {
+            text: '',
+            x: -20
+          },
+          xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+          },
+          yAxis: {
+            title: {
+              text: 'Temperature (°C)'
+            },
+            plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+            }]
+          },
+          tooltip: {
+            valueSuffix: '°C'
+          },
+          legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+          },
+          series: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+          }, {
+            name: 'New York',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+          }, {
+            name: 'Berlin',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+          }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+          }]
+        });
+        // Build the chart
+       $('#piechart1').highcharts({
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y:.1f}%'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Microsoft Internet Explorer',
+                y: 56.33,
+                drilldown: 'Microsoft Internet Explorer'
+            }, {
+                name: 'Chrome',
+                y: 24.03,
+                drilldown: 'Chrome'
+            }, {
+                name: 'Firefox',
+                y: 10.38,
+                drilldown: 'Firefox'
+            }, {
+                name: 'Safari',
+                y: 4.77,
+                drilldown: 'Safari'
+            }, {
+                name: 'Opera',
+                y: 0.91,
+                drilldown: 'Opera'
+            }, {
+                name: 'Proprietary or Undetectable',
+                y: 0.2,
+                drilldown: null
+            }]
+        }],
+        drilldown: {
+            series: [{
+                name: 'Microsoft Internet Explorer',
+                id: 'Microsoft Internet Explorer',
+                data: [
+                    ['v11.0', 24.13],
+                    ['v8.0', 17.2],
+                    ['v9.0', 8.11],
+                    ['v10.0', 5.33],
+                    ['v6.0', 1.06],
+                    ['v7.0', 0.5]
+                ]
+            }, {
+                name: 'Chrome',
+                id: 'Chrome',
+                data: [
+                    ['v40.0', 5],
+                    ['v41.0', 4.32],
+                    ['v42.0', 3.68],
+                    ['v39.0', 2.96],
+                    ['v36.0', 2.53],
+                    ['v43.0', 1.45],
+                    ['v31.0', 1.24],
+                    ['v35.0', 0.85],
+                    ['v38.0', 0.6],
+                    ['v32.0', 0.55],
+                    ['v37.0', 0.38],
+                    ['v33.0', 0.19],
+                    ['v34.0', 0.14],
+                    ['v30.0', 0.14]
+                ]
+            }, {
+                name: 'Firefox',
+                id: 'Firefox',
+                data: [
+                    ['v35', 2.76],
+                    ['v36', 2.32],
+                    ['v37', 2.31],
+                    ['v34', 1.27],
+                    ['v38', 1.02],
+                    ['v31', 0.33],
+                    ['v33', 0.22],
+                    ['v32', 0.15]
+                ]
+            }, {
+                name: 'Safari',
+                id: 'Safari',
+                data: [
+                    ['v8.0', 2.56],
+                    ['v7.1', 0.77],
+                    ['v5.1', 0.42],
+                    ['v5.0', 0.3],
+                    ['v6.1', 0.29],
+                    ['v7.0', 0.26],
+                    ['v6.2', 0.17]
+                ]
+            }, {
+                name: 'Opera',
+                id: 'Opera',
+                data: [
+                    ['v12.x', 0.34],
+                    ['v28', 0.24],
+                    ['v27', 0.17],
+                    ['v29', 0.16]
+                ]
+            }]
+        }
+    });
+        
+      });
+  });
 
       //custom select box
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
+      
       
 
   </script>

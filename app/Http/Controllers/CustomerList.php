@@ -63,4 +63,42 @@ class CustomerList extends Controller
        /*DB::commit();*/
    
     }
+    public function edit(Request $request){
+      $item = $request->input('json');
+
+       /*DB::beginTransaction();*/
+    
+      $update = DB::table('Customers')                 
+                 ->where('Name',$item[0])
+                 ->update([
+                      'Address' => $item[1],
+                      'ContactPerson' =>$item[3],
+                      'MobileNumber' =>$item[2],
+                      ]);
+       if($update){
+            echo 'Success';
+         }else{
+            echo 'Failed';
+         }          
+       
+       /*DB::commit();*/
+
+   }
+   public function delete(Request $request){
+      $item = $request->input('json');
+
+       /*DB::beginTransaction();*/
+    
+      $update = DB::table('Customers')                 
+                 ->where('Name',$item[0])
+                 ->delete();
+       if($update){
+            echo 'Success';
+         }else{
+            echo 'Failed';
+         }          
+       
+       /*DB::commit();*/
+
+   }
 }

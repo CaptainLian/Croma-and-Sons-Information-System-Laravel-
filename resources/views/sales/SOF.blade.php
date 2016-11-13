@@ -10,6 +10,35 @@
 
 @section('csof')
 
+@if(isset($outcome) )
+   @if($outcome == 1)
+    <div class="alert alert-success alert-block fade in">
+  @elseif($outcome == 0)
+    <div class="alert alert-danger alert-block fade in">
+  @endif
+  
+    <button data-dismiss="alert" class="close close-sm" type="button">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4>
+      <i class="fa fa-ok-sign"></i>
+        @if($outcome == 1)
+          Success!
+        @elseif($outcome == 0)
+          Failed!
+        @endif
+      
+    </h4>
+
+       
+        <p> 
+        @if($outcomeMessage <> null) 
+        {!!$outcomeMessage!!}
+        @endif
+      </p>
+   
+  </div>
+@endif
 
 {!! Form::open(['url' => 'sales/salesOrder/create']) !!}
 
@@ -18,29 +47,71 @@
 <div class="row">
 
 	<div class="form-group">
-		<label class="control-label col-md-1">Set Delivery Date</label>
-		<div class="col-md-3 col-xs-11">
+		<label class="control-label col-md-1">Set Order Date</label>
+		<div class="col-md-4 col-xs-11">
 
 			<div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012"  class="input-append date dpYears">
 
-				{!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""']) !!}
+				{!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""','size'=>'16']) !!}
 
 				<span class="input-group-btn add-on">
-					<button class="btn btn-danger" type="button"><i class="fa fa-calendar"></i></button>
-				</span>
-			</div>
+        {!! Form::button('<i class="fa fa-calendar"></i>',
+        ['class' => 'btn ',
+         'style' => 'padding:6px 9px 6px 9px;background-color:#ff6c60;color:white'])!!}
+ 
+        </span>
+      </div>
 
 
 
-			<br>
-		</div>
+      <br>
+    </div>
 
-	</div>
+  </div>
 </div>
+
+<div class="row" id="newUserRow">
+  <div class="form-group" id="toHide1">
+    {!! Form::label('customerName','Customer Name',
+    ['class' => 'col-sm-1 control-label col-lg-1'])!!}
+
+    <div class="col-lg-4 col-md-4 ">
+      <div class="input-group m-bot15">
+       <span class="input-group-btn">
+        <button class="btn btn-white" type="button" id="newUser">New User</button>
+      </span>
+      {!! Form::select('customerName', $customers,null,
+      ['class' => 'form-control m-bot15',
+       'id' => 'customer-select']) !!}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" id="toHide">
+
+    {!! Form::label('customerName1','Customer Name',['class' => 'col-sm-1 control-label col-lg-1'])!!}
+    <div class="col-lg-4">
+      <div class="input-group m-bot15">
+        <span class="input-group-btn">
+          <button class="btn btn-white" type="button" id="cancelButton">Cancel</button>
+        </span>
+        {!! Form::text('customerName1',null,['class' => 'form-control',
+        'id' => 'customer-text'])!!}
+      </div>
+    </div>
+  </div>
+
+ 
+
+
+</div>
+
+
 <div class="row">
 
-{!! Form::label('terms','Payment Terms',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
-  <div class="col-sm-3">
+  {!! Form::label('terms','Payment Terms',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+  <div class="col-sm-4">
    {!! Form::select('terms',$terms,null,
    ['class' => 'form-control m-bot15']) !!}
 
@@ -50,22 +121,7 @@
 </div>
 
 
-<div class="row" id="newUserRow">
-  <div class="form-group" id="toHide1">
-   {!! Form::label('customerName','Customer Name',['class' => 'col-sm-1 control-label col-lg-1'])!!}
 
-   <div class="col-lg-3">
-    <div class="input-group m-bot15">
-     <span class="input-group-btn">
-      <button class="btn btn-white" type="button" id="newUser">New User</button>
-    </span>
-    {!! Form::select('customerName',$customers,null,
-    ['class' => 'form-control m-bot15']) !!}
-
-  </div>
-</div>
-</div>
-</div>
 <!-- 
 <div class="row">
   <div class="form-group">
@@ -80,20 +136,28 @@
 </div>
 
 </div> -->
-<br>
-
+ 
 
 <div class="row">
   <div class="form-group">
 
-   {!! Form::label('delivery-address','Delivery Adress',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
-   <div class="col-sm-3">
+   {!! Form::label('delivery-address','Delivery Address',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+   <div class="col-sm-4">
     {!! Form::text('delivery-address',null,['class' => 'form-control'])!!}
   </div>
 </div>
 
 </div>
 
+<div class="row">
+  <div class="form-group" id='customer-address-new'>
+
+   {!! Form::label('customer-address','Customer Address',['class' => 'col-sm-1 col-sm-2 control-label'])!!}
+   <div class="col-sm-4">
+    {!! Form::text('customer-delivery-address',null,['class' => 'form-control',
+    'id' =>'customer-address'])!!}
+  </div>
+</div>
 
 <br>
 
@@ -103,18 +167,6 @@
 
 
 
-<div class="form-group" id="toHide">
-
-	<label class="col-sm-1 control-label col-lg-1" >Customer Name</label>
-	<div class="col-lg-3">
-		<div class="input-group m-bot15">
-			<span class="input-group-btn">
-				<button class="btn btn-white" type="button" id="cancelButton">Cancel</button>
-			</span>
-			<input type="text" class="form-control">
-		</div>
-	</div>
-</div>
 
 
 
@@ -163,7 +215,7 @@
               <th>Unit</th>
 
               <th>Unit Price</th>
-                      
+
               <th></th>
             </tr>
           </thead>
@@ -200,7 +252,7 @@
               <td>
 
               </td>
-            
+
             </tr>
           </tbody>
         </table>
@@ -223,10 +275,12 @@
 </div>
 
 <div class="text-center invoice-btn">
-  {!! Form::button('Submit Sales Form',[
-  "class" => 'btn btn-danger btn-lg fa fa-check',
-  'type' => 'submit',
-  'style' => 'font-weight:100;font-size:16px;font-family:FontAwesome']) !!}  
+<a href="/sales/home" class="btn btn-danger btn-lg" style="background-color:#ff6c60;border-color:#ff6c60"><i class="fa fa-times" style="background-color:#ff6c60"></i> Cancel </a>
+ {!! Form::button('<i class="fa fa-check"></i>Submit Form',[
+ "class" => 'btn btn-success btn-lg ',
+ 'type' => 'submit',
+ 'style' => 'font-weight:100;font-size:16px;font-family:Open Sans']) !!}
+ <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>  
 
 
 </div>

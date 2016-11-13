@@ -123,7 +123,7 @@
       </section>
 
       <!-- js placed at the end of the document so the pages load faster -->
-      <script src="{{URL::asset('js/jquery.js')}}"></script>
+        <script src="{{URL::asset('js/jquery.js')}}"></script>
       <script >
       quantity = [];  
       price = [];
@@ -350,9 +350,10 @@
       }
         
       </script>
-      <script src="{{URL::asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
+    
+      <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
             <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
-      <script src="{{URL::asset('js/bootstrap-wysihtml5p.min.js')}}"></script>
+     <!--  <script src="{{URL::asset('js/bootstrap-wysihtml5p.min.js')}}"></script> -->
       <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
       <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
       <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
@@ -361,18 +362,19 @@
 
 
       <script type="text/javascript" src="{{URL::asset('assets/fuelux/js/spinner.min.js')}}"></script>
-      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
+      <!-- <script type="text/javascript" src="{{URL::asset('assets/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}></script>
-      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script> -->
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-daterangepicker/moment.min.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
-      <script type="text/javascript" src="{{URL::asset('assets/jquery-mult  i-select/js/jquery.multi-select.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>	
       <script type="text/javascript" src="{{URL::asset('assets/data-tables/jquery.dataTables.js')}}"></script>
+
       <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script>
 
 
@@ -384,21 +386,35 @@
 
       <!--this page  script only-->
        
-
+            <!--this page script only-->
+ 
 
       <!--right slidebar-->
+
       <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
 
       <!--common script for all pages-->
       <script src="{{URL::asset('js/common-scripts.js')}}"></script>
 
       <script>
+         EditableTable.init();
+         
 
-
+        $('#customer-address-new').hide();
+        $("#cancelButton").click(function(){
+          $('#customer-address-new').hide();
+          $('#customer-text').attr('value','');
+          $('#customer-address').attr('value','');
+        });
+         $("#newUser").click(function(){
+          $('#customer-address-new').show();
+          $('#customer-select').attr('value','null');
+        });
 
 
        $(document).ready(function() {
-        $("#newUser").click(function (){
+        
+         $("#newUser").click(function (){
 
 
 
@@ -428,12 +444,11 @@
 
         });
         
-        EditableTable.init();
-
+     
+ 
       });
 
     </script>
-
 
   </body>
 

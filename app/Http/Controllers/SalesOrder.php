@@ -19,8 +19,11 @@ class SalesOrder extends Controller
     public function index(){
     	$customer = DB::table('Customers')
     				  ->select('CustomerID','Name')
+              ->orderBy('Name','asc')
     				  ->get();
     	$customer = $customer->pluck('Name','CustomerID');
+      $customer = array('null' => 'Please Select Customer') + $customer->toArray();
+
     	$terms = DB::table('REF_Terms')
 
     			   ->pluck("Terms","Terms");
@@ -36,56 +39,132 @@ class SalesOrder extends Controller
     }
 
     public function create(Request $request){
+    
+    
+    
+    $customerNumber = -2;
+    if($request->input('customerName1') <> 'null' && $request->input('customerName1') <> '' ){
+      $customerNumber = DB::table('Customers')
+                          ->insertGetId([
+                            'Name' => $request->input('customerName1'),
+                            'Address' =>$request->input('customer-delivery-address')
+                            ]);
+
+      
+    }else{
+      $customerNumber = $request->input('customerName');
+    }
+
+    
 
     $customer = DB::table('Customers')
     				  ->select('CustomerID','Name')
+              ->orderBy('Name','asc')
     				  ->get();
-	$customer = $customer->pluck('Name','CustomerID');
-	$terms = DB::table('REF_Terms')
-			   ->pluck("Terms","Terms");
+  	$customer = $customer->pluck('Name','CustomerID');
+    $customer = array('null' => 'Please Select Customer') + $customer->toArray();
+
+     
+  	$terms = DB::table('REF_Terms')
+  			   ->pluck("Terms","Terms");
 
      $now = Carbon::now()->toDateString();
 
-    
-
+    $result = 0;
+    $outcome = 0;
+    $outcomeMessage = '';
     DB::beginTransaction();
-    if(count($request->input('material')) > 0){
-        $id = DB::table('SalesOrders')
-        		->insertGetId(['DateCreated' => Carbon::now(),
-        				 'SalesOrderStatusID' => '1',
-        				 'CustomerID' => $request->input('customerName'),
-        				 'Terms' => $request->input('terms'),
-                         'DeliveryAddress' => $request->input('address')]);
+    if($customerNumber <> -1){
+      if(count($request->input('material')) > 0){
+          $id = DB::table('SalesOrders')
+          		->insertGetId(['DateCreated' => Carbon::now(),
+          				 'SalesOrderStatusID' => '1',
+          				 'CustomerID' => $customerNumber,
+          				 'Terms' => $request->input('terms'),
+                           'DeliveryAddress' => $request->input('address')]);
+          
 
-        for($ctr = 0; $ctr< count($request->input('material')); $ctr++){
-            try{
-    	    DB::table('SalesOrderItems')
-    	      ->insert(['SalesOrderID' => $id,
-    	      			'Thickness' => $request->input('thickness.'.$ctr),
-    	      			'Width' => $request->input('width.'.$ctr),
-    	      			'Length' => $request->input('length.'.$ctr),
-    	      			'WoodtypeID' => $request->input('material.'.$ctr),
-                        'BoardFeet' =>(
-                            $request->input('width.'.$ctr)*
-                            $request->input('length.'.$ctr)
-                            ),
-    	      			'Quantity' =>$request->input('qty.'.$ctr)]);
-            }
-           catch(\Exception $e){
-                echo "error";
+          for($ctr = 0; $ctr< count($request->input('material')); $ctr++){
+              try{
+
+                $enough =   DB::table('CompanyInventory')
+                            ->select('StockQuantity')
+                            ->where([
+                           'Thickness' => $request->input('thickness.'.$ctr),
+                          'Width' => $request->input('width.'.$ctr),
+                          'Length' => $request->input('length.'.$ctr),
+                          'WoodtypeID' => $request->input('material.'.$ctr)
+                              ])->pluck('StockQuantity');
+                /*echo $enough[0];
+                echo $request->input('qty.'.$ctr);*/
+                if( $enough[0] >= $request->input('qty.'.$ctr)
+                  ){
+                   $insert = DB::table('SalesOrderItems')
+                  ->insert(['SalesOrderID' => $id,
+                        'Thickness' => $request->input('thickness.'.$ctr),
+                        'Width' => $request->input('width.'.$ctr),
+                        'Length' => $request->input('length.'.$ctr),
+                        'WoodtypeID' => $request->input('material.'.$ctr),
+                              'BoardFeet' =>(
+                                  $request->input('width.'.$ctr)*
+                                  $request->input('length.'.$ctr)
+                                  ),
+                        'Quantity' =>$request->input('qty.'.$ctr)]);
+                  $newQuantity = $enough[0] - $request->input('qty.'.$ctr);
+                  $update = DB::table('CompanyInventory')
+                              ->where([
+                             ['Thickness','=',$request->input('thickness.'.$ctr)],
+                            ['Width','=', $request->input('width.'.$ctr)],
+                            ['Length','=', $request->input('length.'.$ctr)],
+                            ['WoodtypeID','=', $request->input('material.'.$ctr)]
+                                ])
+                              ->update(['StockQuantity'=> $newQuantity]);
+                 
+                 
+                     
+                   
+                       $outcome = 1;    
+                }
+                else{
+                   $ctr += count($request->input('material'));
+                  $outcomeMessage .= 'The amount of material you entered cannot be accomodated! <br>';   
+                  $outcome = 0;   
+                  DB::rollBack();
+                }
+                 
+              }
+              catch(\Exception $e){
+                echo $e;  
+                $ctr += count($request->input('material'));
+                $outcomeMessage .= 'Something wrong with the material you inserted! <br>';   
+                $outcome = 0;   
                 DB::rollBack();
-            }
-        }
+              }
+            
+                 
+                  
+              
+          }
+      }
+      else if(count($request->input('material')) == 0){
+        $outcomeMessage .= 'No material!<br>';     
+                
+      }
+    }else if($customerNumber == -1){
+       $outcomeMessage .= 'Two Customers!';     
     }
 
     DB::commit();
-
     
+ 
+     
     return view('sales.SOF',
     		['active' => 'sof',
     		 'customers' => $customer,
     		 'terms' => $terms,
-              'now' => $now]);
+         'now' => $now,
+         'outcome' => $outcome,
+         'outcomeMessage' => $outcomeMessage]);
    /* $ctr=0;
     $c =$request->input('qty.'.$ctr);
     print_r($c);	*/
@@ -97,6 +176,7 @@ class SalesOrder extends Controller
     }
 
     public function check(Request $request){
+        
         $customer = DB::table('Customers')
                   ->select('CustomerID','Name')
                   ->get();
