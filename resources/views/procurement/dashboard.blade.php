@@ -5,7 +5,7 @@ Procurement Dashboard
 @endsection
 
 @push('css')
-	<link href="/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="/css/highchars.css" />
 @endpush
 
 @section('sidebar')
@@ -26,7 +26,7 @@ Procurement Dashboard
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
 				<div class="symbol blue">
-					<i class="fa fa-user"></i>
+					<i class="fa fa-file"></i>
 				</div>
 				<div class="value">
 					<h1>{!!$countProductNeedProcurement!!}</h1>
@@ -37,7 +37,7 @@ Procurement Dashboard
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
 				<div class="symbol blue">
-					<i class="fa fa-user"></i>
+					<i class="fa fa-file-text-o"></i>
 				</div>
 				<div class="value">
 				<!-- count -->
@@ -52,24 +52,17 @@ Procurement Dashboard
 		<div class="row">
 			<div class="col-lg-6">
 				<section class="panel">
-					<header class="panel-heading">
-						<div class="row"> 
-							<h3>Reject vs Total Purchases</h3>
-						</div>
-						<font size="2%" align="center">(of current month: <u>{!!date('F')!!}</u>)</font>
-					</header>
 					<div class="panel-body">
-						<div id="graph2" class="chart"></div>
+						<div id="graph1"></div>
 					</div>
 				</section>
 			</div>
 			<div class="col-lg-6">
 				<section class="panel">
-					<header class="panel-heading">
-						<h3>Monthly Procurement</h3>
-					</header>
 					<div class="panel-body">
-						<div id="chart-2" class="chart"></div>
+						<div style="height: 400;" id="graph2" class="chart"></div>
+
+
 					</div>
 				</section>
 			</div>
@@ -80,46 +73,132 @@ Procurement Dashboard
 @endsection
 
 @push('javascript')
-	<script>
-		var failed  = 30;
-		var success = 50;
+	<script src="/js/highcharts.src.js"></script>
+	<script src="/modules/exporting.src.js"></script>
+	<script src="/modules/data.src.js"></script>
+	<script src="/modules/drilldown.src.js"></script>
+	<script src="/modules/no-data-to-display.src.js"></script>
 
-		var data = [
-            {
-                label: "United States",
-                data: [[1990, 18.9], [1991, 18.7], [1992, 18.4], [1993, 19.3], [1994, 19.5], [1995, 19.3], [1996, 19.4], [1997, 20.2], [1998, 19.8], [1999, 19.9], [2000, 20.4], [2001, 20.1], [2002, 20.0], [2003, 19.8], [2004, 20.4]]
-            },
-            {
-                label: "Germany",
-                data: [[1990, 12.4], [1991, 11.2], [1992, 10.8], [1993, 10.5], [1994, 10.4], [1995, 10.2], [1996, 10.5], [1997, 10.2], [1998, 10.1], [1999, 9.6], [2000, 9.7], [2001, 10.0], [2002, 9.7], [2003, 9.8], [2004, 9.79]]
-            },
-            {
-                label: "Denmark",
-                data: [[1990, 9.7], [1991, 12.1], [1992, 10.3], [1993, 11.3], [1994, 11.7], [1995, 10.6], [1996, 12.8], [1997, 10.8], [1998, 10.3], [1999, 9.4], [2000, 8.7], [2001, 9.0], [2002, 8.9], [2003, 10.1], [2004, 9.80]]
-            },
-            {
-                label: "Sweden",
-                data: [[1990, 5.8], [1991, 6.0], [1992, 5.9], [1993, 5.5], [1994, 5.7], [1995, 5.3], [1996, 6.1], [1997, 5.4], [1998, 5.4], [1999, 5.1], [2000, 5.2], [2001, 5.4], [2002, 6.2], [2003, 5.9], [2004, 5.89],]
-            },
-           
-        ];
+	<script >
 
+		$(function () {
+		    // Create the chart
+		    Highcharts.chart('graph1', {
+		        chart: {
+		            type: /* creampie */'pie'
+		        },
+		        title: {
+		            text: 'Procurement Reject Ratio'
+		        },
+		        subtitle: {
+		            text: 'Of this current month:<u>{!!date('F')!!}</u>'
+		        },
+		        plotOptions: {
+		            series: {
+		                dataLabels: {
+		                    enabled: true,
+		                    format: '{point.name}: {point.y:.0f}'
+		                }
+		            }
+		        },
+
+		        tooltip: {
+		            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>'
+		        },
+		        series: [{
+		        	name: 'Reject vs Accept',
+		        	data: [{
+		        		name: 'Reject',
+		        		y: {!!$procurementRatio->Reject!!},
+		        		color: 'red',
+		        		drilldown: 'Reject',
+		        	},{	
+		        		name: 'Accept',
+		        		y: {!!$procurementRatio->Accept!!},
+		        		color: 'green',
+		        		drilldown: 'Accept',
+		        	}]
+		        }],
+		        drilldown: {
+		            series: [
+		            	{
+			            	name: 'Reject',
+			            	id: 'Reject',
+			            	data: [
+			            		@foreach($procurementRatioSuppliersReject AS $supplier)
+			            			['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
+
+			            		@endforeach
+			            	]
+		            	},
+		            	{
+			            	name: 'Accept',
+			            	id: 'Accept',
+			            	data: [
+			            		@foreach($procurementRatioSuppliersAccept AS $supplier)
+			            			['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
+
+			            		@endforeach
+			            	],
+			            }
+		            	
+		            ]
+		        }
+		    });
+		});
+
+
+		$(function () {
+		    Highcharts.chart('graph2', {
+		        title: {
+		            text: 'Monthly Purchases in ₱esos',
+		            //x: -20 //center
+		        },
+		        subtitle:{
+		        	text: 'Of this current year {!!date('Y')!!}'
+		        },
+		        xAxis: {
+		            categories: [
+		            	@foreach($months as $month)
+		            		'{!!$month!!}',
+
+		            	@endforeach
+		            ]
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'Purchases (Php)'
+		            },
+		        },
+		        tooltip: {
+		            valueSuffix: ' ₱'
+		        },
+		        legend: {
+		            layout: 'vertical',
+		            align: 'right',
+		            verticalAlign: 'middle',
+		            borderWidth: 0
+		        },
+		        series: [{
+		            name: 'Purchases',
+		            data: [
+		            	@foreach($monthlyExpense as $expense)
+		            		{!!$expense!!},
+		            	@endforeach
+		            ]
+		        }]
+		    });
+		});
 	</script>
-	<script src="/assets/chart-master/Chart.js"></script>
-	<!--right slidebar-->
-	
-	<script src="/assets/flot/jquery.flot.js"></script>
-	<script src="/assets/flot/jquery.flot.resize.js"></script>
-	<script src="/assets/flot/jquery.flot.pie.js"></script>
-	<script src="/assets/flot/jquery.flot.stack.js"></script>
-	<script src="/assets/flot/jquery.flot.crosshair.js"></script>
-	<!--script for this page-->
-	<script src="/js/count.js"></script>
-	<script src="/js/flot-chart2.js"></script>
+
+	<!--
 	<script>
 		//custom select box    
         $(function(){
             $('select.styled').customSelect();
         });
 	</script>
+
+	-->
 @endpush

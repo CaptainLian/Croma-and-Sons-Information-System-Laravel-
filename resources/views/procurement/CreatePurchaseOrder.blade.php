@@ -40,6 +40,7 @@ Create Purchase Order
 			@endif
 			<div class="row">
 				{!!Form::open(['action' => 'BusinessControllers\ProcurementFormController@inputPurchaseOrder'])!!}
+				
 				<div class="row" id="newUserRow">
 					<div class="form-group ">
 						<label class="control-label col-md-1">Requested Delivery Date</label>
@@ -156,13 +157,13 @@ Create Purchase Order
 										<th>Quantity</th>
 										<th>Unit</th>
 										<th>Unit Price</th>
-										<th>Discount</th>
 										<th>Amount</th>
 										<th></th>
 									</tr>
 								</thead>
 								
 								<tbody>
+									
 								</tbody>
 							</table>
 						</div>
@@ -176,7 +177,7 @@ Create Purchase Order
 							<strong>Sub - Total amount :</strong>$6820
 						</li>
 						<li>
-							<strong>Discount :</strong>10%
+							<strong>Discount :</strong><input name="discount" type="number" step="any" min=0.0 max=1.0 value=0.0 />
 						</li>
 						<li>
 							<strong>VAT :</strong>-----
@@ -199,28 +200,32 @@ Create Purchase Order
 @endsection
 
 @push('javascript')
+	
 	<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-daterangepicker/moment.min.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-	<script type="text/javascript" src="/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-	<script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
-	<script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
-	<script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
-	<script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
-	<script src="/js/dynamic_table_init.js"></script>
-	<!--script for this page only-->
-	<script src="/js/editable-table.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+    <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+    <script src="/js/advanced-form-components.js"></script>
+
+    <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+    <script src="/js/dynamic_table_init.js"></script>
+   
+    <!--script for this page only-->
+    <script src="/js/editable-table6.js"></script>
 	<!--this page script only-->
 	<!--right slidebar-->
-	<script src="/js/slidebars.min.js"></script>
+	
 	<!--common script for all pages-->
-	<script src="/js/common-scripts.js"></script>
 	<script src="/js/advanced-form-components.js" type="text/javascript"></script>
 	<script>
 	  $(document).ready(function() {

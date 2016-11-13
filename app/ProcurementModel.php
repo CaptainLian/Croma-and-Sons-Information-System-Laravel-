@@ -8,101 +8,117 @@ use DB;
 class ProcurementModel extends Model{
 
 	public static function getWeeklyQuantityProductPurchase(){
-		$eh = DB::select(DB::raw("SELECT Types.WoodType AS Material, CONCAT(Purchased.Thickness, 'x', Purchased.Width, 'x', Purchased.Length) AS Size, 
-							   Purchased.PurchasedQuantity - Rejected.RejectedQuantity AS PurchasedQuantity, 
-							   Rejected.RejectedQuantity AS RejectedQuantity,
-							   (Purchased.PurchasedQuantity - Rejected.RejectedQuantity)*pdi.PurchasedUnitPrice AS PurchasedAmount,
-							   Rejected.RejectedQuantity*pdi.PurchasedUnitPrice AS RejectedAmount
-						FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQuantity
-							    FROM PurchaseDeliveryItems
-							   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-																     FROM PurchaseDeliveryReceipts
-																	WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
-							  GROUP BY WoodTypeID, Thickness, Width, Length) Purchased JOIN (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS RejectedQuantity
-																							  FROM PurchaseRejects
-																							 WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-																																   FROM PurchaseDeliveryReceipts
-																																   WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
-																							GROUP BY WoodTypeID, Thickness, Width, Length) Rejected
-																						ON Purchased.WoodTypeID = Rejected.WoodTypeID
-						                                                                AND Purchased.Thickness = Rejected.Thickness
-						                                                                AND Purchased.Width = Rejected.Width
-						                                                                AND Purchased.Length = Rejected.Length
-						                                                                JOIN REF_WoodTypes Types
-						                                                                  ON Types.WoodTypeID = Purchased.WoodTypeID
-						                                                                 JOIN PurchaseDeliveryItems pdi
-						                                                                 	ON pdi.WoodTypeID = Purchased.WoodTypeID
-						                                                                 	AND pdi.Thickness = Purchased.Thickness
-						                                                                 	AND pdi.Width = Purchased.Width
-						                                                                 	AND pdi.Length = Purchased.Length;"));
+		// Material Size QuantityOrdered, Quantity Rejected , Total Quantity, Ampunt Purchased, Ampount Rejected
+		$eh = DB::select(DB::raw("SELECT WoodType AS Material, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
+									FROM (SELECT WoodTypeID, 
+												CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, 
+												SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, 
+												SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, 
+												SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, 
+												SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
+	    							FROM PurchaseDeliveryItems 
+	  							   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										     							 FROM PurchaseDeliveryReceipts
+										    							WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
+                                          
+     																 GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
+														 				   ON DR.WoodTypeID = wt.WoodTypeID"));
 			return $eh ? $eh : [];
-
 	}
 
 	public static function getMonthlyQuantityProductPurchase(){
-		$eh = DB::select(DB::raw("SELECT Types.WoodType AS Material, 
-	   CONCAT(Purchased.Thickness, 'x', Purchased.Width, 'x', Purchased.Length) AS Size, 
-	   Purchased.PurchasedQuantity - Rejected.RejectedQuantity AS PurchasedQuantity, 
-	   Rejected.RejectedQuantity AS RejectedQuantity,
-	   (Purchased.PurchasedQuantity - Rejected.RejectedQuantity)*pdi.PurchasedUnitPrice AS PurchasedAmount,
-	   Rejected.RejectedQuantity*pdi.PurchasedUnitPrice AS RejectedAmount
-FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQuantity
-		FROM PurchaseDeliveryItems
-	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-											 FROM PurchaseDeliveryReceipts
-											WHERE YEAR(DateDelivered) = YEAR(CURDATE())
-											  AND MONTH(DateDelivered) = MONTH(CURDATE()))
-	  GROUP BY WoodTypeID, Thickness, Width, Length) Purchased JOIN (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS RejectedQuantity
-																	   FROM PurchaseRejects
-																	  WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-																										   FROM PurchaseDeliveryReceipts
-																										  WHERE YEAR(DateDelivered) = YEAR(CURDATE())
-																											AND MONTH(DateDelivered) = MONTH(CURDATE()))
-																   GROUP BY WoodTypeID, Thickness, Width, Length) Rejected
-																 ON Purchased.WoodTypeID = Rejected.WoodTypeID
-																AND Purchased.Thickness = Rejected.Thickness
-																AND Purchased.Width = Rejected.Width
-																AND Purchased.Length = Rejected.Length
-															   JOIN REF_WoodTypes Types
-																 ON Types.WoodTypeID = Purchased.WoodTypeID
-															   JOIN PurchaseDeliveryItems pdi
-																 ON pdi.WoodTypeID = Purchased.WoodTypeID
-																AND pdi.Thickness = Purchased.Thickness
-																AND pdi.Width = Purchased.Width
-																AND pdi.Length = Purchased.Length;"));
+		$eh = DB::select(DB::raw("SELECT 
+										WoodType AS Material, 
+										Size, 
+										QuantityOrdered, 
+										QuantityRejected, 
+										TotalQuantity, 
+										AmountPurchased, 
+										AmountRejected
+									FROM (SELECT 
+												WoodTypeID, 
+												CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, 
+												SUM(Quantity) AS QuantityOrdered, 
+												SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, 
+												SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, 
+												SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, 
+												SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
+	    									FROM PurchaseDeliveryItems 
+	   									   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										     									 FROM PurchaseDeliveryReceipts
+										   										WHERE YEAR(DateDelivered) = YEAR(CURDATE())
+											  									AND MONTH(DateDelivered) = MONTH(CURDATE()))
+                                          
+     							GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
+														 							ON DR.WoodTypeID = wt.WoodTypeID;"));
+
 		return $eh ? $eh : [];
 	}
 
 	public static function getYearlyQuantityProductPurchase(){ 
-		$eh = DB::select(DB::raw("SELECT Types.WoodType AS Material, 
-	   CONCAT(Purchased.Thickness, 'x', Purchased.Width, 'x', Purchased.Length) AS Size, 
-	   Purchased.PurchasedQuantity - Rejected.RejectedQuantity AS PurchasedQuantity, 
-	   Rejected.RejectedQuantity AS RejectedQuantity,
-	   (Purchased.PurchasedQuantity - Rejected.RejectedQuantity)*pdi.PurchasedUnitPrice AS PurchasedAmount,
-	   Rejected.RejectedQuantity*pdi.PurchasedUnitPrice AS RejectedAmount
-FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQuantity
-		FROM PurchaseDeliveryItems
-	   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-											 FROM PurchaseDeliveryReceipts
-											WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
-	  GROUP BY WoodTypeID, Thickness, Width, Length) Purchased JOIN (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS RejectedQuantity
-																	   FROM PurchaseRejects
-																	  WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
-																										   FROM PurchaseDeliveryReceipts
-																										  WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
-																   GROUP BY WoodTypeID, Thickness, Width, Length) Rejected
-																 ON Purchased.WoodTypeID = Rejected.WoodTypeID
-																AND Purchased.Thickness = Rejected.Thickness
-																AND Purchased.Width = Rejected.Width
-																AND Purchased.Length = Rejected.Length
-															   JOIN REF_WoodTypes Types
-																 ON Types.WoodTypeID = Purchased.WoodTypeID
-															   JOIN PurchaseDeliveryItems pdi
-																 ON pdi.WoodTypeID = Purchased.WoodTypeID
-																AND pdi.Thickness = Purchased.Thickness
-																AND pdi.Width = Purchased.Width
-																AND pdi.Length = Purchased.Length;"));
+		$eh = DB::select(DB::raw("SELECT WoodType AS Material, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
+									FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
+										    FROM PurchaseDeliveryItems 
+										   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+																			     FROM PurchaseDeliveryReceipts
+																			    WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
+									                                          
+									     GROUP BY WoodTypeID, Thickness, Width, Length) DR JOIN REF_WoodTypes wt  
+																							 ON DR.WoodTypeID = wt.WoodTypeID;"));
+
 		return $eh ? $eh : [];
+	}
+
+	public static function getPurchaseReportWeekly(){
+		$eh = DB::select(DB::raw('SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.DateDelivered AS DeliveryDate, dri.PurchasedAmount, dr.Discount, dri.RejectedAmount
+  FROM (SELECT PurchaseDeliveryReceiptID, PurchaseOrderID, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+		  FROM PurchaseDeliveryItems
+	     WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										       FROM PurchaseDeliveryReceipts
+										      WHERE YEARWEEK(DateDelivered) = YEARWEEK(CURDATE()))
+	GROUP BY PurchaseDeliveryReceiptID, WoodTypeID, Thickness, Width, Length) dri JOIN PurchaseDeliveryReceipts dr
+																					ON dri.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+																				  JOIN PurchaseOrders po
+																					ON dr.PurchaseOrderID = po.PurchaseOrderID
+																				  JOIN Suppliers s
+																					ON s.SupplierID = po.SupplierID;'));
+		return $eh ? $eh : [];
+
+	}
+
+	public static function getPurchaseReportMonthly(){
+		$eh = DB::select(DB::raw('SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.DateDelivered AS DeliveryDate, dri.PurchasedAmount, dr.Discount, dri.RejectedAmount
+  FROM (SELECT PurchaseDeliveryReceiptID, PurchaseOrderID, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+		  FROM PurchaseDeliveryItems
+	     WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										       FROM PurchaseDeliveryReceipts
+										      WHERE YEAR(DateDelivered) = YEAR(CURDATE())
+                                                AND MONTH(DateDelivered) = MONTH(CURDATE()))
+	GROUP BY PurchaseDeliveryReceiptID, WoodTypeID, Thickness, Width, Length) dri JOIN PurchaseDeliveryReceipts dr
+																					ON dri.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+																				  JOIN PurchaseOrders po
+																					ON dr.PurchaseOrderID = po.PurchaseOrderID
+																				  JOIN Suppliers s
+																					ON s.SupplierID = po.SupplierID;'));
+		return $eh ? $eh : [];
+
+	}
+
+	public static function getPurchaseReportYearly(){
+		$eh = DB::select(DB::raw('SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.DateDelivered AS DeliveryDate, dri.PurchasedAmount, dr.Discount, dri.RejectedAmount
+  FROM (SELECT PurchaseDeliveryReceiptID, PurchaseOrderID, IFNULL(SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice), 0) AS PurchasedAmount, IFNULL(SUM(RejectedQuantity*PurchasedUnitPrice), 0) AS RejectedAmount
+		  FROM PurchaseDeliveryItems
+	     WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+										       FROM PurchaseDeliveryReceipts
+										      WHERE YEAR(DateDelivered) = YEAR(CURDATE()))
+	GROUP BY PurchaseDeliveryReceiptID, WoodTypeID, Thickness, Width, Length) dri JOIN PurchaseDeliveryReceipts dr
+																					ON dri.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+																				  JOIN PurchaseOrders po
+																					ON dr.PurchaseOrderID = po.PurchaseOrderID
+																				  JOIN Suppliers s
+																					ON s.SupplierID = po.SupplierID;;'));
+		return $eh ? $eh : [];
+
 	}
 
 
@@ -148,6 +164,46 @@ FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQua
     	return $pendingPO ? $pendingPO: [];
     }
 
+    public static function getProcurementRatio(){
+    	/* 
+    	SELECT IFNULL(SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)), 0) AS Accept, IFNULL(SUM(IFNULL(RejectedQuantity, 0)), 0) AS Reject
+  FROM PurchaseDeliveryItems dr
+ WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+									   FROM PurchaseDeliveryReceipts
+									  WHERE MONTH(DateDelivered) = MONTH(CURDATE()));*/
+
+		$eh = DB::table('PurchaseDeliveryItems')
+				 ->select(DB::raw('IFNULL(SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)), 0) AS Accept, IFNULL(SUM(IFNULL(RejectedQuantity, 0)), 0) AS Reject'))
+
+				 ->whereIn('PurchaseDeliveryReceiptID', function($query){
+				 	$query->select('PurchaseDeliveryReceiptID')
+				 		  ->from('PurchaseDeliveryReceipts')
+				 		  ->where(DB::raw('MONTH(DateDelivered)'), '=', DB::raw('MONTH(CURDATE())'));
+
+				 });
+
+
+    	return $eh->first();
+    }
+
+    public static function getProcurementRatioSuppliers(){
+    	$eh = DB::select("SELECT s.Name, d.Accept, d.Reject
+ 							FROM (SELECT po.SupplierID AS SupplierID, SUM(IFNULL(Quantity, 0) - IFNULL(RejectedQuantity, 0)) AS Accept, SUM(IFNULL(RejectedQuantity, 0)) AS Reject
+	      							FROM PurchaseDeliveryItems dr JOIN PurchaseOrders po
+										  ON dr.PurchaseOrderID = po.PurchaseOrderID
+								   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID
+											  							 FROM PurchaseDeliveryReceipts
+											  							WHERE MONTH(DateDelivered) = MONTH(CURDATE()))
+		 				GROUP BY po.SupplierID) d JOIN Suppliers s
+													ON d.SupplierID = s.SupplierID;");
+
+    	//$eh = DB::table();
+    	
+    	return $eh ? $eh : [];
+    }
+
+
+
     public static function getCountProductsNeedProcurement(){
     	/*
 		SELECT COUNT(*) AS Amount
@@ -161,7 +217,7 @@ FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQua
     }
 
 
-    public static function createPurchaseOrder($term, $supplier, $address, $deliveryDate, $rows){
+    public static function createPurchaseOrder($term, $supplier, $address, $deliveryDate, $discount, $rows){
     	DB::beginTransaction();
 
     	try{
@@ -171,6 +227,7 @@ FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQua
 	    				'Terms' => $term,
 	    				'DeliveryAddress' => $address,
 	    				'RequestedDeliveryDate' => $deliveryDate,
+	    				'Discount' => $discount,
 	    			]
     		);
 
@@ -184,13 +241,12 @@ FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQua
 				    		  			'Width' => $row['width'],
 				    		  			'Length' => $row['length'],
 				    		  			'Quantity' => $row['quantity'],
-				    		  			'UnitPrice' => $row['unitPrice'],
-				    		  			'Discount' => $row['discount']]);
+				    		  			'UnitPrice' => $row['unitPrice']]);
 	    	}
     	}catch(\Exception $e){
     		//echo '<script> console.log('.$e->getMessage().')</script>';
     		//echo 'FAILED DUE TO EXCEPTION';
-    		//echo $e->getMessage();
+    		echo $e->getMessage();
     		DB::rollback();
     		return false;
     	}
@@ -256,4 +312,18 @@ FROM (SELECT WoodTypeID, Thickness, width, Length, SUM(Quantity) AS PurchasedQua
     	return true;
     }
 
+    public static function getMonthlyProcurementOfCurrentYear(){
+    	/*
+			SELECT MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount
+    FROM PurchaseDeliveryItems di JOIN PurchaseDeliveryReceipts dr
+								    ON di.PurchaseDeliveryReceiptID = dr.PurchaseDeliveryReceiptID
+GROUP BY 1;
+    	*/
+
+		$eh = DB::table('PurchaseDeliveryItems')
+				->select(DB::raw("MONTHNAME(DateDelivered)							 AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount"))
+				->join('PurchaseDeliveryReceipts', 'PurchaseDeliveryItems.PurchaseDeliveryReceiptID' ,'=','PurchaseDeliveryReceipts.PurchaseDeliveryReceiptID')
+				->groupBy(DB::raw(1));
+		return $eh->get();
+    }
 }

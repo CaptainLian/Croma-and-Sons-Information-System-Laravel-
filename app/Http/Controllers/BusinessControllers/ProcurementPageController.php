@@ -10,20 +10,48 @@ use App\Http\Controllers\Controller;
 use App\CustomerModel;
 use App\ProcurementModel;
 use App\SupplierModel;
+use \stdClass;
 
 use Session;
 
 class ProcurementPageController extends Controller{
 
     public function viewDashboard(){
+        /* Retrieve information */
         $pendingPurchaseOrderCount = ProcurementModel::getPendingPurchaseOrderCount();
         $countProductNeedProcurement = ProcurementModel::getCountProductsNeedProcurement();
+        $procurementRatio = ProcurementModel::getProcurementRatio();
+        $procurementRatioSuppliers = ProcurementModel::getProcurementRatioSuppliers();
+        $monthlyProcurement = ProcurementModel::getMonthlyProcurementOfCurrentYear();
+
+        /* Process information */
+        $procurementRatioSuppliersAccept = [];
+        $procurementRatioSuppliersReject = [];
+
+        foreach($procurementRatioSuppliers as $supplier){
+            $procurementRatioSuppliersAccept[] = [$supplier->Name, $supplier->Accept];
+            $procurementRatioSuppliersReject[] = [$supplier->Name, $supplier->Reject];
+        }
+
+        $months = [];
+        $monthlyExpense = [];
+
+        foreach($monthlyProcurement AS $month){
+            $months[] = $month->Month;
+            $monthlyExpense[] = $month->PurchaseAmount;
+        }
 
         $data =[
             'pendingPurchaseOrderCount' => $pendingPurchaseOrderCount,
             'countProductNeedProcurement' => $countProductNeedProcurement,
-
+            'procurementRatio' => $procurementRatio,
+            'procurementRatioSuppliersAccept' => $procurementRatioSuppliersAccept,
+            'procurementRatioSuppliersReject' => $procurementRatioSuppliersReject,
+            'months' => $months,
+            'monthlyExpense' => $monthlyExpense,
         ];
+
+        /* Send information */
     	return view('procurement.dashboard')->with($data);
     }
 
@@ -58,8 +86,35 @@ class ProcurementPageController extends Controller{
     public function viewEncodeDeliveryReceipt(){
         $pendingPO = ProcurementModel::getPendingPurchaseOrders();
 
+        $pendingPODetails = [];
+
+        foreach($pendingPO as $po){
+            $PODetail = ProcurementModel::getPurchaseOrder($po->POID);
+
+            $pendingPODetails[$po->POID] = new stdClass();
+            $pendingPODetails[$po->POID]->Terms = $PODetail->Terms;
+            $pendingPODetails[$po->POID]->DeliveryAddress = $PODetail->DeliveryAddress;
+            $pendingPODetails[$po->POID]->RequestedDeliveryDate = $PODetail->RequestedDeliveryDate;
+            $pendingPODetails[$po->POID]->DateCreated = $PODetail->DateCreated;
+            $pendingPODetails[$po->POID]->Discount = $PODetail->Discount;
+
+            $supplierDetail = SupplierModel::getSupplierDetails($PODetail->SupplierID);
+            $pendingPODetails[$po->POID]->SupplierName = $supplierDetail->Name;
+            $pendingPODetails[$po->POID]->SupplierAddress = $supplierDetail->Address;
+            $pendingPODetails[$po->POID]->Landline = $supplierDetail->Landline;
+
+            $POItems = ProcurementModel::getPurchaseOrderItems($po->POID);
+
+             $pendingPODetails[$po->POID]->items = [];
+
+            foreach($POItems as $item){
+                 $pendingPODetails[$po->POID]->items[] = $item;
+            }
+        }
+
         $data = [
             'pendingPO' => $pendingPO,
+            'pendingPODetails' => $pendingPODetails,
         ];
 
         return view('procurement.DeliveryReceiptInitial')->With($data);
@@ -102,7 +157,6 @@ class ProcurementPageController extends Controller{
         ];
 
         return view('procurement.SupplierList')->with($data);
-
     }
 
     public function viewPurchaseList(){
@@ -110,6 +164,16 @@ class ProcurementPageController extends Controller{
     }
 
     public function viewPurchaseReport(){
-        return view('procurement.PurchaseReport');
+        $weeklyPurchase = ProcurementModel::getPurchaseReportWeekly();
+        $monthlyPurchase = ProcurementModel::getPurchaseReportMonthly();
+        $yearlyPurchase = ProcurementModel::getPurchaseReportYearly();
+
+        $data = [
+            'weekly' => $weeklyPurchase,
+            'monthly' => $monthlyPurchase,
+            'yearly' => $yearlyPurchase,
+        ];
+        
+        return view('procurement.PurchaseReport')->with($data);
     }
 }

@@ -1,20 +1,21 @@
 <?php
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are http_persistent_handles_ident()
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
-*/
+	/*
+	|--------------------------------------------------------------------------
+	| Web Routes
+	|--------------------------------------------------------------------------
+	|
+	| This file is where you may define all of the routes that are http_persistent_handles_ident()
+	| by your application. Just tell Laravel the URIs it should respond
+	| to using a Closure or controller method. Build something great!
+	|
+	*/
 
-Route::get('/sales/home','Dashboard@index');
+	Route::group(['prefix' => 'sales'], function(){
+		Route::get('home','Dashboard@index');
 
-Route::get('/sales/salesOrder','SalesOrder@index');
+		Route::get('salesOrder','SalesOrder@index');
 
 
 Route::post('sales/salesOrder/check','SalesOrder@check'); 
@@ -29,7 +30,7 @@ Route::get('/sales/createDeliveryReceipt/{salesOrderID}','SalesOrderList@create'
 
 Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
 
-Route::get('/sales/catalog','SalesCatalog@index');
+		Route::get('invoice','SalesInvoice@list');
 
 Route::post('/sales/catalog/add','SalesCatalog@add');
 
@@ -39,18 +40,21 @@ Route::post('/sales/catalog/delete','SalesCatalog@delete');
 
 Route::get('/sales/invoice','SalesInvoice@list');
 
-Route::get('/sales/invoice/{sdrid}', 'SalesInvoice@create');
+		Route::get('productReport',function(){
+			return view('sales.PSR',['active' => 'psr']);
+		});
 
 
-Route::get('/sales/productReport',function(){
-	return view('sales.PSR',['active' => 'psr']);
-});
+		Route::get('customerlist','CustomerList@index');
 
 
-Route::get('/sales/customerlist','CustomerList@index');
+		Route::get('createDeliveryReceipt',function(){
+			return view('sales.SDR',['active' => 'sdri']);
+		});
 
 Route::post('/sales/customerlist/add','CustomerList@add');
 
+<<<<<<< HEAD
 Route::post('/sales/customerlist/edit','CustomerList@edit');
 Route::post('/sales/customerlist/delete','CustomerList@delete');
 
@@ -63,8 +67,16 @@ Route::get('/sales/report','SalesReport@index');
 Route::get('/try',function(){
 	return view('sales.SII');
 });
+=======
+		Route::post('salesOrder/create','SalesOrder@create');
+	});
+>>>>>>> Procurement&DB
 
 
+	Route::get('/try',function(){
+		return view('sales.SII');
+	});
 
+require_once 'Lian.php';
 /*Routes::post('/sales','SalesOrder@check');*/
 
