@@ -1,7 +1,7 @@
 @extends('procurement.main')
 
 @section('title')
-Purchase Report
+Purchase History
 @endsection
 
 @section('sidebar')
@@ -62,7 +62,7 @@ Purchase Report
                     <tbody>
                       @foreach($weekly as $item)
                         <tr>
-                          <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td><a href="/procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
                           <td>{!!$item->DeliveryDate!!}</td>
                           <td>{!!$item->Supplier!!}</td>
                           <td>{!!$item->PurchasedAmount!!}</td>
@@ -102,7 +102,7 @@ Purchase Report
                     <tbody>
                       @foreach($monthly as $item)
                         <tr>
-                          <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td><a href="/procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
                           <td>{!!$item->DeliveryDate!!}</td>
                           <td>{!!$item->Supplier!!}</td>
                           <td>{!!$item->PurchasedAmount!!}</td>
@@ -142,7 +142,7 @@ Purchase Report
                     <tbody>
                       @foreach($yearly as $item)
                         <tr>
-                          <td><a href="procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td><a href="/procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
                           <td>{!!$item->DeliveryDate!!}</td>
                           <td>{!!$item->Supplier!!}</td>
                           <td>{!!$item->PurchasedAmount!!}</td>

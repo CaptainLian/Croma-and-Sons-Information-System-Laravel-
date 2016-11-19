@@ -60,10 +60,12 @@ class ProcurementPageController extends Controller{
 
     	$suppliers = SupplierModel::getSuppliers();
     	$terms = CustomerModel::getTerms();
+        $requestedProducts = ProcurementModel::getRequestedProducts();
 
     	$data = [
     		'suppliers' => $suppliers,
     		'terms' => $terms,
+            'requestedProducts' => $requestedProducts,
     	];
     	return view('procurement.CreatePurchaseOrder')->with($data);
     }
@@ -149,11 +151,32 @@ class ProcurementPageController extends Controller{
         return view('procurement.DeliveryReceiptSpecific')->with($data);
     }
 
+    public function viewDeliveryReceiptSpecificInputless($id){
+        $deliveryReceiptDetails = ProcurementModel::getDeliveryReceipt($id);
+       // print_r($deliveryReceiptDetails);
+        $deliveryReceiptItems = ProcurementModel::getDeliveryReceiptItems($id);
+        $supplierDetails = SupplierModel::getSupplierDetails($deliveryReceiptDetails->SupplierID);
+
+        //var_dump($supplierDetails);
+
+        
+        $data = [
+            'deliveryReceiptDetails' => $deliveryReceiptDetails,
+            'deliveryReceiptItems' => $deliveryReceiptItems,
+            'supplierDetails' => $supplierDetails, 
+        ];
+
+        return view('procurement.DeliveryReceiptSpecificInputless ')->with($data);
+    }
+
     public function viewSupplierList(){
         $suppliers = SupplierModel::getSuppliersDetailed();
+        $supplierPrices = SupplierModel::getSupplierPrices();
 
+        //print_r($supplierPrices);
         $data =[
             'suppliers' => $suppliers,
+            'supplierPrices' => $supplierPrices,
         ];
 
         return view('procurement.SupplierList')->with($data);

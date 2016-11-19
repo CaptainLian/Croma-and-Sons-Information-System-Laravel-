@@ -28,9 +28,12 @@
 					<li>
 						<a href="/logout"><i class="fa fa-key"></i> Log Out</a>
 					</li>
+
+
 				</ul>
 			</li>
 			<!-- user login dropdown end -->
+			@yield('navbar-dropdown-content');
 		</ul>
 		<!--search & user info end-->
 	</div>

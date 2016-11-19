@@ -4,6 +4,12 @@
 Create Purchase Order
 @endsection
 
+@section('navbar-dropdown-content')
+<li class="sb-toggle-right">
+ 	<i class="fa  fa-align-right"></i>
+</li>
+@endsection
+
 @section('sidebar')
 	@include('procurement.sidebar', ['active' => 'PurchaseOrder'])
 @endsection
@@ -105,7 +111,7 @@ Create Purchase Order
 					<div class="form-group">
 						<label class="col-sm-1 col-sm-2 control-label">Delivery Address</label>
 						<div class="col-sm-3">
-							<input name="address" id="address" type="text" required class="form-control">
+							<input name="address" value="976 A. Bonifacio Ave, Balingasa, Balintawak, Quezon City" id="address" type="text" required class="form-control">
 						</div>
 					</div>
 				</div>
@@ -199,6 +205,40 @@ Create Purchase Order
 <!-- invoice end-->
 @endsection
 
+@section('slidebar')
+<h4 class="side-title">Procurement Request</h4>
+<div class="panel-body">
+	<div class="adv-table">
+		<table class="display table table-bordered table-striped" id="dynamic-table">
+			<thead>
+				<tr>
+					<th><font color="white">Material</font></th>
+					<th><font color="white">Size</font></th>
+					<th><font color="white">Quantity</font></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($requestedProducts as $product)
+					<tr class="gradeC">
+						<td>
+									<!--"#4787be" -->
+							<font color="white" >{!!$product->Material!!}</font>
+						</td>
+						<td>
+							<font color="white" size="1.8">{!!$product->Size!!}</font>
+						</td>
+						<td>
+							<font color="white">{!!$product->RequestedQuantity!!}</font>
+						</td>
+						
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+	</div>
+</div>
+@endsection
+
 @push('javascript')
 	
 	<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
@@ -215,7 +255,7 @@ Create Purchase Order
     <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
     <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
-    <script src="/js/advanced-form-components.js"></script>
+    <script type="text/javascript" src="/js/advanced-form-components.js"></script>
 
     <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
     <script src="/js/dynamic_table_init.js"></script>

@@ -15,11 +15,7 @@ Procurement Dashboard
 @section('main-content')
 	<header class="panel-heading">
 		<h1>Procurement Dashboard</h1>
-		<br>
-		<span class="tools pull-right">
-			<a href="javascript:;" class="fa fa-chevron-down"></a>
-			<a href="javascript:;" class="fa fa-times"></a>
-		</span>
+
 	</header>
 
 	<div class="row state-overview">

@@ -166,3 +166,8 @@ SELECT dri.PurchaseDeliveryReceiptID AS DeliveryReceipt, s.Name AS Supplier, dr.
                                                                                     
                                                                                     
 SELECT CONCAT(YEAR('2016-01-01'), '-', MONTHNAME('2016-01-01'), '-', DAY('2016-01-01'));
+
+
+SELECT *
+FROM CompanyInventory
+WHERE RequestedQuantity > 0;

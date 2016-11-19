@@ -1,7 +1,7 @@
 @extends('procurement.main')
 
 @section('title')
-Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!} 
+Delivery Receipt for PO: {!!$deliveryReceiptDetails->PurchaseDeliveryReceiptID!!} 
 @endsection
 
 @section('sidebar')
@@ -20,37 +20,13 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 	<div class="panel panel-primary">
 		<!--<div class="panel-heading navyblue"> INVOICE</div>-->
 		<div class="panel-body">
-			<div class="row">
-				
-				<div class="form-group">
-					<label class="control-label col-md-1">Set Delivery Date</label>
-					<div class="col-md-2 col-xs-11">
-						<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="{!!date('Y-m-d')!!}" class="input-append date dpYears">
-							<input type="text" name="DeliveryDate" readonly="" value="{!!date('Y-m-d')!!}" size="16" class="form-control">
-							<span class="input-group-btn add-on">
-								<button class="btn btn-danger" type="button">
-								<i class="fa fa-calendar"></i>
-								</button>
-							</span>
-						</div>
-						<br>
-					</div>
-				</div>
-			</div>
+			
 			<div class="row invoice-list">
 				<div class="text-center corporate-id">
 					<img src="img/vector-lab.jpg" alt="">
 					<h1>Supplier Delivery Receipt</h1>
 				</div>
-				<div class="col-lg-4 col-sm-4">
-					<h4>BILLING AND DELIVERY INFORMATION</h4>
-					<p>Payment Terms :
-						<strong>{!!$purchaseOrderDetails->Terms!!}</strong>
-						<br>Delivery Address:
-						<b>{!!$purchaseOrderDetails->DeliveryAddress!!}</b>
-						<br>
-					</p>
-				</div>
+					
 				<div class="col-lg-4 col-sm-4">
 					<h4>SUPPLIER INFORMATION</h4>
 					<p>Supplier Name :
@@ -69,14 +45,17 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 						</li>
 
 						-->
-						<li>Purchase Order Number :
-							<strong>{!!$purchaseOrderDetails->PurchaseOrderID!!}</strong>
+						<li>Delivery Receipt Number :
+							<strong>{!!$deliveryReceiptDetails->PurchaseDeliveryReceiptID!!}</strong>
 						</li>
-						<!--
+						<li>
+							Delivery Date:
+							<strong>{!!$deliveryReceiptDetails->DateDelivered!!}</strong>
+						</li>
 						<li>Prepared By :
-							<b>John Fisher</b>
+							<b>{!!$deliveryReceiptDetails->PreparedBy!!}</b>
 						</li>
-						-->
+
 					</ul>
 				</div>
 			</div>
@@ -87,7 +66,6 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 						<th>Material</th>
 						<th class="">Size</th>
 						<th class="">Unit</th>
-						<th class="">Ordered Quantity</th>
 						<th class="">Quantity Recieved</th>
 						<th class="">Quantity Rejected</th>
 						<th class="">B/F</th>
@@ -101,18 +79,18 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 						$sum = 0.0;
 
 					?>
-					@foreach($purchaseOrderItems as $item)
+					@foreach($deliveryReceiptItems as $item)
 						<tr>
 							<td>{!!$count!!}</td>
 							<td><{!!$item->Material!!}/></td>
 							<td>{!!$item->Size!!}</td>
 							<td>piece</td>
 							<td>{!!$item->Quantity!!}</td>
-							<td>{!!$item->Quantity!!}<</td>
-							<td><input type="number" min=0 required name="QuantityRejected[]" value=0 /></td>
+							<td>{!!$item->RejectedQuantity!!}</td>
 							<td>{!!$item->BoardFeet!!}</td>
-							<td>{!!$item->UnitPrice!!}</td>
-							<td>{!!($sum += $item->UnitPrice*$item->Quantity*(1 - $item->Discount))!!}</td>
+							<td>{!!$item->PurchasedUnitPrice!!}</td>
+							<td>{!!$tmp = ($item->Quantity-$item->RejectedQuantity)*$item->PurchasedUnitPrice!!}</td>
+							<?php $sum += $tmp; ?>
 						</tr>
 
 						<?php $count++; ?>
@@ -136,9 +114,13 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 						<li>
 							<u>Grand Total</u> : <strong>{!!$sum!!} Php</strong>
 						</li>
+
+						
 					</ul>
 				</div>
 			</div>
+
+			<a href="/procurement/PurchaseReport" class="btn btn-danger" >Return</a>
 		</div>
 	</div>
 </section>
@@ -160,7 +142,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
     <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
     <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
-    <script src="/js/advanced-form-components.js"></script>
+    <script type="text/javascript" src="/js/advanced-form-components.js"></script>
     <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
     <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>

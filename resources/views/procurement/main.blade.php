@@ -34,9 +34,11 @@
 		<section id="container">
 
 			@include('master.navbar',['name' => 'Procurement Manager'])
+			
 
 			<!--sidebar start-->
 			<aside>
+				
 				<div id="sidebar" class="nav-collapse ">
 		         	<!-- sidebar menu start-->
 		         	<ul class="sidebar-menu" id="nav-accordion">
@@ -56,6 +58,9 @@
 			<!--main content end-->
 
 			<!-- Right Slidebar start -->
+			<div class="sb-slidebar sb-right sb-style-overlay">
+				@yield('slidebar')
+			</div>
 			<!-- Right Slidebar end -->
 
 			<!--footer start-->

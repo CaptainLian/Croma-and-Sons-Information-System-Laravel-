@@ -14,7 +14,7 @@ use App\CustomerModel;
 use Illuminate\Support\Facades\Input as Input;
 use Redirect;
 use Session;
-
+use \stdClass;
 
 class ProcurementFormController extends Controller{
     
@@ -90,9 +90,9 @@ class ProcurementFormController extends Controller{
     	if(!$status){
             //echo 'ADASDASDADASDAS';
     		
-            return Redirect::back()
-    						->withErrors(['error' => 'An unexpected error occured.'])
-    						->withInput(Input::all());
+       //     return Redirect::back()
+    //						->withErrors(['error' => 'An unexpected error occured.'])
+   // 						->withInput(Input::all());
             
             
             //return mysql_errno() ? "true" : "false";
@@ -100,11 +100,13 @@ class ProcurementFormController extends Controller{
 
     	$suppliers = SupplierModel::getSuppliers();
     	$terms = CustomerModel::getTerms();
+        $requestedProducts = ProcurementModel::getRequestedProducts();
     	$success = 'Purchase Order successfully created.';
 
     	$data = [
     		'suppliers' => $suppliers,
     		'terms' => $terms,
+            'requestedProducts' => $requestedProducts,
     		'success' => $success,
     	];
 

@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class ProcurementModel extends Model{
 
+	public static function getRequestedProducts(){
+		/* 
+		
+		*/
+
+		$eh = DB::select(DB::raw("SELECT wt.WoodType AS Material,  CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, RequestedQuantity
+									FROM (SELECT *
+											FROM CompanyInventory
+											WHERE RequestedQuantity > 0) ci JOIN REF_WoodTypes wt
+																			  ON ci.WoodTypeID = wt.WoodTypeID;"));
+		return $eh ? $eh : [];
+	}
+
 	public static function getWeeklyQuantityProductPurchase(){
 		// Material Size QuantityOrdered, Quantity Rejected , Total Quantity, Ampunt Purchased, Ampount Rejected
 		$eh = DB::select(DB::raw("SELECT WoodType AS Material, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
@@ -233,7 +246,41 @@ class ProcurementModel extends Model{
 
 	    	foreach($rows as $row){
 	    		//POID SupplierID WoodTypeID Thickness Width Length Quantity UnitPrice
-	    		$insert = DB::table('PurchaseOrderItems')
+	    		
+	    		
+				$checkExist = DB::table('SupplierPrices')
+								->select(['SupplierID', 'WoodTypeID', 'Thickness', 'Width', 'Length'])
+								->where([
+										'SupplierID' => $supplier,
+										'WoodTypeID' => $row['woodType'],
+										'Thickness' => $row['thickness'],
+										'Width' => $row['width'],
+										'Length' => $row['length'],
+									])->first();
+
+				if($checkExist == NULL){
+					DB::table('SupplierPrices')
+					  ->insert([
+					  		'SupplierID' => $supplier,
+					  		'WoodTypeID' => $row['woodType'],
+							'Thickness' => $row['thickness'],
+							'Width' => $row['width'],
+							'Length' => $row['length'],
+							'CurrentPrice' => $row['unitPrice']
+					  	]);
+				}else{	
+					DB::table('SupplierPrices')
+					  ->where([
+					  		'SupplierID' => $supplier,
+							'WoodTypeID' => $row['woodType'],
+							'Thickness' => $row['thickness'],
+							'Width' => $row['width'],
+							'Length' => $row['length'],
+					  	])
+					  	->update(['CurrentPrice' => $row['unitPrice']]);
+				}
+
+				$insert = DB::table('PurchaseOrderItems')
 				    		  ->insert(['PurchaseOrderID' => $id,
 				    		  			'SupplierID' => $supplier, 
 				    		  			'WoodTypeID' => $row['woodType'],
@@ -242,10 +289,12 @@ class ProcurementModel extends Model{
 				    		  			'Length' => $row['length'],
 				    		  			'Quantity' => $row['quantity'],
 				    		  			'UnitPrice' => $row['unitPrice']]);
+
 	    	}
     	}catch(\Exception $e){
     		//echo '<script> console.log('.$e->getMessage().')</script>';
     		//echo 'FAILED DUE TO EXCEPTION';
+
     		echo $e->getMessage();
     		DB::rollback();
     		return false;
@@ -262,15 +311,32 @@ class ProcurementModel extends Model{
 
     	return $PO->first();
     }
-
+    
     public static function getPurchaseOrderItems($id){
     	$items = DB::table('PurchaseOrderItems')
-    			   ->select(DB::raw("REF_WoodTypes.WoodTypeID AS WoodTypeID, WoodType AS Material, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, Thickness, Length, Width, Quantity, BoardFeet, UnitPrice, Discount"))
+    			   ->select(DB::raw("REF_WoodTypes.WoodTypeID AS WoodTypeID, WoodType AS Material, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, Thickness, Width, Length, Quantity, BoardFeet, UnitPrice, Discount"))
     			   ->where('PurchaseOrderID', '=', $id)
     			   ->join('REF_WoodTypes', 'PurchaseOrderItems.WoodTypeID', '=', 'REF_WoodTypes.WoodTypeID');
     	return $items->get();
 
     	//# 	Material 	Size 	Unit 	Quantity 	B/F 	Unit Price 	Discount 	Total
+    }
+
+    public static function getDeliveryReceipt($id){
+    	$DR = DB::table('PurchaseDeliveryReceipts')
+    			->select(DB::raw("PurchaseDeliveryReceiptID, DateDelivered, PurchaseDeliveryReceipts.Discount, PurchaseDeliveryReceipts.DeliveryAddress, PurchaseDeliveryReceipts.Comments, PurchaseDeliveryReceipts.PreparedBy, SupplierID"))
+    			->where('PurchaseDeliveryReceiptID', '=', $id)
+    			->join('PurchaseOrders', 'PurchaseOrders.PurchaseOrderID', '=', 'PurchaseDeliveryReceipts.PurchaseOrderID');
+    	return $DR->first();
+    }
+
+    public static function getDeliveryReceiptItems($id){
+    	$items = DB::table('PurchaseDeliveryItems')
+    			   ->select(DB::raw("REF_WoodTypes.WoodTypeID AS WoodTypeID, WoodType AS Material, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, Thickness, Width, Length, BoardFeet, Quantity, RejectedQuantity, PurchasedUnitPrice"))
+    			   ->where('PurchaseDeliveryReceiptID', '=', $id)
+    			   ->join('REF_WoodTypes', 'PurchaseDeliveryItems.WoodTypeID', '=', 'REF_WoodTypes.WoodTypeID');
+    	return $items->get();
+
     }
 
     public static function createDeliveryReceipt($purchaseOrderID, $term, $deliveryAddress, $deliveryDate, $rows){
@@ -303,7 +369,7 @@ class ProcurementModel extends Model{
     	}catch(\Exception $e){
     		//echo '<script> console.log('.$e->getMessage().')</script>';
     		//echo 'FAILED DUE TO EXCEPTION';
-    		echo $e->getMessage();
+    		//echo $e->getMessage();
     		DB::rollback();
     		return false;
     	}
@@ -321,7 +387,7 @@ GROUP BY 1;
     	*/
 
 		$eh = DB::table('PurchaseDeliveryItems')
-				->select(DB::raw("MONTHNAME(DateDelivered)							 AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount"))
+				->select(DB::raw("MONTHNAME(DateDelivered) AS Month, SUM((Quantity - RejectedQuantity)*PurchasedUnitPrice) AS PurchaseAmount"))
 				->join('PurchaseDeliveryReceipts', 'PurchaseDeliveryItems.PurchaseDeliveryReceiptID' ,'=','PurchaseDeliveryReceipts.PurchaseDeliveryReceiptID')
 				->groupBy(DB::raw(1));
 		return $eh->get();
