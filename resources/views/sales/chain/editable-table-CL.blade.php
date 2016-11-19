@@ -184,7 +184,10 @@ var EditableTable = function () {
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
-                    saveEditedRow(oTable, nEditing);
+                    if(status == 'edit')
+                        saveEditedRow(oTable, nEditing);
+                    else
+                        saveRow(oTable,nEditing);
                     nEditing = null;
                     var json = [];
                     var ctr = 0;

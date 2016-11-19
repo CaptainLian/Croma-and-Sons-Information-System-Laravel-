@@ -50,7 +50,7 @@
 		<label class="control-label col-md-1">Set Order Date</label>
 		<div class="col-md-4 col-xs-11">
 
-			<div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012"  class="input-append date dpYears">
+			<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="12-02-2012"  class="input-append date dpYears">
 
 				{!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""','size'=>'16']) !!}
 
@@ -220,40 +220,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="">
-              <td>
-
-              </td>
-              <td>
-
-
-              </td>
-              <td>
-
-
-              </td>
-              <td>
-
-
-              </td>
-              <td>
-
-
-              </td>
-              <td>
-
-
-
-              </td>
-
-              <td>
-
-              </td>
-              <td>
-
-              </td>
-
-            </tr>
+            
           </tbody>
         </table>
       </div>
@@ -266,9 +233,9 @@
 <div class="row">
   <div class="col-lg-4 invoice-block pull-right">
     <ul class="unstyled amounts">
-      <li><strong>Sub - Total amount :</strong> <a id='sub'></a></li>
+      <li><strong>Subtotal amount :</strong> <a id='sub'></a></li>
       <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',null,['style'=>'width:40px', 'id' => 'dis']) !!}</li>
-      <li><strong>VAT :</strong> -----</li>
+      
       <li ><strong> Total : </strong><a id="tot"></a></li>
     </ul>
   </div>

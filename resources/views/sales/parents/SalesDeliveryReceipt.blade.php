@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 
 <!-- Mirrored from thevectorlab.net/flatlab/invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Aug 2016 03:22:31 GMT -->
@@ -100,10 +100,10 @@
                     <label class="control-label col-md-1">Set Delivery Date</label>
                     <div class="col-md-2 col-xs-11">
 
-                      <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012"  class="input-append date dpYears">
-                        <input type="text" readonly="" value="12-02-2012" size="16" class="form-control">
+                      <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2012-02-12"  class="input-append date dpYears">
+                        <input type="text" readonly="" value="2012-02-12" size="16" class="form-control">
                         <span class="input-group-btn add-on">
-                          <button class="btn btn-danger" type="button"><i class="fa fa-calendar"></i></button>
+                          <button class="btn " style="padding:6px 9px 6px 9px;background-color:#ff6c60;color:white" type="button"><i class="fa fa-calendar"></i></button>
                         </span>
                       </div>
 
@@ -163,7 +163,7 @@
                   </div>
                 </div>
                 <div class="text-center invoice-btn">
-                  <a class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Submit Delivery Receipt </a>
+                  <a class="btn btn-danger btn-lg" style="background-color: #ec6459;border: #ec6459"><i class="fa fa-check"></i> Submit Delivery Receipt </a>
                   <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
 
                 </div>

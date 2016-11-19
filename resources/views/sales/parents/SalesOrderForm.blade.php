@@ -123,7 +123,7 @@
       </section>
 
       <!-- js placed at the end of the document so the pages load faster -->
-        <script src="{{URL::asset('js/jquery.js')}}"></script>
+      <script src="{{URL::asset('js/jquery.js')}}"></script>
       <script >
       quantity = [];  
       price = [];
@@ -140,12 +140,13 @@
             
           
       });*/
+      //
       function check(error, prices){
             
         ctrErr = 0;
         $('#editable-sample tr').each(function(){
-        if(ctrErr > 0){
-          if(error[ctrErr - 1] == 'X'){
+        if(ctrErr > -1){
+          if(error[ctrErr] == 'X'){
             
             ctrVal = 0
             $(this).find('td').each(function(){
@@ -159,7 +160,7 @@
 
               }else if(ctrVal == 6){
                  
-                $(this).find('input').val(prices[ctrErr-1][0]['CurrentUnitPrice']);
+                $(this).find('input').val(prices[ctrErr][0]['CurrentUnitPrice']);
               }
               ctrVal++;
             });
@@ -191,11 +192,49 @@
         
        /* console.log('asd');*/
        /* setTimeout(check,3000);*/
-      
-  
+      // Check if Quantity is enough and change color
+      $('#editable-sample').on('change','.quan',function(){
+              ctrVal = 0;
+              console.log('Quantity event');
+              console.log(stock);
+
+
+              $('.quan').each(function(){
+               
+                /*console.log(stock);
+                console.log(stock.length);
+                console.log(stock[0]);*/
+                /*console.log(stock[ctrVal][0]['StockQuantity']);*/
+                console.log($(this).val());
+                if(stock[ctrVal + 1] instanceof Array ){
+                    console.log('pagkatapos ng number')
+                   if($(this).val() > parseInt(stock[ctrVal +1][0]['StockQuantity'])){
+                    if($(this).parent().hasClass('has-success')){
+                      
+                       $(this).parent().removeClass('has-success').addClass('has-error');
+                    }else{
+                      $(this).parent().addClass('has-error');
+                  }
+                  }else{
+                    
+                    if($(this).parent().hasClass('has-error')){
+                       $(this).parent().removeClass('has-error').addClass('has-success');
+                    }else{
+                      $(this).parent().addClass('has-success');
+                    }
+
+
+
+                  }
+
+                }
+
+                ctrVal++;
+            });
+        });
 
      
-
+      //if there's a new input in orders 
        $('#editable-sample').on('change','.len, .thick, .wid, .material',function(){   
           lg = [];
           width = [];
@@ -236,42 +275,8 @@
              console.log('end');
           }
 */
-          $('#editable-sample').on('change','.quan',function(){
-              ctrVal = 0;           
-              $('.quan').each(function(){
-               
-                /*console.log(stock);
-                console.log(stock.length);
-                console.log(stock[0]);*/
-                /*console.log(stock[ctrVal][0]['StockQuantity']);*/
-                console.log($(this).val());
-                if(stock[ctrVal+1] instanceof Array){
-
-                   if($(this).val() > parseInt(stock[ctrVal+1][0]['StockQuantity'])){
-                    if($(this).parent().hasClass('has-success')){
-                      
-                       $(this).parent().removeClass('has-success').addClass('has-error');
-                    }else{
-                      $(this).parent().addClass('has-error');
-                  }
-                  }else{
-                    
-                    if($(this).parent().hasClass('has-error')){
-                       $(this).parent().removeClass('has-error').addClass('has-success');
-                    }else{
-                      $(this).parent().addClass('has-success');
-                    }
-
-
-
-                  }
-
-                }
-
-                ctrVal++;
-            });
-          });
-           $.ajax({
+          
+          $.ajax({
             type: "POST",
             url : '/sales/salesOrder/check',
             data : {'_token' : token , 'width':width,
@@ -330,12 +335,17 @@
       });
 
       
+
+
       $('#dis').change(function(){
       /*  console.log($(this).val());     */   
           compute();
       })
+
+
+
       function compute(){
-          if(quantity.length > 0 && price.length >0){
+          if(quantity.length > -1 && price.length > -1){
             total = 0;
             for( ctr = 0; ctr < quantity.length; ctr++){
                 total += quantity[ctr]*price[ctr];
@@ -369,11 +379,14 @@
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script> -->
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-daterangepicker/moment.min.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>	
       <script type="text/javascript" src="{{URL::asset('assets/data-tables/jquery.dataTables.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+      <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
 
       <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script>
 
@@ -396,6 +409,7 @@
       <!--common script for all pages-->
       <script src="{{URL::asset('js/common-scripts.js')}}"></script>
 
+      <script src="{{URL::asset('js/advanced-form-components.js')}}"></script>
       <script>
          EditableTable.init();
          

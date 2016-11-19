@@ -29,10 +29,12 @@ var EditableTable = function () {
                 jqTds[6].innerHTML = '<a style="width:100%"  class="delete" href="">Cancel</a>';
 
             }
+
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);                
-                jqTds[0].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[0] + '">';
+                console.log( jqTds);
+                jqTds[0].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[1] + '">';
                 jqTds[1].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[2] + '">';
                 jqTds[3].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[3] + '">';
@@ -66,11 +68,13 @@ var EditableTable = function () {
                     console.log('asd');
                 });*/
                 var jqInputs = $('input', nRow);
+                console.log(jqInputs);
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
+
                 oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 5, false);
                 oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 6, false);
                 oTable.fnDraw();
@@ -186,12 +190,24 @@ var EditableTable = function () {
                 
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
+
                     restoreRow(oTable, nEditing);
+                     
                     editRealRow(oTable, nRow);
+                     
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
-                    saveEditedRow(oTable, nEditing);
+                    if(status == 'edit'){
+                        console.log(' Sa edit');
+                        saveEditedRow(oTable, nEditing);
+                    }
+
+                        
+                    else if(status == 'add'){
+                        console.log(' Sa add');
+                        saveRow(oTable,nEditing);
+                    }
                     nEditing = null;
 
                     var json = [];                   
