@@ -16,6 +16,7 @@ class SalesOrderList extends Controller
     	$pendingSalesOrder = DB::table('SalesOrders')
     						   ->select('*')
     						   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
+                   ->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
     						   ->where('SalesOrders.SalesOrderStatusID', '1')->get();  
     	
 		

@@ -41,6 +41,40 @@ class SalesOrder extends Controller
     public function create(Request $request){
     
     
+    $stringInput = 0;
+    $width =$request->input('width');
+    $thickness = $request->input('thickness');
+    $length = $request->input('length');
+    $qty = $request->input('qty');
+     
+
+    if(count($width)>0){
+      foreach($width as $key){
+         
+        if(!is_numeric($key)){
+          $stringInput = 1;
+        }
+      }
+      
+      foreach($thickness as $key){
+         
+        if(!is_numeric($key) ){
+          $stringInput = 1;
+        }
+      }  
+      foreach($length as $key){
+         
+        if(!is_numeric($key)){
+          $stringInput = 1;
+        }
+      } 
+      foreach($qty as $key){
+         
+        if(!is_numeric($key)){
+          $stringInput = 1;
+        }
+      }
+    } 
     
     $customerNumber = -2;
     if($request->input('customerName1') <> 'null' && $request->input('customerName1') <> '' ){
@@ -54,15 +88,30 @@ class SalesOrder extends Controller
     }else{
       $customerNumber = $request->input('customerName');
     }
+    $pd;
+    DB::beginTransaction();
+    try{
+      $id = DB::table('SalesOrders')
+              ->insertGetId(['DateCreated' => Carbon::now(),
+                   'SalesOrderStatusID' => '1',
+                   'CustomerID' => $customerNumber,
+                   'Terms' => $request->input('terms'),
+                           'DeliveryAddress' => $request->input('address')]);
+              $pd = 1;
+              DB::rollBack();
 
+    }catch(\Exception $e){
+      $pd = -1;
+      DB::rollBack();
+    }
     
 
-    $customer = DB::table('Customers')
-    				  ->select('CustomerID','Name')
-              ->orderBy('Name','asc')
-    				  ->get();
-  	$customer = $customer->pluck('Name','CustomerID');
-    $customer = array('null' => 'Please Select Customer') + $customer->toArray();
+      $customer = DB::table('Customers')
+      				  ->select('CustomerID','Name')
+                ->orderBy('Name','asc')
+      				  ->get();
+    	$customer = $customer->pluck('Name','CustomerID');
+      $customer = array('null' => 'Please Select Customer') + $customer->toArray();
 
      
   	$terms = DB::table('REF_Terms')
@@ -74,7 +123,9 @@ class SalesOrder extends Controller
     $outcome = 0;
     $outcomeMessage = '';
     DB::beginTransaction();
-    if($customerNumber <> -1){
+ 
+    if($customerNumber <> -1 && $pd <> -1 && $stringInput ==0 && !empty($width )){
+       
       if(count($request->input('material')) > 0){
           $id = DB::table('SalesOrders')
           		->insertGetId(['DateCreated' => Carbon::now(),
@@ -83,10 +134,10 @@ class SalesOrder extends Controller
           				 'Terms' => $request->input('terms'),
                            'DeliveryAddress' => $request->input('address')]);
           
-
+           
           for($ctr = 0; $ctr< count($request->input('material')); $ctr++){
               try{
-
+                echo 'Pumasok sa try';
                 $enough =   DB::table('CompanyInventory')
                             ->select('StockQuantity')
                             ->where([
@@ -121,9 +172,15 @@ class SalesOrder extends Controller
                               ->update(['StockQuantity'=> $newQuantity]);
                  
                  
-                     
-                   
-                       $outcome = 1;    
+                      
+                  if($insert){
+                  $outcome = 1;       
+                  }
+                  else{
+                    $outcome = 0;   
+                  DB::rollBack();
+                  }
+                       
                 }
                 else{
                    $ctr += count($request->input('material'));
@@ -147,15 +204,30 @@ class SalesOrder extends Controller
           }
       }
       else if(count($request->input('material')) == 0){
-        $outcomeMessage .= 'No material!<br>';     
+        $outcomeMessage .= 'No material!<br>'; 
+        $outcome = 0;   
+                DB::rollBack();    
                 
       }
     }else if($customerNumber == -1){
-       $outcomeMessage .= 'Two Customers!';     
+       $outcomeMessage .= 'Two Customers!';  
+       $outcome = 0;   
+      DB::rollBack();   
     }
 
     DB::commit();
-    
+    if($outcome == 1){
+      $sdr = DB::table('SalesDeliveryReceipts')
+               ->insert([
+                  'SalesOrderID' => $id,
+                  'DRStatusID' => 1,
+                  'DateCreated' => $now,
+                  'DeliveryAddress' => $request->input('address')             
+                ]);
+      if($sdr){
+        echo 'SDR success!';
+      }
+    }
  
      
     return view('sales.SOF',
@@ -201,18 +273,18 @@ class SalesOrder extends Controller
             $temp2 = DB::table('CompanyInventory')
                        ->select('CurrentUnitPrice')
                        ->where([
-                        ['Length',intval($length[$ctr])],
-                         ['Width',intval($width[$ctr])],
-                         ['Thickness',intval($thickness[$ctr])],
-                         ['WoodtypeID',intval($material[$ctr])]
+                        ['Length',floatval($length[$ctr])],
+                         ['Width',floatval($width[$ctr])],
+                         ['Thickness',floatval($thickness[$ctr])],
+                         ['WoodtypeID',floatval($material[$ctr])]
                         ])->get();
            $temp3 = DB::table('CompanyInventory')
                        ->select('StockQuantity')
                        ->where([
-                        ['Length',intval($length[$ctr])],
-                         ['Width',intval($width[$ctr])],
-                         ['Thickness',intval($thickness[$ctr])],
-                         ['WoodtypeID',intval($material[$ctr])]
+                        ['Length',floatval($length[$ctr])],
+                         ['Width',floatval($width[$ctr])],
+                         ['Thickness',floatval($thickness[$ctr])],
+                         ['WoodtypeID',floatval($material[$ctr])]
                         ])->get();
 
             if($temp2 <> '[]'){                            
