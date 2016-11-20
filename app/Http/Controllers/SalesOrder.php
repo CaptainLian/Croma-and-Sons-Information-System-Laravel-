@@ -96,7 +96,8 @@ class SalesOrder extends Controller
                    'SalesOrderStatusID' => '1',
                    'CustomerID' => $customerNumber,
                    'Terms' => $request->input('terms'),
-                           'DeliveryAddress' => $request->input('address')]);
+                           'DeliveryAddress' => $request->input('address')
+                    ]);
               $pd = 1;
               DB::rollBack();
 
@@ -123,7 +124,7 @@ class SalesOrder extends Controller
     $outcome = 0;
     $outcomeMessage = '';
     DB::beginTransaction();
- 
+    
     if($customerNumber <> -1 && $pd <> -1 && $stringInput ==0 && !empty($width )){
        
       if(count($request->input('material')) > 0){
@@ -132,12 +133,13 @@ class SalesOrder extends Controller
           				 'SalesOrderStatusID' => '1',
           				 'CustomerID' => $customerNumber,
           				 'Terms' => $request->input('terms'),
-                           'DeliveryAddress' => $request->input('address')]);
+                           'DeliveryAddress' => $request->input('address'),
+                    'Discount' => ($request->input('discount')/100)]);
           
            
           for($ctr = 0; $ctr< count($request->input('material')); $ctr++){
               try{
-                echo 'Pumasok sa try';
+                
                 $enough =   DB::table('CompanyInventory')
                             ->select('StockQuantity')
                             ->where([

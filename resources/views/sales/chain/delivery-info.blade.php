@@ -14,7 +14,7 @@
 			<strong>{{$so[0]->SalesOrderID}}</strong>
 		</li>
 
-		<li>Orderdate :
+		<li>Order Date :
 			<strong>{{$so[0]->DateCreated}}</strong>
 		</li>
 
