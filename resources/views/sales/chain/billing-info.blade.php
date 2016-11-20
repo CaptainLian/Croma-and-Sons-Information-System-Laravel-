@@ -7,7 +7,7 @@
 		<strong> {{$so[0]->Terms}}</strong>
 		
 		@if($active == 'si')
-			<br>Delivery Date :  <strong> 2013-03-17</strong>  </br>
+			<br>Delivery Date :  <strong> {{$so[0]->DateDelivered}}</strong>  </br>
 
 		@endif
 
@@ -29,10 +29,9 @@
 
 		 Address:
 		<b>
-		@if(isset($address))
-			{{$address}}
-		@endif
-
+		 
+			{{$so[0]->DeliveryAddress}}
+	 
 
 		</b>
 

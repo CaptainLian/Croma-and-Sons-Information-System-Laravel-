@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\DB;
 class SalesOrderList extends Controller
 {
     public function index(){
-    	$pendingSalesOrder = DB::table('SalesOrders')
+    	$pendingSalesOrder = DB::table('SalesDeliveryReceipts')
     						   ->select('*')
-    						   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
-                   ->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
-    						   ->where('SalesOrders.SalesOrderStatusID', '1')->get();  
+                   ->join('SalesOrders','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
+    						   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')          
+    						   ->where('SalesDeliveryReceipts.DRStatusID', '1')->get();  
     	
 		  
     	return view('sales.SDRI',
@@ -25,6 +25,7 @@ class SalesOrderList extends Controller
     		 'active' => 'sdri']);
 
     }
+
     public function create($salesID){
         $now = Carbon::now()->toDateString();
         $so = DB::table('SalesOrders')
@@ -33,7 +34,7 @@ class SalesOrderList extends Controller
         $sdr = DB::table('SalesDeliveryReceipts')
                  ->where('SalesOrderID',$salesID)
                  ->pluck('SalesDeliveryReceiptID');
-        $addr = DB::table('SalesDeliveryReceipts')
+        $addr = DB::table('SalesOrders')
                  ->where('SalesOrderID',$salesID)
                  ->pluck('DeliveryAddress');
         $dis = DB::table('SalesOrders')
@@ -68,21 +69,24 @@ class SalesOrderList extends Controller
     public function post(Request $request){
           $date = $request->input('date');
           $id = $request->input('sdrID');
+          echo $id;
           DB::beginTransaction();      
           try{
           $insert =DB::table('SalesInvoice')
             ->insert([
               'SalesDeliveryReceiptID'=>$id,
-              'DateCreated' =>$date
+              
               ]);
 
-          echo $insert.'Insert';
+          /*echo $insert.'Insert';
+          echo $date;*/
 
           $update = DB::table('SalesDeliveryReceipts')
           ->where('SalesDeliveryReceiptID',intval($id))
-          ->update(array('DRStatusID' => intval(2)));
+          ->update(['DRStatusID' => intval(2),'DateDelivered' => $date]);
 
-          echo $update.'Update';
+          /*echo $update.'Update';*/
+
             if(!$insert || !$update){
                DB::rollBack();
                echo 'Fail';
@@ -93,11 +97,11 @@ class SalesOrderList extends Controller
             DB::rollBack();
           }          
           DB::commit();
-         $pendingSalesOrder = DB::table('SalesOrders')
+          $pendingSalesOrder = DB::table('SalesOrders')
                    ->select('*')
                    ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
                    ->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
-                   ->where('SalesOrders.SalesOrderStatusID', '1')->get();  
+                   ->where('SalesDeliveryReceipts.DRStatusID', '1')->get();   
       
       
       return view('sales.SDRI',
