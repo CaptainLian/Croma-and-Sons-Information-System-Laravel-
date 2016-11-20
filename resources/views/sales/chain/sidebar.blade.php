@@ -19,7 +19,7 @@
       <li>
         <a  @if ($active == 'sdri')class="active" @endif href="/sales/deliveryReceiptInitial">
           <i class="fa fa-file-text"></i>
-          <span>Create Delivery Receipt</span>
+          <span> Delivery Receipt</span>
         </a>
       </li>
 
@@ -49,18 +49,12 @@
       <li>
         <a  @if ($active == 'sr')class="active" @endif  href="/sales/report">
           <i class="fa fa-file"></i>
-          <span>Sales Report</span>
+          <span>Sales History</span>
         </a>
       </li>
 
 
-      <li>
-        <a  @if ($active == 'psr')class="active" @endif href="/sales/productReport">
-          <i class="fa fa-file"></i>
-          <span>Product Sale Report</span>
-        </a>
-      </li>
-
+       
 
       <!--multi level menu start-->
 

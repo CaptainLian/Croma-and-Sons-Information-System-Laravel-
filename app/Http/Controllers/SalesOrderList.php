@@ -19,7 +19,7 @@ class SalesOrderList extends Controller
                    ->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
     						   ->where('SalesOrders.SalesOrderStatusID', '1')->get();  
     	
-		
+		  
     	return view('sales.SDRI',
     		['pendingSalesOrder' => $pendingSalesOrder,
     		 'active' => 'sdri']);
@@ -30,7 +30,16 @@ class SalesOrderList extends Controller
         $so = DB::table('SalesOrders')
                 ->where('SalesOrderID',$salesID)
                 ->get();
-    
+        $sdr = DB::table('SalesDeliveryReceipts')
+                 ->where('SalesOrderID',$salesID)
+                 ->pluck('SalesDeliveryReceiptID');
+        $addr = DB::table('SalesDeliveryReceipts')
+                 ->where('SalesOrderID',$salesID)
+                 ->pluck('DeliveryAddress');
+        $dis = DB::table('SalesOrders')
+                 ->where('SalesOrderID',$salesID)
+                 ->pluck('Discount');
+ 
         $customer = DB::table('Customers')
                       ->where('CustomerID',$so[0]->CustomerID)
                       ->get();
@@ -45,15 +54,54 @@ class SalesOrderList extends Controller
                    ->join('REF_WoodTypes as REW','SalesOrderItems.WoodTypeID','=','REW.WoodTypeID')
                    ->where('SalesOrderID',$salesID)
                    ->get();
-
+         
         return view('sales.SDR',['active' => 'sdr',
             'so' => $so,
             'now' => $now,
+            'sdrID'=>$sdr[0],
             'customer' => $customer,
+            'address' =>$addr[0],
+            'dis' => $dis[0]*100,
             'items' => $items]);
     }
 
     public function post(Request $request){
+          $date = $request->input('date');
+          $id = $request->input('sdrID');
+          DB::beginTransaction();      
+          try{
+          $insert =DB::table('SalesInvoice')
+            ->insert([
+              'SalesDeliveryReceiptID'=>$id,
+              'DateCreated' =>$date
+              ]);
 
+          echo $insert.'Insert';
+
+          $update = DB::table('SalesDeliveryReceipts')
+          ->where('SalesDeliveryReceiptID',intval($id))
+          ->update(array('DRStatusID' => intval(2)));
+
+          echo $update.'Update';
+            if(!$insert || !$update){
+               DB::rollBack();
+               echo 'Fail';
+            }
+          }
+          catch(\Exception $e){
+            echo $e;
+            DB::rollBack();
+          }          
+          DB::commit();
+         $pendingSalesOrder = DB::table('SalesOrders')
+                   ->select('*')
+                   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
+                   ->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
+                   ->where('SalesOrders.SalesOrderStatusID', '1')->get();  
+      
+      
+      return view('sales.SDRI',
+        ['pendingSalesOrder' => $pendingSalesOrder,
+         'active' => 'sdri']);
     }
 }
