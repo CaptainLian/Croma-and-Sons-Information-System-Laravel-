@@ -42,14 +42,15 @@ Supplier List
 						</tr>
 					</thead>
 					<tbody>
+						<?php $modalCount = 0;?>
 						@foreach($suppliers as $supplier)
 							<tr>
 								<td>
-									<a data-toggle="modal" href="#myModal2">
+									<a data-toggle="modal" href="#myModal{!!$modalCount!!}">
 										{!!$supplier->Name!!}
 									</a>
 									
-									<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal fade" id="myModal{!!$modalCount!!}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-dialog modal-lg">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -85,7 +86,7 @@ Supplier List
 																	<table class="table table-striped table-hover">
 																		<?php 
 																			$count = 1;
-																				
+																			
 																		?>
 																		<thead>
 																			<tr>
@@ -169,6 +170,8 @@ Supplier List
 									<a class="delete" href="javascript:;">Delete</a>
 								</td>
 							</tr>
+
+							<?php $modalCount++; ?>
 						@endforeach
 						</tr>
 						

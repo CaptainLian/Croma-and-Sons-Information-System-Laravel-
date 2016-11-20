@@ -72,4 +72,12 @@ GROUP BY 1;
   SELECT DISTINCT DATE_FORMAT(DateDelivered, '%b') AS Month
     FROM PurchaseDeliveryReceipts
 ORDER BY 1 DESC;
+
+
+SELECT PendingPO.PurchaseOrderID AS POID, PendingPO.DateCreated AS DateCreated, S.Name AS SupplierName
+										   FROM (SELECT PurchaseOrderID, DateCreated, SupplierID
+												   FROM PurchaseOrders
+	   											  WHERE PurchaseOrderID NOT IN (SELECT PurchaseOrderID
+																				  FROM PurchaseDeliveryReceipts)) PendingPO JOIN Suppliers S
+																															  ON PendingPO.SupplierID = S
                                                 

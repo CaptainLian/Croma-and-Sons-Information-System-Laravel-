@@ -11,9 +11,6 @@
 
 
 
-
-
-
 Route::get('/logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
 
 Route::group(['prefix' => 'admin'], function(){
@@ -57,7 +54,13 @@ Route::group(['prefix' => 'procurement'], function(){
 });
 
 Route::group(['prefix' => 'inventory'], function(){
-	Route::get('dashboard', ['as' => 'InventoryDashboard', 'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
+	Route::get('dashboard', ['as' => 'viewInventoryDashboard', 'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
+
+	Route::get('InventoryList', ['as' => 'viewInventoryList', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryList']);
+
+	Route::get('EditInventory', ['as' => 'viewInventoryEdit', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryEdit']);
+
+	Route::get('InventoryResize', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);		
 });
 
 ?>

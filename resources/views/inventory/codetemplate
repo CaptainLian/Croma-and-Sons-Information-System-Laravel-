@@ -1,0 +1,17 @@
+@extends('inventory.main')
+
+@section('title')
+
+@endsection
+
+@push('css')
+
+@endpush
+
+@section('main-content')
+
+@endsection
+
+@push('javascript')
+
+@endpush
