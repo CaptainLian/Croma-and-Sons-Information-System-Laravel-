@@ -84,6 +84,7 @@ class SalesOrder extends Controller
                             'Address' =>$request->input('customer-delivery-address')
                             ]);
 
+
       
     }else{
       $customerNumber = $request->input('customerName');
@@ -91,12 +92,14 @@ class SalesOrder extends Controller
     $pd;
     DB::beginTransaction();
     try{
+      echo  $request->input('delivery-address');
       $id = DB::table('SalesOrders')
               ->insertGetId(['DateCreated' => Carbon::now(),
                    'SalesOrderStatusID' => '1',
                    'CustomerID' => $customerNumber,
                    'Terms' => $request->input('terms'),
-                           'DeliveryAddress' => $request->input('address')]);
+                  'DeliveryAddress' => $request->input('delivery-address')
+                    ]);
               $pd = 1;
               DB::rollBack();
 
@@ -123,7 +126,7 @@ class SalesOrder extends Controller
     $outcome = 0;
     $outcomeMessage = '';
     DB::beginTransaction();
- 
+    
     if($customerNumber <> -1 && $pd <> -1 && $stringInput ==0 && !empty($width )){
        
       if(count($request->input('material')) > 0){
@@ -132,12 +135,13 @@ class SalesOrder extends Controller
           				 'SalesOrderStatusID' => '1',
           				 'CustomerID' => $customerNumber,
           				 'Terms' => $request->input('terms'),
-                           'DeliveryAddress' => $request->input('address')]);
+                           'DeliveryAddress' => $request->input('address'),
+                    'Discount' => ($request->input('discount')/100)]);
           
            
           for($ctr = 0; $ctr< count($request->input('material')); $ctr++){
               try{
-                echo 'Pumasok sa try';
+                
                 $enough =   DB::table('CompanyInventory')
                             ->select('StockQuantity')
                             ->where([
@@ -191,7 +195,7 @@ class SalesOrder extends Controller
                  
               }
               catch(\Exception $e){
-                echo $e;  
+               /* echo $e;  */
                 $ctr += count($request->input('material'));
                 $outcomeMessage .= 'Something wrong with the material you inserted! <br>';   
                 $outcome = 0;   
@@ -225,7 +229,7 @@ class SalesOrder extends Controller
                   'DeliveryAddress' => $request->input('address')             
                 ]);
       if($sdr){
-        echo 'SDR success!';
+        /*echo 'SDR success!';*/
       }
     }
  

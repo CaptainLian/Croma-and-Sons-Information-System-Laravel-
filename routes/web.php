@@ -27,7 +27,7 @@ Route::get('/sales/deliveryReceiptInitial','SalesOrderList@index');
 
 Route::get('/sales/createDeliveryReceipt/{salesOrderID}','SalesOrderList@create');
 
-Route::post('sales/deliveryReceiptInitial','SalesOrderList@post');
+Route::post('sales/deliveryReceiptInitial/submit/','SalesOrderList@post');
 
 Route::get('/sales/catalog','SalesCatalog@index');
 

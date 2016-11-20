@@ -10,11 +10,15 @@
 
 		 
 	@if($active == 'sdr')
+		<li>
+			Delivery Receipt Number	 :
+			<strong>{{$sdrID}}</strong>
+		</li>
 		<li>Sales Order Number	 :
 			<strong>{{$so[0]->SalesOrderID}}</strong>
 		</li>
 
-		<li>Orderdate :
+		<li>Order Date :
 			<strong>{{$so[0]->DateCreated}}</strong>
 		</li>
 

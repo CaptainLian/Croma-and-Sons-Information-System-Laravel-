@@ -17,7 +17,8 @@ class SalesInvoice extends Controller
     	$pd = DB::table('SalesDeliveryReceipts as SDR')
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
     			->join('Customers as C','C.CustomerID','=','SO.CustomerID')
-    			->where('SDR.DRStatusID','1')
+          ->join('SalesInvoice as SI','SI.SalesDeliveryReceiptID','=','SDR.SalesDeliveryReceiptID')
+    			->where('SDR.DRStatusID','2')
     			->get();
 
     	return view('sales.SII',
@@ -26,14 +27,16 @@ class SalesInvoice extends Controller
     		 ]);
     }
     public function create($id){
-        $w = DB::table('SalesDeliveryReceipts')
-               ->select('SalesOrderID')
-               ->where('SalesDeliveryReceiptID',$id);
-        $so=DB::table('SalesOrders')
-              ->where('SalesOrderID',$w); 
-         print_r($so);
-    	/*return view('sales.SI',
+        
+        $so=DB::table('SalesInvoice as SI')
+              ->join('SalesDeliveryReceipts as SDR','SI.SalesDeliveryReceiptID','=','SDR.SalesDeliveryReceiptID')
+              ->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
+              ->join('Customers as C','C.CustomerID','=','SO.CustomerID')
+              ->where('SalesInvoiceID',$id)
+              ->get(); 
+         
+    	return view('sales.SI',
             ['active' => 'si',
-             'so' => $so]);*/
+             'so' => $so]);
     }
 }

@@ -1,31 +1,31 @@
   <!DOCTYPE html>
-<html lang="en">
+  <html lang="en">
 
-<!-- Mirrored from thevectorlab.net/flatlab/invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Aug 2016 03:22:31 GMT -->
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Mosaddek">
-  <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <link rel="shortcut icon" href="{{URL::asset('img/favicon.html')}}">
+  <!-- Mirrored from thevectorlab.net/flatlab/invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Aug 2016 03:22:31 GMT -->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="{{URL::asset('img/favicon.html')}}">
 
-  <title>Croma and Sons</title>
+    <title>Croma and Sons</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{URL::asset('css/bootstrap-reset.css')}}" rel="stylesheet">
-  <!--external css-->
-  <link href="{{URL::asset('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
-  <!--right slidebar-->
-  <link href="{{URL::asset('css/slidebars.css')}}" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
-  <link href="{{URL::asset('css/style-responsive.css')}}" rel="stylesheet" />
-  <link href="{{URL::asset('css/invoice-print.css')}}" rel="stylesheet" media="print">
+    <!-- Bootstrap core CSS -->
+    <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('css/bootstrap-reset.css')}}" rel="stylesheet">
+    <!--external css-->
+    <link href="{{URL::asset('assets/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
+    <!--right slidebar-->
+    <link href="{{URL::asset('css/slidebars.css')}}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('css/style-responsive.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('css/invoice-print.css')}}" rel="stylesheet" media="print">
 
 
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
@@ -95,18 +95,23 @@
 
 
                  <div class="row">
-
-                   <div class="form-group">
+                  {!! Form::open(['url' => 'sales/deliveryReceiptInitial/submit']) !!}
+                  <div class="form-group">
                     <label class="control-label col-md-1">Set Delivery Date</label>
                     <div class="col-md-2 col-xs-11">
 
-                      <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2012-02-12"  class="input-append date dpYears">
-                        <input type="text" readonly="" value="2012-02-12" size="16" class="form-control">
+                    {{Form::hidden('sdrID',$sdrID)}}
+                      <div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="2016-02-12"  class="input-append date dpYears">
+
+                        {!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""','size'=>'16']) !!}
+
                         <span class="input-group-btn add-on">
-                          <button class="btn " style="padding:6px 9px 6px 9px;background-color:#ff6c60;color:white" type="button"><i class="fa fa-calendar"></i></button>
+                          {!! Form::button('<i class="fa fa-calendar"></i>',
+                          ['class' => 'btn ',
+                          'style' => 'padding:6px 9px 6px 9px;background-color:#ff6c60;color:white'])!!}
+
                         </span>
                       </div>
-
 
 
                       <br>
@@ -143,9 +148,9 @@
                       <th class="">Size</th>
                       <th class="">Unit</th>
                       <th class="">Quantity</th>
-                       
+
                       <th class="">Unit Price</th>
-                       
+
                     </tr>
                   </thead>
                   <tbody>
@@ -156,16 +161,19 @@
                   <div class="col-lg-4 invoice-block pull-right">
                     <ul class="unstyled amounts">
                       <li><strong>Sub - Total amount :</strong><a id='sub'> </a></li>
-                      <li><strong >Discount :</strong> <a id="dis">10</a>%</li>
-                      <li><strong>VAT :</strong> -----</li>
+                      <li><strong >Discount :</strong> <a id="dis">{{$dis}}</a>%</li>
+                      
                       <li><strong>Grand Total :</strong> <a id='tot'></a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="text-center invoice-btn">
-                  <a class="btn btn-danger btn-lg" style="background-color: #ec6459;border: #ec6459"><i class="fa fa-check"></i> Submit Delivery Receipt </a>
+                  {!! Form::button('<i class="fa fa-check"></i>Submit Form',[
+                  "class" => 'btn btn-danger btn-lg ',
+                  'type' => 'submit',
+                  'style' => 'font-weight:100;font-size:16px;font-family:Open Sans;background-color:#ff6c60;border-color:#ff6c60']) !!}
                   <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
-
+                  {!! Form::close()!!}
                 </div>
               </div>
             </div>
@@ -338,13 +346,13 @@
         console.log(price);
         
       });
-       $('.price').each(function(){
+      $('.price').each(function(){
         console.log(parseInt($(this).html()));
         quan.push(parseInt($(this).html()));
         console.log(price);
         
       });
-       total = 0;
+      total = 0;
       for(ctr = 0; ctr < price.length; ctr++){
         total += (price[ctr] * quan[ctr]);
       }

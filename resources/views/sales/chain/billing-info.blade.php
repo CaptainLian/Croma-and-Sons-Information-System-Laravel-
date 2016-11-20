@@ -5,10 +5,21 @@
 
 	<p>Payment Terms :
 		<strong> {{$so[0]->Terms}}</strong>
+		
 		@if($active == 'si')
-			<br>Delivery Date :  <strong> 2013-03-17</strong>  </br>
+			<br>Delivery Date :  <strong> {{$so[0]->DateDelivered}}</strong>  </br>
 
 		@endif
+
+		@if(isset($sdrID) )
+			<br/>
+			Delivery Receipt #
+			<strong>{{$sdrID}}</strong>
+		@endif
+
+
+
+
 		@if($active =='si')
 			Delivery
 		@else
@@ -17,7 +28,12 @@
 
 
 		 Address:
-		<b>Need column address in DB</b>
+		<b>
+		 
+			{{$so[0]->DeliveryAddress}}
+	 
+
+		</b>
 
 			<br>
 		</p>

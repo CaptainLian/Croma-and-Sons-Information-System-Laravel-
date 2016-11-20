@@ -1,15 +1,15 @@
 @extends('sales.parents.SalesDeliveryReceipt')
 
 @section('sidebar')
-@include('sales.chain.sidebar')
+	@include('sales.chain.sidebar')
 @endsection
 
 @section('billing-info')
-@include('sales.chain.billing-info',['so' => $so])
+	@include('sales.chain.billing-info',['so' => $so,'sdrID'=> $sdrID])
 @endsection
 
 @section('customer-info')
-@include('sales.chain.customer-info',['customer' => $customer])
+	@include('sales.chain.customer-info',['customer' => $customer])
 @endsection
 
 @section('materials')

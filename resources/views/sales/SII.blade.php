@@ -14,7 +14,7 @@
 			<td>{{$p->DateCreated}}</td>
 			<td>{{$p->Name}}</td>
 			<th>
-				<a href="/sales/invoice/{{$p->SalesDeliveryReceiptID}}"
+				<a href="/sales/invoice/{{$p->SalesInvoiceID}}"
 				 <button id='asd' type="button" class="btn btn-success">Create Invoice</button>
 				 </a>
 			</th>
