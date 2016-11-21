@@ -60,6 +60,7 @@ Inventory List
 			</div>
 		</section>
 	</div>
+	<!--
 	<div class="col-sm-5">
 		<section class="panel">
 			<header class="panel-heading">
@@ -98,6 +99,8 @@ Inventory List
 			</div>
 		</section>
 	</div>
+
+	-->
 </div>
 <!-- page end-->
 @endsection
