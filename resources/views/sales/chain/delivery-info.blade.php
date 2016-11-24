@@ -4,11 +4,11 @@
 
 	@if($active == 'si')
 		<li>Invoice Number :
-			<strong>69626</strong>
+			<strong>{{$so[0]->SalesInvoiceID}}</strong>
 		</li>
 	@endif
 
-		 
+
 	@if($active == 'sdr')
 		<li>
 			Delivery Receipt Number	 :

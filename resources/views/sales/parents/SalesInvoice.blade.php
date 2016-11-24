@@ -43,7 +43,7 @@
           <!--logo start-->
           <a href="SalesDashboard.html" class="logo">Croma<span id="AND">and</span><span id="SONS">Sons</span></a>
           <!--logo end-->
-          
+
           <div class="top-nav ">
             <ul class="nav pull-right top-menu">
 
@@ -80,7 +80,7 @@
 
         <aside>
           @yield('sidebar')
-        </aside>  
+        </aside>
         <!--sidebar end-->
         <!--main content start-->
         <section id="main-content">
@@ -100,48 +100,54 @@
                     @yield('billing-info')
 
                     @yield('customer-info')
-                    
+
                     @yield('delivery-info')
-                  
- 
+
+
               </div>
+              {!! Form::open(['url' => 'sales/invoice/submit']) !!}
+              {!! Form::hidden('id',$id)!!}
               <table class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>Material</th>
                     <th class="">Size</th>
+                      <th class="">Quantity</th>
                     <th class="">Unit</th>
-                    <th class="">Quantity</th>
-                    <th class="">B/F</th>
+                    <th class="">Rejects</th>
+
                     <th class="">Unit Price</th>
-                    <th class="">Discount</th>    
+
                     <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   @yield('sales-item')
-                   
+
                 </tbody>
               </table>
               <div class="row">
                 <div class="col-lg-4 invoice-block pull-right">
                   <ul class="unstyled amounts">
-                    <li><strong>Sub - Total amount :</strong> $6820</li>
-                    <li><strong>Discount :</strong> 10%</li>
-                    <li><strong>VAT :</strong> -----</li>
-                    <li><strong>Grand Total :</strong> $6138</li>
+                    <li><strong>Subtotal:</strong><span id='sub'></span></li>
+                    <li><strong>Discount :</strong><span id='dis'> {{$discount*100}}</span> %</li>
+                    <li><strong>Total :</strong> <span id="tot"></span></li>
                   </ul>
                 </div>
               </div>
               <div class="text-center invoice-btn">
-                <a class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Submit Invoice </a>
+                {!! Form::button('<i class="fa fa-check"></i>Submit Rejects',[
+                "class" => 'btn btn-info btn-lg ',
+                'type' => 'submit',
+                'style' => 'font-weight:100;font-size:16px;font-family:Open Sans']) !!}
                 <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
 
               </div>
             </div>
           </div>
         </section>
+        {!! Form::close()!!}
         <!-- invoice end-->
       </section>
     </section>
@@ -304,17 +310,44 @@
 
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="{{URL::asset('js/jquery.js')}}"></script>
+  <script>
+    $('tr').each(function(){
+      var quan = $(this).find('.quan').html();
+      var price = $(this).find('.price').html();
+
+      console.log(quan);
+      console.log(price);
+
+      $(this).find('.total').html(quan*parseInt(price));
+    });
+    var total = 0;
+    $('tr').find('.total').each(function(){
+      total += parseInt($(this).text());
+    });
+    console.log(total);
+    $('#sub').html(total);
+
+    var dis = $('#dis').html();
+    console.log(dis);
+    console.log(parseFloat(dis));
+    total = total - (total * parseFloat(dis)/100);
+    console.log(total);
+    $('#tot').html(total);
+
+
+
+  </script>
   <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
   <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
   <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
-  <script src="{{URL::asset('js/jquery.nicescroll.js"')}} type="text/javascript"></script>
-  <script src="{{URL::asset('js/respond.min.js')}}" ></script>
+  <!-- <script src="{{URL::asset('js/jquery.nicescroll.js"')}} type="text/javascript"></script>
+  <script src="{{URL::asset('js/respond.min.js')}}" ></script> -->
 
   <!--right slidebar-->
   <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
 
   <!--common script for all pages-->
-  <script src="{{URL::asset('js/common-scripts.js')}}"></script>
+  <!-- <script src="{{URL::asset('js/common-scripts.js')}}"></script> -->
 
 
 </body>
