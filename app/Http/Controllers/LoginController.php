@@ -19,11 +19,11 @@ class LoginController extends Controller{
 
 	const LOGIN_RULES = ['username' => 'bail|required|exists:Accounts,Username',
                			  'password' => 'bail|required'];
-    const LOGIN_ERROR_MESSAGES = ['required' => 'Please input your :attribute.',
-              					   'username.exists' => 'Username is not associated to any account.'];
+  const LOGIN_ERROR_MESSAGES = ['required' => 'Please input your :attribute.',
+              					   			'username.exists' => 'Username is not associated to any account.'];
 
 	public function validateLogin(Request $request){
-		
+
 		$validator = Validator::make(Input::all(), LoginController::LOGIN_RULES, LoginController::LOGIN_ERROR_MESSAGES);
 
 		if($validator->fails()){
@@ -42,6 +42,9 @@ class LoginController extends Controller{
 
 		Session::put('username', $account->Username);
  		Session::put('active', true);
+		Session::put('firstname', $account->Firstname);
+		Session::put('lastname', $account->Lastname);
+
 		$controller = '';
 		switch ($account->PositionID) {
 			case 1:
@@ -50,7 +53,6 @@ class LoginController extends Controller{
 			case 2:
 				$controller = 'Dashboard@index';
 				break;
-
 			case 3:
 				$controller = 'BusinessControllers\InventoryPageController@viewDashboard';
 				break;
@@ -61,7 +63,6 @@ class LoginController extends Controller{
 		}
 
 		Session::put('controller', $controller);
-		View::share('name', $account->Firstname.' '.$account->Lastname);
 		return Redirect::action($controller);
 	}
 
