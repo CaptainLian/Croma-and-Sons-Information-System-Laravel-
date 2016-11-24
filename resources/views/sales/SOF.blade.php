@@ -235,7 +235,7 @@
   <div class="col-lg-4 invoice-block pull-right">
     <ul class="unstyled amounts">
       <li><strong>Subtotal amount :</strong> <a id='sub'></a></li>
-      <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',null,['style'=>'width:40px', 'id' => 'dis']) !!}%</li>
+      <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',0,['style'=>'width:40px', 'id' => 'dis']) !!}%</li>
 
       <li ><strong> Total : </strong><a id="tot"></a></li>
     </ul>

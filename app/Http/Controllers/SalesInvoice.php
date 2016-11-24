@@ -18,7 +18,7 @@ class SalesInvoice extends Controller
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
     			->join('Customers as C','C.CustomerID','=','SO.CustomerID')
           ->join('SalesInvoice as SI','SI.SalesDeliveryReceiptID','=','SDR.SalesDeliveryReceiptID')
-    			->where('SDR.DRStatusID','2')
+    			->where('SDR.DRStatusID','3')
     			->get();
 
     	return view('sales.SII',
@@ -71,7 +71,7 @@ class SalesInvoice extends Controller
                ->pluck('SDR.SalesDeliveryReceiptID');
       DB::table('SalesDeliveryReceipts')
         ->where('SalesDeliveryReceiptID',$sdr[0])
-        ->update(['DRStatusID'=>3]);
+        ->update(['DRStatusID'=>5]);
       // echo $sdr[0];
       $len = $request->input('len');
       $wid = $request->input('wid');
@@ -118,7 +118,7 @@ class SalesInvoice extends Controller
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
     			->join('Customers as C','C.CustomerID','=','SO.CustomerID')
           ->join('SalesInvoice as SI','SI.SalesDeliveryReceiptID','=','SDR.SalesDeliveryReceiptID')
-    			->where('SDR.DRStatusID','2')
+    			->where('SDR.DRStatusID','3')
     			->get();
 
     	return view('sales.SII',

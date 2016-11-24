@@ -95,7 +95,7 @@ class SalesOrder extends Controller
       // echo  $request->input('delivery-address');
       $id = DB::table('SalesOrders')
               ->insertGetId(['DateCreated' => Carbon::now(),
-                   'SalesOrderStatusID' => '2',
+                   'SalesOrderStatusID' => '1',
                    'CustomerID' => $customerNumber,
                    'Terms' => $request->input('terms'),
                   'DeliveryAddress' => $request->input('delivery-address')
@@ -229,7 +229,7 @@ class SalesOrder extends Controller
                   'DeliveryAddress' => $request->input('address')
                 ]);
       if($sdr){
-        /*echo 'SDR success!';*/
+      
       }
     }
 

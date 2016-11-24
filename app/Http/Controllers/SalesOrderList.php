@@ -17,7 +17,7 @@ class SalesOrderList extends Controller
     						   ->select('*')
                    ->join('SalesOrders','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
     						   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
-    						   ->where('SalesDeliveryReceipts.DRStatusID', '1')->get();
+    						   ->where('SalesDeliveryReceipts.DRStatusID', '2')->get();
 
 
     	return view('sales.SDRI',
@@ -85,7 +85,7 @@ class SalesOrderList extends Controller
 
           $update = DB::table('SalesDeliveryReceipts')
           ->where('SalesDeliveryReceiptID',intval($id))
-          ->update(['DRStatusID' => intval(2),'DateDelivered' => $date]);
+          ->update(['DRStatusID' => intval(3),'DateDelivered' => $date]);
 
           /*echo $update.'Update';*/
 
@@ -103,7 +103,7 @@ class SalesOrderList extends Controller
                    ->select('*')
                    ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
                    ->join('SalesDeliveryReceipts','SalesOrders.SalesOrderID','=','SalesDeliveryReceipts.SalesOrderID')
-                   ->where('SalesDeliveryReceipts.DRStatusID', '1')->get();
+                   ->where('SalesDeliveryReceipts.DRStatusID', '2')->get();
 
 
       return view('sales.SDRI',
