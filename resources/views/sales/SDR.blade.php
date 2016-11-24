@@ -28,13 +28,14 @@
 			<td class="pcs" width="30px">
 				{{$items[$ctr]->Quantity}}
 
-				 
+
 
 
 			</td>
-			 
-			<td class="price">{{  $items[$ctr]->CurrentUnitPrice }}</td>
-			 
+
+			<td class="price" >{{  $items[$ctr]->CurrentUnitPrice }}</td>
+			<td style="text-align:right" class="price2">{{$items[$ctr]->CurrentUnitPrice * $items[$ctr]->Quantity}}</td>
+
 		</tr>
 	@endfor
 @endsection

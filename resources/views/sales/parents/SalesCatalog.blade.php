@@ -19,7 +19,7 @@
 <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
 <link href="{{URL::asset('css/style-responsive.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media
-    queries -->	
+    queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
@@ -70,7 +70,7 @@
       </header>
       <!--header end-->
       <!--sidebar start-->
-      
+
 
 
 
@@ -299,6 +299,7 @@
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="{{URL::asset('js/jquery.js')}}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
   <script src="{{URL::asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
   <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
   <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
@@ -323,6 +324,6 @@
     <!-- Mirrored from thevectorlab.net/flatlab/editable_table.html
     by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Aug 2016 03:21:14 GMT
   -->
-  
+
 
 </body></html>

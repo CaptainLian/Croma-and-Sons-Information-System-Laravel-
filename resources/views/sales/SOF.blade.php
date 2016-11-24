@@ -16,7 +16,7 @@
   @elseif($outcome == 0)
     <div class="alert alert-danger alert-block fade in">
   @endif
-  
+
     <button data-dismiss="alert" class="close close-sm" type="button">
       <i class="fa fa-times"></i>
     </button>
@@ -27,16 +27,16 @@
         @elseif($outcome == 0)
           Failed!
         @endif
-      
+
     </h4>
 
-       
-        <p> 
-        @if($outcomeMessage <> null) 
+
+        <p>
+        @if($outcomeMessage <> null)
         {!!$outcomeMessage!!}
         @endif
       </p>
-   
+
   </div>
 @endif
 
@@ -47,7 +47,7 @@
 <div class="row">
 
 	<div class="form-group">
-		<label class="control-label col-md-1">Set Order Date</label>
+		<label class="control-label col-md-1">Set Delivery Date</label>
 		<div class="col-md-4 col-xs-11">
 
 			<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="12-02-2012"  class="input-append date dpYears">
@@ -58,7 +58,7 @@
         {!! Form::button('<i class="fa fa-calendar"></i>',
         ['class' => 'btn ',
          'style' => 'padding:6px 9px 6px 9px;background-color:#ff6c60;color:white'])!!}
- 
+
         </span>
       </div>
 
@@ -78,10 +78,11 @@
     <div class="col-lg-4 col-md-4 ">
       <div class="input-group m-bot15">
        <span class="input-group-btn">
-        <button class="btn btn-white" type="button" id="newUser">New User</button>
+        <button class="btn btn-white" type="button" id="newUser">New Customer</button>
       </span>
       {!! Form::select('customerName', $customers,null,
       ['class' => 'form-control m-bot15',
+
        'id' => 'customer-select']) !!}
 
       </div>
@@ -102,7 +103,7 @@
     </div>
   </div>
 
- 
+
 
 
 </div>
@@ -122,7 +123,7 @@
 
 
 
-<!-- 
+<!--
 <div class="row">
   <div class="form-group">
 
@@ -136,7 +137,7 @@
 </div>
 
 </div> -->
- 
+
 
 <div class="row">
   <div class="form-group">
@@ -215,12 +216,12 @@
               <th>Unit</th>
 
               <th>Unit Price</th>
-
+              <th>Total</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            
+
           </tbody>
         </table>
       </div>
@@ -234,8 +235,8 @@
   <div class="col-lg-4 invoice-block pull-right">
     <ul class="unstyled amounts">
       <li><strong>Subtotal amount :</strong> <a id='sub'></a></li>
-      <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',null,['style'=>'width:40px', 'id' => 'dis']) !!}</li>
-      
+      <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',null,['style'=>'width:40px', 'id' => 'dis']) !!}%</li>
+
       <li ><strong> Total : </strong><a id="tot"></a></li>
     </ul>
   </div>
@@ -247,7 +248,7 @@
  "class" => 'btn btn-success btn-lg ',
  'type' => 'submit',
  'style' => 'font-weight:100;font-size:16px;font-family:Open Sans']) !!}
- <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>  
+ <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
 
 
 </div>
@@ -257,4 +258,3 @@
 
 {!! Form::close()!!}
 @endsection
-

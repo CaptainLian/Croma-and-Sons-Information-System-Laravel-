@@ -44,7 +44,7 @@
           <!--logo start-->
           <a href="SalesDashboard.html" class="logo">Croma<span id="AND">and</span><span id="SONS">Sons</span></a>
           <!--logo end-->
-          
+
           <div class="top-nav ">
             <ul class="nav pull-right top-menu">
 
@@ -96,10 +96,10 @@
                 <div class="panel-body">
 
                   @yield('csof')
-                  
+
                   <!-- // Start of Editable  -->
-                  
-                  
+
+
                 </div>
               </div>
             </section>
@@ -124,30 +124,44 @@
 
       <!-- js placed at the end of the document so the pages load faster -->
       <script src="{{URL::asset('js/jquery.js')}}"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
       <script >
-      quantity = [];  
+
+      quantity = [];
       price = [];
-      stock = [];  
+      stock = [];
       token = $('meta[name="csrf-token"]').attr('content');
 
-       
+      $('#customer-select').change(function(){
+        var id = $(this).val();
+        $.ajax({
+          type:'POST',
+          url:'/sales/salesOrder/check2',
+          data:{'_token':token,'id':id},
+          success:function(data){
+            $('#delivery-address').val(data);
+          }
+
+        })
+      });
+
      /* var subtotal = array();
       var quan = array();*/
 /*      $('#editable-sample').on('change','.disc',function(){
-          
+
             console.log('asddasd');
             $('#editable-sample').on('val','.amt',1);
-            
-          
+
+
       });*/
       //
       function check(error, prices){
-            
+
         ctrErr = 0;
         $('#editable-sample tr').each(function(){
         if(ctrErr > -1){
           if(error[ctrErr] == 'X'){
-            
+
             ctrVal = 0
             $(this).find('td').each(function(){
               if(ctrVal > -1 && ctrVal < 4){
@@ -159,7 +173,7 @@
               }else if(ctrVal == 5){
 
               }else if(ctrVal == 6){
-                 
+
                 $(this).find('input').val(prices[ctrErr][0]['CurrentUnitPrice']);
               }
               ctrVal++;
@@ -170,7 +184,7 @@
               ctrVal++;
             });*/
           }else{
-            
+
             ctrVal = 0;
             $(this).find('td').each(function(){
               if(ctrVal > -1 && ctrVal < 4){
@@ -179,7 +193,7 @@
                 }else{
                   $(this).addClass('has-error');
                 }
-               
+
               }
               ctrVal++;
             });
@@ -187,9 +201,9 @@
         }
         ctrErr++;
        });
-      }    
+      }
 
-        
+
        /* console.log('asd');*/
        /* setTimeout(check,3000);*/
       // Check if Quantity is enough and change color
@@ -200,7 +214,7 @@
 
 
               $('.quan').each(function(){
-               
+
                 /*console.log(stock);
                 console.log(stock.length);
                 console.log(stock[0]);*/
@@ -210,13 +224,13 @@
                     console.log('pagkatapos ng number')
                    if($(this).val() > parseInt(stock[ctrVal +1][0]['StockQuantity'])){
                     if($(this).parent().hasClass('has-success')){
-                      
+
                        $(this).parent().removeClass('has-success').addClass('has-error');
                     }else{
                       $(this).parent().addClass('has-error');
                   }
                   }else{
-                    
+
                     if($(this).parent().hasClass('has-error')){
                        $(this).parent().removeClass('has-error').addClass('has-success');
                     }else{
@@ -231,11 +245,14 @@
 
                 ctrVal++;
             });
+           console.log('HAHHAHA');
+
         });
 
-     
-      //if there's a new input in orders 
-       $('#editable-sample').on('change','.len, .thick, .wid, .material',function(){   
+
+
+      //if there's a new input in orders
+       $('#editable-sample').on('change','.len, .thick, .wid, .material',function(){
           lg = [];
           width = [];
           thickness = [];
@@ -243,30 +260,31 @@
           material = []
           console.log(lg.lenth);
           $('.len').each(function(){
-             console.log($(this).val());
-             if($(this).val() == ''){
-              lg.push(' ');
-             }
-            lg.push($(this).val());                  
-          });      
+
+            console.log('len');
+            console.log($(this).val());
+            lg.push($(this).val());
+          });
           $('.wid').each(function(){
-             
-            width.push($(this).val());                  
+
+            width.push($(this).val());
           });
           $('.thick').each(function(){
-             
-            thickness.push($(this).val());                  
+
+            thickness.push($(this).val());
           });
 
           $('.quan').each(function(){
-             
-            quantity.push($(this).val());                  
+
+            quantity.push($(this).val());
           });
           $('.material').each(function(){
-             
-            material.push($(this).val());                  
-          });
 
+            material.push($(this).val());
+          });
+          console.log(thickness);
+          console.log(width);
+          console.log(lg);
           /*for(ctr=0;ctr<lg.length;ctr++){
             console.log('start');
             console.log(thickness[ctr]);
@@ -275,7 +293,7 @@
              console.log('end');
           }
 */
-          
+
           $.ajax({
             type: "POST",
             url : '/sales/salesOrder/check',
@@ -300,7 +318,7 @@
             alert(error);
             alert( "error" );
           })*/
-       
+
 
 
 
@@ -311,34 +329,45 @@
 
 
       });
-      
-      $('#editable-sample').on('change','.quan',function(){              
-          quantity = [];  
+
+      $('#editable-sample').on('change','.quan, .len, .wid, .thick',function(){
+          quantity = [];
           console.log('quan');
           $('.quan').each(function(){
-            console.log($(this).val());
+            // console.log($(this).val());
             quantity.push($(this).val());
-            console.log(quantity.length);
-             
-           
-          });   
-          price = []; 
+            // console.log(quantity.length);
+
+
+          });
+          price = [];
           $('.price').each(function(){
-            console.log('price');
-            console.log($(this).val());
+            // console.log('price');
+            // console.log($(this).val());
             price.push($(this).val());
-            console.log(price.length);
-           
-           
-          });    
+            // console.log(price.length);
+
+
+          });
+
+          var tr = $(this).closest('tr');
+
+
+
+          $(tr).find('.total2').val($(this).val() * parseInt(price)  );
+          var x = 0;
+          console.log("price NEILASD");
+          console.log(price);
+
+
            compute();
       });
 
-      
+
 
 
       $('#dis').change(function(){
-      /*  console.log($(this).val());     */   
+      /*  console.log($(this).val());     */
           compute();
       })
 
@@ -347,10 +376,15 @@
       function compute(){
           if(quantity.length > -1 && price.length > -1){
             total = 0;
-            for( ctr = 0; ctr < quantity.length; ctr++){
-                total += quantity[ctr]*price[ctr];
-            }
-            console.log(total);                  
+
+            $('.total2').each(function(){
+              total += parseInt($(this).val());
+            });
+
+            // for( ctr = 0; ctr < quantity.length; ctr++){
+            //     total += quantity[ctr]*price[ctr];
+            // }
+            console.log(total);
             $("#sub").html(total);
             total = total - (total * ($('#dis').val()/100) );
             $('#tot').html(total);
@@ -358,9 +392,9 @@
 
         }
       }
-        
+
       </script>
-    
+
       <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
             <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
      <!--  <script src="{{URL::asset('js/bootstrap-wysihtml5p.min.js')}}"></script> -->
@@ -383,7 +417,7 @@
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.multi-select.js')}}"></script>
-      <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>	
+      <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/data-tables/jquery.dataTables.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
       <script type="text/javascript" src="{{URL::asset('assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
@@ -394,13 +428,13 @@
 
 
       <!--script for this page only-->
-      
-      
+
+
 
       <!--this page  script only-->
-       
+
             <!--this page script only-->
- 
+
 
       <!--right slidebar-->
 
@@ -412,7 +446,7 @@
       <script src="{{URL::asset('js/advanced-form-components.js')}}"></script>
       <script>
          EditableTable.init();
-         
+
 
         $('#customer-address-new').hide();
         $("#cancelButton").click(function(){
@@ -427,7 +461,7 @@
 
 
        $(document).ready(function() {
-        
+
          $("#newUser").click(function (){
 
 
@@ -436,20 +470,20 @@
          $("#toHide").show();
          $("#toHide1").hide();
 
-	 /*	$("#newUserRow").html(" <div class=\"form-group\">" + 
+	 /*	$("#newUserRow").html(" <div class=\"form-group\">" +
                                       "<label class=\"col-sm-1 col-sm-2 control-label\">Customer Name</label>" +
                                       "<div class=\"col-sm-3\">" +
-                                          "<input type=\"text\" class=\"form-control\">" + 
+                                          "<input type=\"text\" class=\"form-control\">" +
                                     "  </div> " +
                                 "  </div> ");
-								
-								
+
+
                                 */
 
                               });
-        
-        
-        
+
+
+
         $("#cancelButton").click(function(){
 
 
@@ -457,9 +491,9 @@
           $("#toHide1").show();
 
         });
-        
-     
- 
+
+
+
       });
 
     </script>

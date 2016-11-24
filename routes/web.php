@@ -17,7 +17,9 @@ Route::get('/sales/home','Dashboard@index');
 Route::get('/sales/salesOrder','SalesOrder@index');
 
 
-Route::post('sales/salesOrder/check','SalesOrder@check'); 
+Route::post('sales/salesOrder/check','SalesOrder@check');
+
+Route::post('sales/salesOrder/check2','SalesOrder@change');
 
 Route::post('sales/salesOrder/create','SalesOrder@create');
 
@@ -40,6 +42,8 @@ Route::post('/sales/catalog/delete','SalesCatalog@delete');
 Route::get('/sales/invoice','SalesInvoice@list');
 
 Route::get('/sales/invoice/{sdrid}', 'SalesInvoice@create');
+
+Route::post('/sales/invoice/submit', 'SalesInvoice@submit');
 
 
 Route::get('/sales/productReport',function(){
@@ -67,4 +71,3 @@ Route::get('/try',function(){
 
 
 /*Routes::post('/sales','SalesOrder@check');*/
-

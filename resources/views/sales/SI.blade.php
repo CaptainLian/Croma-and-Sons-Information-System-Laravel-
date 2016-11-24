@@ -2,7 +2,7 @@
 
 @section('sidebar')
 	@include('sales.chain.sidebar')
-@endsection	
+@endsection
 
 @section('billing-info')
 	@include('sales.chain.billing-info')
@@ -13,28 +13,42 @@
 @endsection
 
 @section('delivery-info')
-	@include('sales.chain.delivery-info')
+	@include('sales.chain.delivery-info',['so'=>$so])
 @endsection
 
 
 @section('sales-item')
 
-<tr>
-	<td>1</td>
-	<td>LCD Monitor</td>
-	<td class="hidden-phone">22-12-10</td>
-	<td class="">$ 1000</td>
-	<td class="" width="30px">
+	@foreach($so as $key=>$item)
+		<tr>
+
+			<td>{{$key+1}}</td>
+			<td>{{$item->WoodType}}</td>
+			{{ Form::hidden('wood[]',$item->WoodType)}}
+			<td class="hidden-phone">
+			{{Form::hidden('thick[]',$item->Thickness)}}
+			{{Form::hidden('wid[]',$item->Width)}}
+			{{Form::hidden('len[]',$item->Length)}}
+			{{$item->Thickness}}/
+			{{$item->Width}}/
+			{{$item->Length}}
+
+			</td>
+			<td class='quan'>{{$item->Quantity}}</>
+			<td class="">pcs</td>
+
+			<td    width="100px">
 
 
-		<input class="form-control m-bot15" type="text" >
+					<!-- <input class="form-control m-bot15" type="text" > -->
+				{!! Form::number('quan[]',0,['class'=>'form-control m-bot15','min'=> '0','max'=>$item->Quantity])!!}
 
 
-	</td>
-	<td>$ 2000</td>
-	<td>$ 2000</td>
-	<td>$ 2000</td>
-	<td>$ 2000</td>
-</tr>
+			</td>
 
+			<td class="price">{{$item->CurrentUnitPrice}}</td>
+
+			<td class='total'>$ 2000</td>
+		</tr>
+	@endforeach
 @endsection

@@ -12,9 +12,9 @@
                 for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
                     oTable.fnUpdate(aData[i], nRow, i, false);
                 }
- 
+
                 oTable.fnDraw();
-                 
+
             }
 
             function editRow(oTable, nRow) {
@@ -25,10 +25,11 @@
                 jqTds[1].innerHTML = '<input  style="width:100%" type="text" class="form-control thick columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input type="text" style="width:100%" class="form-control wid columnAdjust9p" name="width[]" value="' + aData[2] + '">';
                 jqTds[3].innerHTML = '<input type="text" style="width:100%" class="form-control len columnAdjust9p" name="length[]" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<input type="text" style="width:100%" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="text" style="width:100%"  class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<input type="text" style="width:100%" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';               
-                jqTds[7].innerHTML = '<a style="width:100%"  class="delete" href="#">Cancel</a>';
+                jqTds[4].innerHTML = '<input type="text" style="width:100%" ng-model="q" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
+                jqTds[5].innerHTML = '<input type="text" style="width:100%"  ng-model="p" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
+                jqTds[6].innerHTML = '<input type="text" style="width:100%" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';
+                jqTds[7].innerHTML = '<input type="text" style="width:100%" class="form-control total2  columnAdjust9p" disabled=""   disabled="" value="' + aData[7] +'">';
+                jqTds[8].innerHTML = '<a style="width:100%"  class="delete" href="#">Cancel</a>';
             }
 
             function saveRow(oTable, nRow) {
@@ -40,8 +41,9 @@
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
                 oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
-               
-                oTable.fnUpdate('<a class="delete" href="#">Delete</a>', nRow, 7, false);
+                oTable.fnUpdate(jqInputs[7].value, nRow, 7, false);
+
+                oTable.fnUpdate('<a class="delete" href="#">Delete</a>', nRow, 8, false);
 
                 oTable.fnDraw();
             }
@@ -56,8 +58,9 @@
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
                 oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
                 oTable.fnUpdate(jqInputs[6].value, nRow, 6, false);
-                
-                oTable.fnUpdate('<a class="edit" href="#">Delete</a>', nRow, 7, false);
+                  oTable.fnUpdate(jqInputs[7].value, nRow, 7, false);
+
+                oTable.fnUpdate('<a class="edit" href="#">Delete</a>', nRow, 8, false);
                 oTable.fnDraw();
             }
 
@@ -118,8 +121,13 @@
 
                         'sWidth': "9%",
                         'aTargets': [7]
+                    },{
+
+
+                        'sWidth': "9%",
+                        'aTargets': [8]
                     }
-                
+
 
                 ]
             });
@@ -139,7 +147,7 @@
                 nEditing = nRow;
             });
 
-          
+
 
             $('#editable-sample a.delete').live('click', function (e) {
                 e.preventDefault();
@@ -168,7 +176,7 @@
                 }
             });
 
-            
+
 
             $('#editable-sample a.edit').live('click', function (e) {
                 e.preventDefault();

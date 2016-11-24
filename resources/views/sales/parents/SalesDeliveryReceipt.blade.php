@@ -32,7 +32,7 @@
       <![endif]-->
     </head>
 
-    <body>
+    <body ng-app='item'>
 
       <section id="container" class="">
         <!--header start-->
@@ -43,7 +43,7 @@
           <!--logo start-->
           <a href="SalesDashboard.html" class="logo">Croma<span id="AND">and</span><span id="SONS">Sons</span></a>
           <!--logo end-->
-          
+
           <div class="top-nav ">
             <ul class="nav pull-right top-menu">
 
@@ -80,7 +80,7 @@
 
         <aside>
           @yield('sidebar')
-        </aside> 
+        </aside>
 
         <!--sidebar end-->
         <!--main content start-->
@@ -123,7 +123,7 @@
 
 
                   </div>
-                </div>					
+                </div>
 
 
 
@@ -150,20 +150,21 @@
                       <th class="">Quantity</th>
 
                       <th class="">Unit Price</th>
+                      <th class="" style="text-align:right">Total</th>
 
                     </tr>
                   </thead>
                   <tbody>
-                    @yield('materials')                    
+                    @yield('materials')
                   </tbody>
                 </table>
                 <div class="row">
                   <div class="col-lg-4 invoice-block pull-right">
                     <ul class="unstyled amounts">
-                      <li><strong>Sub - Total amount :</strong><a id='sub'> </a></li>
+                      <li><strong>Subtotal amount :</strong><a id='sub'> </a></li>
                       <li><strong >Discount :</strong> <a id="dis">{{$dis}}</a>%</li>
-                      
-                      <li><strong>Grand Total :</strong> <a id='tot'></a></li>
+                      {!! Form::hidden('discount',$dis) !!}
+                      <li><strong> Total :</strong> <a id='tot'></a></li>
                     </ul>
                   </div>
                 </div>
@@ -344,22 +345,25 @@
         console.log(parseInt($(this).html()));
         price.push(parseInt($(this).html()));
         console.log(price);
-        
+
       });
       $('.price').each(function(){
         console.log(parseInt($(this).html()));
         quan.push(parseInt($(this).html()));
         console.log(price);
-        
+
       });
       total = 0;
-      for(ctr = 0; ctr < price.length; ctr++){
-        total += (price[ctr] * quan[ctr]);
-      }
+
+      $('.price2').each(function(){
+        console.log($(this).html());
+        total += parseInt($(this).html());
+      });
       $('#sub').html(total);
       total = total - (total *(parseInt($('#dis').html()))/100);
       $('#tot').html(total);
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
     <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
     <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
@@ -380,7 +384,7 @@
     <script type="text/javascript" src="{{URL::asset('assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
     <!-- <script type="text/javascript" src="{{URL::asset('assets/jquery-mult  i-select/js/jquery.multi-select.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>	
+    <script type="text/javascript" src="{{URL::asset('assets/jquery-multi-select/js/jquery.quicksearch.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/data-tables/jquery.dataTables.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script> -->
 
@@ -388,7 +392,7 @@
 
 
 
-    <script src="{{URL::asset('js/advanced-form-components.js')}}"></script>
+    <!-- <script src="{{URL::asset('js/advanced-form-components.js')}}"></script> -->
 
     <!--right slidebar-->
     <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
@@ -396,7 +400,12 @@
     <!--common script for all pages-->
     <script src="{{URL::asset('js/common-scripts.js')}}"></script>
 
-
+    <script>
+    var sample = angular.module('item',[], function($interpolateProvider){
+        $interpolateProvider.startSymbol('{');
+        $interpolateProvider.endSymbol('}');
+      })
+    </script>
 
 
 

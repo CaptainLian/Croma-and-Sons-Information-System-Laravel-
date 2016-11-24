@@ -2,12 +2,12 @@
 
 @section('sidebar')
 	@include('sales.chain.sidebar')
-@endsection	
+@endsection
 
 
 @section('pending')
 
- 
+
 	@foreach($pending as $p)
 		<tr class="gradeC">
 			<td>{{$p->SalesDeliveryReceiptID}}</td>
@@ -23,7 +23,7 @@
 @endsection
 
 @section('customjs')
-<!-- 
+<!--
 <script>
 	console.log('asd');
 	$('table tbody tr th').click(function({
