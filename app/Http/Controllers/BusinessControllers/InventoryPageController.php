@@ -40,30 +40,30 @@ class InventoryPageController extends Controller
 
     	];
 
-		return view('inventory.InventoryResize')->with($data); 
+		return view('inventory.InventoryResize')->with($data);
     }
 
     public function viewInventoryEdit(){
     	$inventory = InventoryModel::getCompanyInventory();
-    	
+
 		$data = [
 			'inventory' => $inventory
     	];
 
-		return view('inventory.InventoryEdit')->with($data); 
+		return view('inventory.InventoryEdit')->with($data);
     }
 
     public function view(){
     	$data = [
-    		
+
     	];
-		//return view('inventory.')->with($data); 
+		//return view('inventory.')->with($data);
 	}
 
     /*
 		public function view(){
-			
+
 		}
-	
+
     */
 }

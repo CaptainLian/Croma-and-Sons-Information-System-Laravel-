@@ -12,14 +12,14 @@ Website: http://thevectorlab.net/
 
 
 #toHide {
-	
-	
+
+
 	display: none;
-	
-	
-	
-	
-	
+
+
+
+
+
 }
 
 
@@ -40,7 +40,7 @@ Website: http://thevectorlab.net/
 
 body {
     color: #797979;
- 
+
     font-family: 'Open Sans', sans-serif;
     padding: 0px !important;
     margin: 0px !important;
@@ -69,44 +69,36 @@ a, a:hover, a:focus {
 }
 
 #chromalogo {
-	
-	
-	width: 30%;
-	
-	
+	width: 25%;
 }
 
 
 #logoPosition {
 	text-align: center;
-	left: 300px;
-	margin-top: 100px;
+	margin-right:auto;
+	margin-left: auto;
+	margin-top: 15px;
 }
-
 
 #container {
     width: 100%;
 	height: 100%
 }
 
-
-
 #AND{
-	
+
 	color: #57c8f2
-	
+
 }
 
 
 #SONS{
-	
+
 	color: #000;
-	
+
 }
 
-
 /*login page*/
-
 .login-body {
     background-color: #FFF;
 }
@@ -128,8 +120,8 @@ a, a:hover, a:focus {
     -webkit-border-radius: 5px 5px 0 0;
     color: #fff;
     font-size: 30
-	
-	
+
+
 px;
     text-transform: uppercase;
     font-weight: 300;

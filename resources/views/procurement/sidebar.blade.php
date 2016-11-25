@@ -5,15 +5,14 @@
 	</a>
 </li>
 <li>
-	<a @if($active == 'PurchaseOrder') class="active" @endif href="\procurement\CreatePurchaseOrder">
+	<a @if($active == 'PurchaseOrder') class="active" @endif href="\procurement\SelectProductPurchaseOrder">
 		<i class="fa fa-file-text"></i>
 		<span>Create Purchase Order</span>
 	</a>
 </li>
 <li>
 	<a @if($active == 'DeliveryReceipt') class="active" @endif href="\procurement\DeliveryReceipt">
-		<i class="fa fa-file-text"></i>
-		Receive Purchase Order
+		<i class="fa fa-file-text"></i>	<font size="2%">Receive Purchase Order</font>
 	</a>
 </li>
 <!--

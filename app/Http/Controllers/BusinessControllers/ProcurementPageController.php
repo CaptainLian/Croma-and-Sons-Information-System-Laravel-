@@ -13,6 +13,7 @@ use App\SupplierModel;
 use \stdClass;
 
 use Session;
+use Illuminate\Support\Facades\Input as Input;
 
 class ProcurementPageController extends Controller{
 
@@ -57,7 +58,7 @@ class ProcurementPageController extends Controller{
 
 
     public function viewCreatePurchaseOrder(){
-
+      /*
     	$suppliers = SupplierModel::getSuppliers();
     	$terms = CustomerModel::getTerms();
         $requestedProducts = ProcurementModel::getRequestedProducts();
@@ -68,6 +69,56 @@ class ProcurementPageController extends Controller{
             'requestedProducts' => $requestedProducts,
     	];
     	return view('procurement.CreatePurchaseOrder')->with($data);
+      */
+      $leastReject = ProcurementModel::getLeastRejectPerProductBySupplier();
+
+      $data = [
+        'leastReject' => $leastReject,
+      ];
+
+      return view('procurement.PurchaseOrderSelect')->with($data);
+    }
+
+    public function viewFormPurchaseOrder(){
+      $suppliers = SupplierModel::getSuppliers();
+      $terms = CustomerModel::getTerms();
+      $requestedProducts = ProcurementModel::getRequestedProducts();
+
+      $data = [
+        'suppliers' => $suppliers,
+        'terms' => $terms,
+        'productRequests' => $requestedProducts,
+
+      ];
+        $input = Input::all();
+
+        if($input != NULL){
+          $products = $input['products'];
+
+          $requests = [];
+
+          foreach ($products  as $product) {
+            $parse = explode(',' , $product);
+            $parseSize = explode('x', $parse[1]);
+
+            $parseProduct = new stdClass();
+            $parseProduct->WoodTypeID = (int)$parse[0];
+            $parseProduct->Thickness = (float)$parseSize[0];
+            $parseProduct->Width = (float)$parseSize[1];
+            $parseProduct->Length = (float)$parseSize[2];
+            $parseProduct->RequestedQuantity = (int)$parse[2];
+            $parseProduct->SupplierID = (int)$parse[3];
+
+            $requests[] = $parseProduct;
+          }
+
+          $data['requestedProducts'] = $requests;
+        }
+
+
+
+
+        return view('procurement.CreatePurchaseOrder')->with($data);
     }
 
     public function viewProductPurchaseReport(){
@@ -131,7 +182,7 @@ class ProcurementPageController extends Controller{
         $data = [
         	'purchaseOrderDetails' => $purchaseOrderDetails,
         	'supplierDetails' => $supplierDetails,
-        	'purchaseOrderItems' => $purchaseOrderItems, 
+        	'purchaseOrderItems' => $purchaseOrderItems,
         ];
 
         return view('procurement.PurchaseOrderSpecific')->with($data);
@@ -146,7 +197,7 @@ class ProcurementPageController extends Controller{
         $data = [
             'purchaseOrderDetails' => $purchaseOrderDetails,
             'supplierDetails' => $supplierDetails,
-            'purchaseOrderItems' => $purchaseOrderItems, 
+            'purchaseOrderItems' => $purchaseOrderItems,
         ];
         return view('procurement.DeliveryReceiptSpecific')->with($data);
     }
@@ -159,11 +210,11 @@ class ProcurementPageController extends Controller{
 
         //var_dump($supplierDetails);
 
-        
+
         $data = [
             'deliveryReceiptDetails' => $deliveryReceiptDetails,
             'deliveryReceiptItems' => $deliveryReceiptItems,
-            'supplierDetails' => $supplierDetails, 
+            'supplierDetails' => $supplierDetails,
         ];
 
         return view('procurement.DeliveryReceiptSpecificInputless ')->with($data);
@@ -196,7 +247,7 @@ class ProcurementPageController extends Controller{
             'monthly' => $monthlyPurchase,
             'yearly' => $yearlyPurchase,
         ];
-        
+
         return view('procurement.PurchaseReport')->with($data);
     }
 }

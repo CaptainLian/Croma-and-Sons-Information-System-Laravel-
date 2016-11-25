@@ -17,7 +17,7 @@ use Session;
 use \stdClass;
 
 class ProcurementFormController extends Controller{
-    
+
 
     public function inputPurchaseOrder(Request $request){
     	//$term, $supplier, $address, $woodTypes, $thicknesses, $widths, $lengths, $quantities, $unitPrices, $discounts
@@ -25,9 +25,9 @@ class ProcurementFormController extends Controller{
     	$term = Input::get('terms');
     	$supplier = Input::get('supplier');
     	$address = Input::get('address');
-        $deliveryDate = Input::get('deliveryDate');
+      $deliveryDate = Input::get('deliveryDate');
 
-        $discount = Input::get('discount');
+      $discount = ((float)Input::get('discount'));
     	//table rows
     	$woodTypes = Input::get('WoodType');
     	$thicknesses = Input::get('Thickness');
@@ -86,31 +86,26 @@ class ProcurementFormController extends Controller{
 
 
     	$status = ProcurementModel::createPurchaseOrder($term, $supplier, $address, $deliveryDate, $discount, $rows);
- 
+
     	if(!$status){
             //echo 'ADASDASDADASDAS';
-    		
-       //     return Redirect::back()
-    //						->withErrors(['error' => 'An unexpected error occured.'])
-   // 						->withInput(Input::all());
-            
-            
+            return Redirect::back()
+    					             ->withErrors(['error' => 'An unexpected error occured.'])
+   						             ->withInput(Input::all());
+
+
             //return mysql_errno() ? "true" : "false";
     	}
 
-    	$suppliers = SupplierModel::getSuppliers();
-    	$terms = CustomerModel::getTerms();
-        $requestedProducts = ProcurementModel::getRequestedProducts();
     	$success = 'Purchase Order successfully created.';
+      $leastReject = ProcurementModel::getLeastRejectPerProductBySupplier();
 
-    	$data = [
-    		'suppliers' => $suppliers,
-    		'terms' => $terms,
-            'requestedProducts' => $requestedProducts,
-    		'success' => $success,
-    	];
+      $data = [
+        'leastReject' => $leastReject,
+        'success' => $success,
+      ];
 
-    	return view('procurement.CreatePurchaseOrder')->with($data);
+      return view('procurement.PurchaseOrderSelect')->with($data);
     }
 
     public function inputDeliveryReceipt(Request $request){
@@ -119,7 +114,7 @@ class ProcurementFormController extends Controller{
         $supplier = Input::get('SupplierID');
         $deliveryAddress = Input::get('DeliveryAddress');
         $deliveryDate = Input::get('DeliveryDate');
-        
+
         $woodTypes = Input::get('Material');
         $thicknesses = Input::get('Thickness');
         $widths = Input::get('Width');
@@ -185,15 +180,15 @@ class ProcurementFormController extends Controller{
         }
 
         $status = ProcurementModel::createDeliveryReceipt($purchaseOrderID, $term, $deliveryAddress, $deliveryDate, $rows);
- 
+
         if(!$status){
             //echo 'ADASDASDADASDAS';
-            
+
             //return Redirect::back()
             //                ->withErrors(['error' => 'An unexpected error occured.'])
              //               ->withInput(Input::all());
-            
-            
+
+
             //return mysql_errno() ? "true" : "false";
         }
 

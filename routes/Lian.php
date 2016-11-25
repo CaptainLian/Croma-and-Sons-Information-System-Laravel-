@@ -6,7 +6,7 @@
 	/* FORMS */
 	Route::post('/', ['as' => 'LoginValidation', 'uses' => 'LoginController@validateLogin']);
 
-	Route::get('/sales/dashboard', ['as' => 'SalesDashboard', 
+	Route::get('/sales/dashboard', ['as' => 'SalesDashboard',
 								  'uses' => 'BusinessControllers\SalesPageController@viewDashboard']);
 
 
@@ -22,7 +22,9 @@ Route::group(['prefix' => 'admin'], function(){
 Route::group(['prefix' => 'procurement'], function(){
 	Route::get('dashboard', ['as' => 'ProcurementDashboard', 'uses' => 'BusinessControllers\ProcurementPageController@viewDashboard']);
 
-	Route::get('CreatePurchaseOrder', ['as' => 'CreatePurchaseOrder', 'uses' => 'BusinessControllers\ProcurementPageController@viewCreatePurchaseOrder']);
+	Route::get('SelectProductPurchaseOrder', ['as' => 'CreatePurchaseOrderInitial', 'uses' => 'BusinessControllers\ProcurementPageController@viewCreatePurchaseOrder']);
+	Route::get('CreatePurchaseOrder', ['uses' => 'BusinessControllers\ProcurementPageController@viewFormPurchaseOrder']);
+  Route::post('inputPurchaseOrder', ['uses' => 'BusinessControllers\ProcurementFormController@inputPurchaseOrder']);
 
 	Route::get('ProductPurchaseReport', ['as' => 'ProductPurchaseReport', 'uses' => 'BusinessControllers\ProcurementPageController@viewProductPurchaseReport' ]);
 
@@ -40,7 +42,7 @@ Route::group(['prefix' => 'procurement'], function(){
 
 	Route::get('PurchaseReport', ['as' => 'PurchaseReport', 'uses' => 'BusinessControllers\ProcurementPageController@viewPurchaseReport']);
 
-	Route::post('CreatePurchaseOrder', ['as' => 'PurchaseOrderInput', 'uses' =>'BusinessControllers\ProcurementFormController@inputPurchaseOrder']);
+	//Route::post('CreatePurchaseOrder', ['as' => 'PurchaseOrderInput', 'uses' =>'BusinessControllers\ProcurementFormController@inputPurchaseOrder']);
 
 	Route::post('CreateDeliveryReceipt', ['as' => 'DeliveryReceiptInput', 'uses' => 'BusinessControllers\ProcurementFormController@inputDeliveryReceipt']);
 
@@ -49,18 +51,18 @@ Route::group(['prefix' => 'procurement'], function(){
 			return 'aguy';
 		});
 
-		
+
 	});
 });
 
-Route::group(['prefix' => 'inventory'], function(){
+Route::group(['prefix' => '/inventory'], function(){
 	Route::get('dashboard', ['as' => 'viewInventoryDashboard', 'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
 
 	Route::get('InventoryList', ['as' => 'viewInventoryList', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryList']);
 
 	Route::get('EditInventory', ['as' => 'viewInventoryEdit', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryEdit']);
 
-	Route::get('InventoryResize', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);		
+	Route::get('InventoryResize', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);
 });
 
 ?>

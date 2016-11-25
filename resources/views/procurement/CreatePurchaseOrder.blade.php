@@ -46,7 +46,7 @@ Create Purchase Order
 			@endif
 			<div class="row">
 				{!!Form::open(['action' => 'BusinessControllers\ProcurementFormController@inputPurchaseOrder'])!!}
-				
+
 				<div class="row" id="newUserRow">
 					<div class="form-group ">
 						<label class="control-label col-md-1">Requested Delivery Date</label>
@@ -77,7 +77,7 @@ Create Purchase Order
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row" id="newUserRow">
 					<div class="form-group" id="toHide1">
 						<label class="col-sm-1 control-label col-lg-1">Supplier Name</label>
@@ -116,7 +116,7 @@ Create Purchase Order
 					</div>
 				</div>
 				<div class="row invoice-list">
-					
+
 					<!--
 						<div class="col-lg-4 col-sm-4">
 								<h4>PURCHASE ORDER INFORMATION</h4>
@@ -164,12 +164,38 @@ Create Purchase Order
 										<th>Unit</th>
 										<th>Unit Price</th>
 										<th>Amount</th>
-										<th></th>
+                    <th></th>
 									</tr>
 								</thead>
-								
+
 								<tbody>
-									
+                  <?php $hidden = ''; ?>
+                  @if (isset($requestedProducts))
+                    @foreach ($requestedProducts as $product)
+                      <?php $hidden .= Form::hidden('WoodType[]', $product->WoodTypeID); ?>
+                      <tr>
+                        <td>
+                          @if ($product->WoodTypeID === 1)
+                            <input type="text" value="Kiln Dry" disabled class="form-control columnAdjust10p" />
+                          @elseif($product->WoodTypeID === 2)
+                            <input type="text" value="Sun Dry" disable class="form-control columnAdjust10p" />
+                          @endif
+                        </td>
+
+
+                        <td>{!!Form::number('Thickness[]', $product->Thickness, ['readonly' => 'on', 'class' => 'form-control columnAdjust9p','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
+                        <td>{!!Form::number('Width[]', $product->Width, ['readonly' => 'on', 'class' => 'form-control columnAdjust9p','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
+                        <td>{!!Form::number('Length[]', $product->Length, ['readonly' => 'on','class' => 'form-control columnAdjust9p', 'step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
+                        <td>{!!Form::number('Quantity[]', $product->RequestedQuantity, [ 'class' => 'form-control columnAdjust9p','step' => '1', 'min' => 0, 'required' => 'required'] )!!}</td>
+
+                        <td>pcs</td>
+                        <td>{!!Form::number('UnitPrice[]', 0.0, [ 'class' => 'form-control columnAdjust9p','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
+                        <td> </td> <!-- Amount -->
+                        <td><a class="delete" href="javascript:;">Cancel</a></td> <!-- delete -->
+                      </tr>
+                    @endforeach
+                  @endif
+
 								</tbody>
 							</table>
 						</div>
@@ -183,10 +209,7 @@ Create Purchase Order
 							<strong>Sub - Total amount :</strong>$6820
 						</li>
 						<li>
-							<strong>Discount :</strong><input name="discount" type="number" step="any" min=0.0 max=1.0 value=0.0 />
-						</li>
-						<li>
-							<strong>VAT :</strong>-----
+							<strong>Discount : %</strong><input name="discount" type="number" step="any" min=0.0 max=100 value=0.0 />
 						</li>
 						<li>
 							<strong>Grand Total :</strong>$6138
@@ -198,6 +221,7 @@ Create Purchase Order
 				<input type="Submit" class="btn btn-danger btn-lg" value ="Submit Purchase Order"/>
 				<a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
 			</div>
+      {!!$hidden!!}
 			{!!Form::close()!!}
 		</div>
 	</div>
@@ -206,67 +230,72 @@ Create Purchase Order
 @endsection
 
 @section('slidebar')
-<h4 class="side-title">Procurement Request</h4>
-<div class="panel-body">
-	<div class="adv-table">
-		<table class="display table table-bordered table-striped" id="dynamic-table">
-			<thead>
-				<tr>
-					<th><font color="white">Material</font></th>
-					<th><font color="white">Size</font></th>
-					<th><font color="white">Quantity</font></th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($requestedProducts as $product)
-					<tr class="gradeC">
-						<td>
-									<!--"#4787be" -->
-							<font color="white" >{!!$product->Material!!}</font>
-						</td>
-						<td>
-							<font color="white" size="1.8">{!!$product->Size!!}</font>
-						</td>
-						<td>
-							<font color="white">{!!$product->RequestedQuantity!!}</font>
-						</td>
-						
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
-	</div>
-</div>
+  <h4 class="side-title">Procurement Request</h4>
+  <div class="panel-body">
+  	<div class="adv-table">
+  		<table class="display table table-bordered table-striped" id="dynamic-table">
+  			<thead>
+  				<tr>
+  					<th><font color="white">Material</font></th>
+  					<th><font color="white">Size</font></th>
+  					<th><font color="white">Quantity</font></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+          @if ($product != NULL)
+            @foreach($productRequests as $product)
+    					<tr class="gradeC">
+    						<td>
+    									<!--"#4787be" -->
+    							<font color="white" >{!!$product->Material!!}</font>
+    						</td>
+    						<td>
+    							<font color="white" size="1.8">{!!$product->Size!!}</font>
+    						</td>
+    						<td>
+    							<font color="white">{!!$product->RequestedQuantity!!}</font>
+    						</td>
+
+    					</tr>
+    				@endforeach
+          @endif
+  			</tbody>
+  		</table>
+  	</div>
+  </div>
 @endsection
 
 @push('javascript')
-	
-	<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-daterangepicker/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-    <script type="text/javascript" src="/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-    <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
-    <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
-    <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
-    <script type="text/javascript" src="/js/advanced-form-components.js"></script>
 
-    <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
-    <script src="/js/dynamic_table_init.js"></script>
-   
-    <!--script for this page only-->
-    <script src="/js/editable-table6.js"></script>
-	<!--this page script only-->
-	<!--right slidebar-->
-	
-	<!--common script for all pages-->
-	<script src="/js/advanced-form-components.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-daterangepicker/moment.min.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+  <script type="text/javascript" src="/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+  <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+  <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
+  <script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+  <script type="text/javascript" src="/js/advanced-form-components.js"></script>
+
+  <script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+  <script type="text/javascript" src="/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
+  <script src="/js/dynamic_table_init.js"></script>
+  <script src="/js/dynamic_table_init2.js "></script>
+
+  <!--script for this page only-->
+  <script src="/js/editable-table8.js"></script>
+  <!--this page script only-->
+  <!--right slidebar-->
+
+  <!--common script for all pages-->
+  <script src="/js/advanced-form-components.js" type="text/javascript"></script>
 	<script>
 	  $(document).ready(function() {
 	    $("#newUser").click(function (){
@@ -277,6 +306,7 @@ Create Purchase Order
 	      $("#toHide").hide();
 	      $("#toHide1").show();
 	    });
+
 	    EditableTable.init();
 	  });
 	 </script>

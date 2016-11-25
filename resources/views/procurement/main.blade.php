@@ -12,7 +12,7 @@
 		<link href="/css/bootstrap-reset.css" rel="stylesheet">
 		<!--external css-->
 		<link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-		
+
 		<link rel="/stylesheet" href="/css/owl.carousel.css" type="text/css">
 		<!--right slidebar-->
 		<link href="/css/slidebars.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 		<link href="/css/style-responsive.css" rel="stylesheet">
 
 		@stack('css')
-		
+
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media
 			queries -->
 		<!--[if lt IE 9]>
@@ -34,11 +34,11 @@
 		<section id="container">
 
 			@include('master.navbar',['name' => 'Procurement Manager'])
-			
+
 
 			<!--sidebar start-->
 			<aside>
-				
+
 				<div id="sidebar" class="nav-collapse ">
 		         	<!-- sidebar menu start-->
 		         	<ul class="sidebar-menu" id="nav-accordion">
@@ -75,11 +75,11 @@
 		</section>
 		<!-- js placed at the end of the document so the pages load faster -->
 		<script src="/js/jquery.js"></script>
-        <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="/js/jquery-migrate-1.2.1.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/bootstrap-multiselect.js" type="text/javascript"></script>
-		<script type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+		<script src="/js/jquery.dcjqaccordion.2.7.js" type="text/javascript"></script>
 		<script src="/js/respond.min.js"></script>
 		<script src="/js/slidebars.min.js"></script>
 		<script src="/js/jquery.scrollTo.min.js"></script>
@@ -87,9 +87,9 @@
 
 		<!--common script for all pages-->
 		<script src="/js/common-scripts.js"></script>
-		
+
 		@stack('javascript')
-		
+
 		<!-- Mirrored from thevectorlab.net/flatlab/index.html by HTTrack
 			Website Copier/3.x [XR&CO'2014], Tue, 23 Aug 2016 03:18:36 GMT -->
 	</body>
