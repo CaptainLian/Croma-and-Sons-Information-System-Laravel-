@@ -218,8 +218,8 @@ Create Purchase Order
 				</div>
 			</div>
 			<div class="text-center invoice-btn">
-				<input type="Submit" class="btn btn-danger btn-lg" value ="Submit Purchase Order"/>
-				<a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
+				<input type="Submit" class="btn btn-success btn-lg" value ="Submit Purchase Order"/>
+				<!-- <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a> -->
 			</div>
       {!!$hidden!!}
 			{!!Form::close()!!}
@@ -246,7 +246,6 @@ Create Purchase Order
             @foreach($productRequests as $product)
     					<tr class="gradeC">
     						<td>
-    									<!--"#4787be" -->
     							<font color="white" >{!!$product->Material!!}</font>
     						</td>
     						<td>
@@ -266,7 +265,6 @@ Create Purchase Order
 @endsection
 
 @push('javascript')
-
   <script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
   <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
   <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>

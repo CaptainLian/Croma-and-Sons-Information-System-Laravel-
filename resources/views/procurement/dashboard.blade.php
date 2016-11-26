@@ -15,15 +15,16 @@ Procurement Dashboard
 @section('main-content')
 	<header class="panel-heading">
 		<h1>Procurement Dashboard</h1>
-
 	</header>
 
 	<div class="row state-overview">
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
-				<div class="symbol blue">
-					<i class="fa fa-file"></i>
-				</div>
+        <a href="/procurement/SelectProductPurchaseOrder">
+  				<div class="symbol blue">
+              <i class="fa fa-file"></i>
+  				</div><!-- symbo-blue -->
+        </a href="#">
 				<div class="value">
 					<h1>{!!$countProductNeedProcurement!!}</h1>
 					<p>Products to Procure</p>
@@ -32,9 +33,11 @@ Procurement Dashboard
 		</div>
 		<div class="col-lg-3 col-sm-6">
 			<section class="panel">
-				<div class="symbol blue">
-					<i class="fa fa-file-text-o"></i>
-				</div>
+        <a href="/procurement/DeliveryReceipt">
+  				<div class="symbol blue">
+              <i class="fa fa-file-text-o"></i>
+  				</div><!-- symbol-blue -->
+        </a>
 				<div class="value">
 				<!-- count -->
 					<h1>{!!$pendingPurchaseOrderCount!!}</h1>
@@ -104,17 +107,20 @@ Procurement Dashboard
 		        },
 		        series: [{
 		        	name: 'Reject vs Accept',
-		        	data: [{
+		        	data: [
+                @if($procurementRatio->Reject > 0){
 		        		name: 'Reject',
 		        		y: {!!$procurementRatio->Reject!!},
 		        		color: 'red',
 		        		drilldown: 'Reject',
-		        	},{	
+		        	}@endif,
+              
+              @if($procurementRatio->Accept > 0){
 		        		name: 'Accept',
 		        		y: {!!$procurementRatio->Accept!!},
 		        		color: 'green',
 		        		drilldown: 'Accept',
-		        	}]
+		        	}@endif]
 		        }],
 		        drilldown: {
 		            series: [
@@ -122,6 +128,7 @@ Procurement Dashboard
 			            	name: 'Reject',
 			            	id: 'Reject',
 			            	data: [
+
 			            		@foreach($procurementRatioSuppliersReject AS $supplier)
 			            			['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
 
@@ -138,7 +145,7 @@ Procurement Dashboard
 			            		@endforeach
 			            	],
 			            }
-		            	
+
 		            ]
 		        }
 		    });
@@ -190,7 +197,7 @@ Procurement Dashboard
 
 	<!--
 	<script>
-		//custom select box    
+		//custom select box
         $(function(){
             $('select.styled').customSelect();
         });

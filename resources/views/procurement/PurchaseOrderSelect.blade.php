@@ -56,8 +56,6 @@
 																	@endif
 
 																	<td>{!!Form::checkbox('products[]', $request->WoodTypeID.','.$request->Size.','.$request->RequestedQuantity.','.$request->SupplierID)!!}</td>
-
-
 																</tr>
 																<?php $value++; ?>
 															@endforeach
@@ -67,9 +65,8 @@
 	            </div>
 
 	            <div class="text-center invoice-btn">
-	                <a class="btn btn-danger btn-lg"><i class="fa fa-times"></i> Cancel </a>
 	                <!-- <a class="btn btn-info btn-lg" href="ProcurementCreatePurchaseOrder.html"><i class="fa fa-check"></i> Make Purchase Order </a> -->
-									{!!Form::submit('Proceed to Purchase Order', ['class' => 'btn btn-info btn-lg'])!!}
+									{!!Form::submit('Proceed to Purchase Order', ['class' => 'btn btn-success btn-lg'])!!}
 	            </div>
 							{!!Form::close()!!}
 	        </section>
