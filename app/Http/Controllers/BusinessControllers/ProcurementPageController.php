@@ -39,21 +39,31 @@ class ProcurementPageController extends Controller{
             $procurementRatioSuppliersReject[] = [$supplier->Name, $supplier->Reject];
         }
 
-        $months = [];
-        $monthlyExpense = [];
+        $monthlyExpense = [
+          'January' => 0,
+          'February' => 0,
+          'March' => 0,
+          'April' => 0,
+          'May' => 0,
+          'June' => 0,
+          'July' => 0,
+          'August' => 0,
+          'September' => 0,
+          'October' => 0,
+          'November' => 0,
+          'December' => 0,
+        ];
 
         foreach($monthlyProcurement AS $month){
-            $months[] = $month->Month;
-            $monthlyExpense[] = $month->PurchaseAmount;
+            $monthlyExpense[$month->Month] = $month->PurchaseAmount;
         }
 
-        $data =[
+        $data = [
             'pendingPurchaseOrderCount' => $pendingPurchaseOrderCount,
             'countProductNeedProcurement' => $countProductNeedProcurement,
             'procurementRatio' => $procurementRatio,
             'procurementRatioSuppliersAccept' => $procurementRatioSuppliersAccept,
             'procurementRatioSuppliersReject' => $procurementRatioSuppliersReject,
-            'months' => $months,
             'monthlyExpense' => $monthlyExpense,
         ];
 

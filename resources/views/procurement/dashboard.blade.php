@@ -161,9 +161,8 @@ Procurement Dashboard
 		        },
 		        xAxis: {
 		            categories: [
-		            	@foreach($months as $month)
+		            	@foreach($monthlyExpense as $month => $expense)
 		            		'{!!$month!!}',
-
 		            	@endforeach
 		            ]
 		        },
