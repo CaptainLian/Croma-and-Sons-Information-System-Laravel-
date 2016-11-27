@@ -78,8 +78,7 @@ Procurement Dashboard
 	<script src="/modules/drilldown.src.js"></script>
 	<script src="/modules/no-data-to-display.src.js"></script>
 
-	<script >
-
+	<script>
 		$(function () {
 		    // Create the chart
 		    Highcharts.chart('graph1', {
@@ -106,45 +105,45 @@ Procurement Dashboard
 		            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>'
 		        },
 		        series: [{
-		        	name: 'Reject vs Accept',
-		        	data: [
-								@if($procurementRatio->Reject > 0){
-			        		name: 'Reject',
-			        		y: {!!$procurementRatio->Reject!!},
-			        		color: 'red',
-			        		drilldown: 'Reject',
-		        		},@endif
+		          name: 'Reject vs Accept',
+		          data: [
+		            @if($procurementRatio->Reject > 0){
+		              name: 'Reject',
+		              y: {!!$procurementRatio->Reject!!},
+		              color: 'red',
+		              drilldown: 'Reject',
+		            },@endif
 
-							@if($procurementRatio-> Accept > 0){
-		        		name: 'Accept',
-		        		y: {!!$procurementRatio->Accept!!},
-		        		color: 'green',
-		        		drilldown: 'Accept',
-		        	}@endif]
+		          @if($procurementRatio-> Accept > 0){
+		            name: 'Accept',
+		            y: {!!$procurementRatio->Accept!!},
+		            color: 'green',
+		            drilldown: 'Accept',
+		          }@endif]
 		        }],
 		        drilldown: {
 		            series: [@if($procurementRatio->Reject > 0){
-			            	name: 'Reject',
-			            	id: 'Reject',
-			            	data: [
-			            		@foreach($procurementRatioSuppliersReject AS $supplier)
-												@if($supplier[1] > 0)
-													['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
-												@endif
-			            		@endforeach
-			            	]
-		            	},@endif
-									@if($procurementRatio->Accept > 0){
-			            	name: 'Accept',
-			            	id: 'Accept',
-			            	data: [
-			            		@foreach($procurementRatioSuppliersAccept AS $supplier)
-												@if($supplier[1] > 0)
-													['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
-												@endif
-			            		@endforeach
-			            	]}@endif
-								]
+		                name: 'Reject',
+		                id: 'Reject',
+		                data: [
+		                  @foreach($procurementRatioSuppliersReject AS $supplier)
+		                    @if($supplier[1] > 0)
+		                      ['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
+		                    @endif
+		                  @endforeach
+		                ]
+		              },@endif
+		              @if($procurementRatio->Accept > 0){
+		                name: 'Accept',
+		                id: 'Accept',
+		                data: [
+		                  @foreach($procurementRatioSuppliersAccept AS $supplier)
+		                    @if($supplier[1] > 0)
+		                      ['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
+		                    @endif
+		                  @endforeach
+		                ]}@endif
+		            ]
 		        }
 		    });
 		});
@@ -157,13 +156,13 @@ Procurement Dashboard
 		            //x: -20 //center
 		        },
 		        subtitle:{
-		        	text: 'Of this current year {!!date('Y')!!}'
+		          text: 'Of this current year {!!date('Y')!!}'
 		        },
 		        xAxis: {
 		            categories: [
-		            	@foreach($monthlyExpense as $month => $expense)
-		            		'{!!$month!!}',
-		            	@endforeach
+		              @foreach($monthlyExpense as $month => $expense)
+		                '{!!$month!!}',
+		              @endforeach
 		            ]
 		        },
 		        yAxis: {
@@ -183,9 +182,9 @@ Procurement Dashboard
 		        series: [{
 		            name: 'Purchases',
 		            data: [
-		            	@foreach($monthlyExpense as $expense)
-		            		{!!$expense!!},
-		            	@endforeach
+		              @foreach($monthlyExpense as $expense)
+		                {!!$expense!!},
+		              @endforeach
 		            ]
 		        }]
 		    });
