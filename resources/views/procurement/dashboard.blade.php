@@ -108,14 +108,14 @@ Procurement Dashboard
 		        series: [{
 		        	name: 'Reject vs Accept',
 		        	data: [
-                @if($procurementRatio->Reject > 0){
-		        		name: 'Reject',
-		        		y: {!!$procurementRatio->Reject!!},
-		        		color: 'red',
-		        		drilldown: 'Reject',
-		        	}@endif,
-              
-              @if($procurementRatio->Accept > 0){
+								@if($procurementRatio->Reject > 0){
+			        		name: 'Reject',
+			        		y: {!!$procurementRatio->Reject!!},
+			        		color: 'red',
+			        		drilldown: 'Reject',
+		        		},@endif
+
+							@if($procurementRatio-> Accept > 0){
 		        		name: 'Accept',
 		        		y: {!!$procurementRatio->Accept!!},
 		        		color: 'green',
@@ -123,30 +123,28 @@ Procurement Dashboard
 		        	}@endif]
 		        }],
 		        drilldown: {
-		            series: [
-		            	{
+		            series: [@if($procurementRatio->Reject > 0){
 			            	name: 'Reject',
 			            	id: 'Reject',
 			            	data: [
-
 			            		@foreach($procurementRatioSuppliersReject AS $supplier)
-			            			['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
-
+												@if($supplier[1] > 0)
+													['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
+												@endif
 			            		@endforeach
 			            	]
-		            	},
-		            	{
+		            	},@endif
+									@if($procurementRatio->Accept > 0){
 			            	name: 'Accept',
 			            	id: 'Accept',
 			            	data: [
 			            		@foreach($procurementRatioSuppliersAccept AS $supplier)
-			            			['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
-
+												@if($supplier[1] > 0)
+													['{!!$supplier[0]!!}', {!!$supplier[1]!!}],
+												@endif
 			            		@endforeach
-			            	],
-			            }
-
-		            ]
+			            	]}@endif
+								]
 		        }
 		    });
 		});

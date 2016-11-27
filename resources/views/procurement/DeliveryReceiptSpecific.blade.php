@@ -1,11 +1,11 @@
 @extends('procurement.main')
 
 @section('title')
-Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!} 
+Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 @endsection
 
 @section('sidebar')
-	@include('procurement.sidebar', ['active' => 'PurchaseOrder'])
+	@include('procurement.sidebar', ['active' => 'DeliveryReceipt'])
 @endsection
 
 @push('css')
@@ -35,7 +35,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 				@endif
 
 				<div class="row">
-					
+
 					<div class="form-group">
 						<label class="control-label col-md-1">Set Delivery Date</label>
 						<div class="col-md-2 col-xs-11">
@@ -54,7 +54,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 				<div class="row invoice-list">
 					<div class="text-center corporate-id">
 						<img src="img/vector-lab.jpg" alt="">
-						<h1>Supplier Delivery Receipt</h1>
+						<h1>Receive Purchase Order</h1>
 					</div>
 					<div class="col-lg-4 col-sm-4">
 						<h4>BILLING AND DELIVERY INFORMATION</h4>
@@ -75,7 +75,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 						</p>
 					</div>
 					<div class="col-lg-4 col-sm-4">
-						<h4>DELIVERY RECEIPT INFORMATION</h4>
+						<h4>PURCHASE ORDER INFORMATION</h4>
 						<ul class="unstyled">
 							<!--
 							<li>Delivery Receipt Number :
@@ -139,7 +139,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 						@endforeach
 						<tr>
 
-						
+
 					</tbody>
 				</table>
 				<div class="row">
@@ -160,8 +160,8 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 					</div>
 				</div>
 				<div class="text-center invoice-btn">
-					<input type="submit" value="Submit Delivery Receipt" class="btn btn-info btn-lg" />
-					<a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a>
+					<input type="submit" value="Submit Delivery Receipt" class="btn btn-success btn-lg" />
+					<!-- <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a> -->
 				</div>
 			</div>
 		{!!Form::close()!!}

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;
 
 class Account extends Authenticatable{
-    
+
 	use Notifiable;
 
 	protected $table = 'Accounts';
@@ -18,14 +18,14 @@ class Account extends Authenticatable{
      * @var array
      */
     protected $fillable = [
-        'Username', 
-        'Email', 
-        'Password', 
-        'PositionID', 
-        'Firstname', 
-        'Middlename', 
-        'Lastname', 
-        'Landline', 
+        'Username',
+        'Email',
+        'Password',
+        'PositionID',
+        'Firstname',
+        'Middlename',
+        'Lastname',
+        'Landline',
         'MobileNumber',
     ];
 
@@ -47,5 +47,5 @@ class Account extends Authenticatable{
 
 	public static function dbEncrypt($string){
 		return DB::select('select SHA2(?, 512) AS \'encrypt\' ', [$string])[0]->encrypt;
-	}		
+	}
 }

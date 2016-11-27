@@ -12,10 +12,15 @@ use App\ProcurementModel;
 use App\SupplierModel;
 use \stdClass;
 
-use Session;
+use Illuminate\Support\Facades\Validator as Validator;
+use Illuminate\Support\Facades\Session as Session;
+use Illuminate\Support\Facades\View as View;
 use Illuminate\Support\Facades\Input as Input;
+use Illuminate\Support\Facades\Redirect as Redirect;
 
 class ProcurementPageController extends Controller{
+    const PURCHASE_ORDER_SELECT_PRODUCT_RULES = ['products' => 'required'];
+    const PURCHASE_ORDER_SELECT_PRODUCT_MESSSAGES = ['products.required' => 'Please select a product before proceeding.'];
 
     public function viewDashboard(){
         /* Retrieve information */
@@ -58,18 +63,6 @@ class ProcurementPageController extends Controller{
 
 
     public function viewCreatePurchaseOrder(){
-      /*
-    	$suppliers = SupplierModel::getSuppliers();
-    	$terms = CustomerModel::getTerms();
-        $requestedProducts = ProcurementModel::getRequestedProducts();
-
-    	$data = [
-    		'suppliers' => $suppliers,
-    		'terms' => $terms,
-            'requestedProducts' => $requestedProducts,
-    	];
-    	return view('procurement.CreatePurchaseOrder')->with($data);
-      */
       $leastReject = ProcurementModel::getLeastRejectPerProductBySupplier();
 
       $data = [
@@ -80,6 +73,16 @@ class ProcurementPageController extends Controller{
     }
 
     public function viewFormPurchaseOrder(){
+      $input = Input::all();
+
+      $validator = Validator::make($input, ProcurementPageController::PURCHASE_ORDER_SELECT_PRODUCT_RULES, ProcurementPageController::PURCHASE_ORDER_SELECT_PRODUCT_MESSSAGES);
+
+      if($validator->fails()){
+  			return Redirect::back()
+  						   ->withErrors($validator)
+  						   ->withInput();
+  		}
+
       $suppliers = SupplierModel::getSuppliers();
       $terms = CustomerModel::getTerms();
       $requestedProducts = ProcurementModel::getRequestedProducts();
@@ -90,7 +93,6 @@ class ProcurementPageController extends Controller{
         'productRequests' => $requestedProducts,
 
       ];
-        $input = Input::all();
 
         if($input != NULL){
           $products = $input['products'];

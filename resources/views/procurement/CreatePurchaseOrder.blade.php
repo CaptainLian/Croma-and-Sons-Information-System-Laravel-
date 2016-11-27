@@ -84,7 +84,7 @@ Create Purchase Order
 						<div class="col-lg-3">
 							<div class="input-group m-bot15">
 								<span class="input-group-btn">
-									<button class="btn btn-white" type="button" id="newUser">New User</button>
+									<button class="btn btn-white" type="button" id="newUser">New Supplier</button>
 								</span>
 								<select onChange="onChangeSupplier(this.form.supplier)" name="supplier" id="supplier" required class="form-control m-bot15">
 									<option></option>
@@ -141,6 +141,7 @@ Create Purchase Order
 								Add New <i class="fa fa-plus"></i>
 								</button>
 							</div>
+              <!--
 							<div class="btn-group pull-right">
 								<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
 								</button>
@@ -150,6 +151,7 @@ Create Purchase Order
 									<li><a href="#">Export to Excel</a></li>
 								</ul>
 							</div>
+            -->
 						</div>
 						<div class="space15"></div>
 						<div class="table-responsive">

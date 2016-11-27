@@ -39,11 +39,12 @@ class LoginController extends Controller{
 						   ->withErrors(['password' => 'Incorrect password or username.'])
 						   ->withInput(Input::except('password'));
 		}
-
+		Session::put('active', true);
 		Session::put('username', $account->Username);
- 		Session::put('active', true);
 		Session::put('firstname', $account->Firstname);
 		Session::put('lastname', $account->Lastname);
+		Session::put('position', $account->PositionID);
+		$account->Middlename == NULL ? Session::put('middlename', '') : Session::put('middlename', $account->Middlename);
 
 		$controller = '';
 		switch ($account->PositionID) {

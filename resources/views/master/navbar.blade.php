@@ -11,10 +11,11 @@
 			<!-- user login dropdown start-->
 			<li class="dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-				<span class="username">@if(Session::has('active')) {!!Session::get('username')!!} @else Croma Employee @endif </span>
-				<b class="caret"></b>
+					<span class="username">@if(Session::has('active')) {!!Session::get('username')!!} @else Croma Employee @endif </span>
+					<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu extended logout">
+					<!--
 					<div class="log-arrow-up"></div>
 					<li>
 						<a href="#"><i class=" fa fa-suitcase"></i>Profile</a>
@@ -25,11 +26,10 @@
 					<li>
 						<a href="#"><i class="fa fa-bell-o"></i> Notification</a>
 					</li>
+				-->
 					<li>
 						<a href="/logout"><i class="fa fa-key"></i> Log Out</a>
 					</li>
-
-
 				</ul>
 			</li>
 			<!-- user login dropdown end -->

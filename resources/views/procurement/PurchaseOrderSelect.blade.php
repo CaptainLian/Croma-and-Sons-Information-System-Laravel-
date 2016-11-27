@@ -16,11 +16,19 @@
 	<!-- page start-->
 	@if(isset($success))
 	<div class="row">
-		<div class="alert alert-success">
+		<div class="alert alert-success alert-dismissible fade in">
 			<strong>Success!</strong> {!!$success!!}
 		</div>
 	</div>
 	@endif
+
+	@foreach($errors->all() as $message)
+		<div class="row">
+			<div class="alert alert-danger alert-dismissible fade in">
+				<strong>Warning!</strong> {!!$message!!}
+			</div>
+		</div>
+	@endforeach
 	<div class="row">
 	    <div class="col-sm-12">
 	        <section class="panel">
@@ -28,7 +36,7 @@
 	                <h1>Purchase Requests</h1>
 	            </header>
 
-							{!!Form::open(['url' => '/procurement/CreatePurchaseOrder', 'method' => 'GET'])!!}
+							{!!Form::open(['action' => 'BusinessControllers\ProcurementPageController@viewFormPurchaseOrder', 'method' => 'GET'])!!}
 	            <div class="panel-body">
 
 	                <div class="adv-table">
@@ -58,6 +66,7 @@
 																	<td>{!!Form::checkbox('products[]', $request->WoodTypeID.','.$request->Size.','.$request->RequestedQuantity.','.$request->SupplierID)!!}</td>
 																</tr>
 																<?php $value++; ?>
+
 															@endforeach
 	                        </tbody>
 	                    </table>
