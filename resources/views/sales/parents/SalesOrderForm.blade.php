@@ -64,9 +64,7 @@
                 </ul>
               </li>
               <!-- user login dropdown end -->
-              <li class="sb-toggle-right">
-                <i class="fa  fa-align-right"></i>
-              </li>
+              
             </ul>
           </div>
         </header>
@@ -207,48 +205,49 @@
        /* console.log('asd');*/
        /* setTimeout(check,3000);*/
       // Check if Quantity is enough and change color
-      $('#editable-sample').on('change','.quan',function(){
-              ctrVal = 0;
-              console.log('Quantity event');
-              console.log(stock);
+      //  QUANTITY CHECKIN
+      // $('#editable-sample').on('change','.quan',function(){
+      //         ctrVal = 0;
+      //         console.log('Quantity event');
+      //         console.log(stock);
 
 
-              $('.quan').each(function(){
+      //         $('.quan').each(function(){
 
-                /*console.log(stock);
-                console.log(stock.length);
-                console.log(stock[0]);*/
-                /*console.log(stock[ctrVal][0]['StockQuantity']);*/
-                console.log($(this).val());
-                if(stock[ctrVal + 1] instanceof Array ){
-                    console.log('pagkatapos ng number')
-                   if($(this).val() > parseInt(stock[ctrVal +1][0]['StockQuantity'])){
-                    if($(this).parent().hasClass('has-success')){
+      //           /*console.log(stock);
+      //           console.log(stock.length);
+      //           console.log(stock[0]);*/
+      //           /*console.log(stock[ctrVal][0]['StockQuantity']);*/
+      //           console.log($(this).val());
+      //           if(stock[ctrVal + 1] instanceof Array ){
+      //               console.log('pagkatapos ng number')
+      //              if($(this).val() > parseInt(stock[ctrVal +1][0]['StockQuantity'])){
+      //               if($(this).parent().hasClass('has-success')){
 
-                       $(this).parent().removeClass('has-success').addClass('has-error');
-                    }else{
-                      $(this).parent().addClass('has-error');
-                  }
-                  }else{
+      //                  $(this).parent().removeClass('has-success').addClass('has-error');
+      //               }else{
+      //                 $(this).parent().addClass('has-error');
+      //             }
+      //             }else{
 
-                    if($(this).parent().hasClass('has-error')){
-                       $(this).parent().removeClass('has-error').addClass('has-success');
-                    }else{
-                      $(this).parent().addClass('has-success');
-                    }
+      //               if($(this).parent().hasClass('has-error')){
+      //                  $(this).parent().removeClass('has-error').addClass('has-success');
+      //               }else{
+      //                 $(this).parent().addClass('has-success');
+      //               }
 
 
 
-                  }
+      //             }
 
-                }
+      //           }
 
-                ctrVal++;
-            });
-           console.log('HAHHAHA');
+      //           ctrVal++;
+      //       });
+      //      console.log('HAHHAHA');
 
-        });
-
+      //   });
+      // END QUANTITY CHECKIN
 
 
       //if there's a new input in orders
@@ -353,9 +352,13 @@
           var tr = $(this).closest('tr');
 
 
-
-          $(tr).find('.total2').val($(this).val() * parseInt(price)  );
           var x = 0;
+          $("tr").find('.total2').each(function(){
+            // val( $(this).val() * parseInt(price)  
+            $(this).val(quantity[x] * price[x] );
+            x++;
+          });
+          
           console.log("price NEILASD");
           console.log(price);
 

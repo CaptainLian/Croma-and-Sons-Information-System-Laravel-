@@ -145,11 +145,12 @@ var EditableTable = function () {
                 var ctr = 0;
                 $(nRow).find('td').each (function(){                    
                   if( ctr < 5)
-                    json.push($(this).text());
+                    json.push($(this).text().trim());
                   
                   ctr++;
                  
-                });                 
+                }); 
+                console.log(json)                ;
                 token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
@@ -225,7 +226,7 @@ var EditableTable = function () {
                     console.log('New');
                     console.log(json);
                     token = $('meta[name="csrf-token"]').attr('content');
-                    alert("Updated! Do not forget to do some ajax to sync with backend :)");
+                    alert("Completed!");
                     if(status == 'add'){
                         $.ajax({
                             type:'POST',

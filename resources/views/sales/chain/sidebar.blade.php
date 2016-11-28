@@ -49,7 +49,7 @@
       <li>
         <a  @if ($active == 'sr')class="active" @endif  href="/sales/report">
           <i class="fa fa-file"></i>
-          <span>Sales History</span>
+          <span>Sales Report</span>
         </a>
       </li>
 

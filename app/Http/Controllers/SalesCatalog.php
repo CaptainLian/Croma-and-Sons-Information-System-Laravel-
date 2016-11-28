@@ -91,19 +91,24 @@ class SalesCatalog extends Controller
                  ->select('WoodTypeID')
                  ->where('WoodType',$item[0])
                  ->pluck('WoodTypeID');
-      $update = DB::table('CompanyInventory')                 
-                 ->where([
-                          ['WoodTypeID',$wood],
-                          ['Thickness',$item[1]],
-                          ['Width',$item[2]],
-                          ['Length',$item[3]]
-                          ])
-                 ->delete();
-       if($update){
-            echo 'Success';
-         }else{
-            echo 'Failed';
-         }          
+      
+     try{ 
+        $update = DB::table('CompanyInventory')                 
+                  ->where([
+                           ['WoodTypeID',$wood],
+                           ['Thickness',$item[1]],
+                           ['Width',$item[2]],
+                           ['Length',$item[3]]
+                           ])
+                  ->delete();
+        if($update){
+             echo 'Success';
+          }else{
+             echo 'Failed';
+          }  
+        }catch(\Exception $e){
+          echo 'Foreign Key!';
+        }        
       
 
       
