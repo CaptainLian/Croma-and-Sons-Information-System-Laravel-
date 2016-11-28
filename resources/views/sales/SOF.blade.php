@@ -32,8 +32,10 @@
 
 
         <p>
-        @if($outcomeMessage <> null)
-        {!!$outcomeMessage!!}
+        @if($outcome == 1)
+          Sales order has been sent to inventory for approval.
+        @else
+          {!!$outcomeMessage !!}
         @endif
       </p>
 
@@ -47,10 +49,10 @@
 <div class="row">
 
 	<div class="form-group">
-		<label class="control-label col-md-1">Set Delivery Date</label>
+		<label class="control-label col-md-1">Set Expected Delivery Date</label>
 		<div class="col-md-4 col-xs-11">
 
-			<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="12-02-2012"  class="input-append date dpYears">
+			<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="{{\Carbon\Carbon::now()}}"  class="input-append date dpYears">
 
 				{!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','readonly' => '""','size'=>'16']) !!}
 
@@ -234,7 +236,7 @@
 <div class="row">
   <div class="col-lg-4 invoice-block pull-right">
     <ul class="unstyled amounts">
-      <li><strong>Subtotal amount :</strong> <a id='sub'></a></li>
+      <li><strong>Subtotal  :</strong> <a id='sub'></a></li>
       <li><strong>{!! Form::label('discount','Discount : ')!!}</strong>{!! Form::text('discount',0,['style'=>'width:40px', 'id' => 'dis']) !!}%</li>
 
       <li ><strong> Total : </strong><a id="tot"></a></li>
@@ -243,7 +245,7 @@
 </div>
 
 <div class="text-center invoice-btn">
-<a href="/sales/home" class="btn btn-danger btn-lg" style="background-color:#ff6c60;border-color:#ff6c60"><i class="fa fa-times" style="background-color:#ff6c60"></i> Cancel </a>
+ 
  {!! Form::button('<i class="fa fa-check"></i>Submit Form',[
  "class" => 'btn btn-success btn-lg ',
  'type' => 'submit',

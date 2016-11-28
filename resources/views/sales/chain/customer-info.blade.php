@@ -4,7 +4,7 @@
 	<p>Customer Name :
 		@if(isset($customer))
 		<strong>{{$customer[0]->Name}}</strong>
-		<br>Address:
+		<br>Customer Address:
 		<b>{{$customer[0]->Address}}</b>
 			<br>Contact Number:
 			<b>{{$customer[0]->MobileNumber}}</b>
@@ -13,7 +13,7 @@
 		</p>
 		@elseif(isset($so))
 		<strong>{{$so[0]->Name}}</strong>
-		<br>Address:
+		<br>Customer Address:
 		<b>{{$so[0]->Address}}</b>
 			<br>Contact Number:
 			<b>{{$so[0]->MobileNumber}}</b>

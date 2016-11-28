@@ -70,7 +70,7 @@ class SalesOrderList extends Controller
     public function post(Request $request){
           $date = $request->input('date');
           $id = $request->input('sdrID');
-          echo $id;
+          // echo $id;
           DB::beginTransaction();
           try{
           $insert =DB::table('SalesInvoice')
@@ -95,7 +95,7 @@ class SalesOrderList extends Controller
             }
           }
           catch(\Exception $e){
-            echo $e;
+            // echo $e;
             DB::rollBack();
           }
           DB::commit();

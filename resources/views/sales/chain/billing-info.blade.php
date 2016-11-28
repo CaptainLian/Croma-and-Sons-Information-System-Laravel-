@@ -22,7 +22,7 @@
 		@endif
 
 
-		 Address:
+		Delivery Address:
 		<b>
 
 			{{$so[0]->DeliveryAddress}}
