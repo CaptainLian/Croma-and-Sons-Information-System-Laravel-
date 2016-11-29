@@ -46,7 +46,7 @@ class InventoryPageController extends Controller
     public function viewInventoryEdit(){
     	$inventory = InventoryModel::getCompanyInventory();
 
-		$data = [
+		  $data = [
 			'inventory' => $inventory
     	];
 
