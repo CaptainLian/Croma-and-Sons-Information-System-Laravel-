@@ -42,14 +42,17 @@ class Dashboard extends Controller
         $failed = $temp[0]->Failed / $total *100;
 
 		 $monthlySales = DB::select(DB::raw("Select Month(SO.DateCreated) as MONTHID, SUM(CI.CurrentUnitPrice * SOI.Quantity) As MONTHLY
-  From SalesOrders SO join SalesOrderItems SOI
+  From SalesInvoice SI join SalesDeliveryReceipts SDR
+             on SI.SalesDeliveryReceiptID  = SDR.SalesDeliveryReceiptID
+             join SalesOrders SO
+                         on SDR.SalesOrderID = SO.SalesOrderID
+          join SalesOrderItems SOI
             on SO.SalesOrderID = SOI.SalesOrderID
             join CompanyInventory CI
                         on  SOI.Thickness = CI.Thickness and SOI.Width = CI.Width and SOI.Length = CI.Length and SOI.WoodTypeID = CI.WoodTypeID
-
 Where Year(SO.DateCreated) = Year(Now())
-Group By 1
-Order by 1 asc"));
+Group by 1
+Order by 1"));
 
 
 		 
