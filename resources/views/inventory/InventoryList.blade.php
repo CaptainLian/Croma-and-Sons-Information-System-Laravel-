@@ -26,10 +26,10 @@ Inventory List
 								<th class="col-sm-1">Status </th>
 								<th class="col-sm-2">Material</th>
 								<th class="col-sm-2">Size</th>
-								<th class="col-sm-2">Qty</th>
+								<th class="col-sm-1">Quantity</th>
 								<th class="col-sm-2">EOQ</th>
 								<th class="col-sm-2">Reorder Point</th>
-								<th class="col-sm-2">Procurement Qty Request</th>
+								<th class="col-sm-3">Procurement Qty Request</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,7 +72,7 @@ Inventory List
 										</td>
 										<td class="AguyInput">
 											<input class="form-control" type="text" style="width: 150px" />
-											<a class="aguy" href="#">aguy</a>
+											<button class="btn btn-success btn-sm AguyButton">aguy</button>
 										</td>
 								</tr>
 							@endforeach
@@ -96,16 +96,21 @@ Inventory List
 	<script type="text/javascript" src="/js/dynamic_table_init.js"></script>
 	<script type="text/javascript" src="/js/dynamic_table_init2.js "></script>
 
-	<script>
+	<script type="text/javascript">
+	/*
 		$(".aguy").click(function(){
 			/*
 			$(this).closest("tr").children().each(function(){
 				console.log($(this).html());
 			});
 			*/
-			var x = $(this).closest("tr").find("td.AguyInput").find("input").val();
-			console.log(x);
+
+
+			//var x = $(this).closest("tr").find("td.AguyInput").find("input").val();
+			//Wconsole.log(x);
+
 		});
+		*/
 	</script>
 	<script>
 
