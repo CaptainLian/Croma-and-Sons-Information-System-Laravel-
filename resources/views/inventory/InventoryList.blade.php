@@ -4,6 +4,10 @@
 Inventory List
 @endsection
 
+@push('meta')
+<meta name="csrf-token" content="{!!csrf_token()!!}" />
+@endpush
+
 @push('css')
 	<link href="/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet">
 	<link href="/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet">
@@ -12,6 +16,9 @@ Inventory List
 
 @section('main-content')
 <!-- page start-->
+<div id="alert">
+
+</div>
 <div class="row">
 	<div class="col-sm-12">
 		<section class="panel">
@@ -27,8 +34,9 @@ Inventory List
 								<th class="col-sm-1">Material</th>
 								<th class="col-sm-2">Size</th>
 								<th class="col-sm-1">Quantity</th>
+								<th class="col-sm-1">Quantity Requested</th>
 								<th class="col-sm-1">EOQ</th>
-								<th class="col-sm-2">Reorder Point</th>
+								<th class="col-sm-1">Reorder Point</th>
 								<th class="col-sm-3">Procurement Quantity Request</th>
 							</tr>
 						</thead>
@@ -38,41 +46,44 @@ Inventory List
 										<?php
 											$threshold = $product->ReorderPoint + $product->ReorderPoint*0.2;
 										?>
+										<td align="center" class="StatusCell" style="padding-top: 1.5%;padding-left: 1.3%">
 										@if($product->StockQuantity > $threshold )
-											<td align="left" style="padding-top: 1.5%;padding-left: 1.3%; width: 10%">
 												<span class="label label-success label-mini" style="padding-left: 20%; padding-right: 20%">Above</span>
-											</td>
 										@elseif($product->StockQuantity == $product->ReorderPoint)
-											<td class="StatusRow" style="padding-top: 1.5%;padding-left: 1.3%">
 												<span class="label label-info label-mini" style="padding-left: 20%; padding-right: 10%">Reorder</span>
-											</td>
 										@elseif($product->StockQuantity <= $threshold AND $product->StockQuantity > $product->ReorderPoint)
-											<td class="StatusRow" style="padding-top: 1.5%;padding-left: 1.3%">
 												<span class="label label-warning label-mini" style="padding-left: 20%; padding-right: 10%">Nearing</span>
-											</td>
 										@else
-											<td style="padding-top: 1.5%;padding-left: 1.3%">
 												<span class="label label-danger label-mini" style="padding-left: 20%; padding-right: 20%">Below</span>
-											</td>
 										@endif
-										<td class="MaterialRow">
+										</td>
+
+										<td align="left" class="MaterialCell">
 											{!!$product->Material!!}
 										</td>
-										<td class="SizeRow">
+										<td align="center" class="SizeCell">
 											{!!$product->Size!!}
 										</td>
-										<td class="StockQuantityRow">
+										<td align="right" class="StockQuantityCell">
 											{!!$product->StockQuantity!!}
 										</td>
-										<td class="EOQRow">
+										<td align="right" class="RequestedQuantityCell">
+											{!!$product->RequestedQuantity!!}
+										</td>
+										<td align="right" class="EOQCell">
 											{!!$product->EconomicOrderQuantity!!}
 										</td>
-										<td>
+										<td align="right" class="ReorderPointCell">
 											{!!$product->ReorderPoint!!}
 										</td>
-										<td class="ProcureRequestRow">
-											<input class="form-control" type="text" style="width: 150px" />
-											<button class="btn btn-success btn-sm AguyButton">aguy</button>
+										<td class="ProcureRequestCell" align="left">
+											<input type="number" min=0 step=1 class="form-control RequestAmount" type="text" style="width: 125px" />
+											<button class="btn btn-success btn-sm RequestButton">Request Quantity</button>
+
+											<input type="hidden" class="WoodTypeID" value="{!!$product->WoodTypeID!!}" />
+											<input type="hidden" class="Thickness" value="{!!$product->Thickness!!}" />
+											<input type="hidden" class="Width" value="{!!$product->Width!!}" />
+											<input type="hidden" class="Length" value="{!!$product->Length!!}" />
 										</td>
 								</tr>
 							@endforeach
@@ -80,13 +91,90 @@ Inventory List
 					</table>
 				</div>
 			</div>
+			<!--
 			<div class="text-center invoice-btn">
 				<a class="btn btn-success btn-lg" id="request"><i class="fa fa-check"></i> Make Procurement Request </a>
 			</div>
+		-->
 		</section>
 	</div>
 </div>
 <!-- page end-->
+
+<!-- Modal -->
+<div id="ProcurementModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Procurement Request</h4>
+      </div><!-- modal-header -->
+      <div class="modal-body">
+				<center><h5><strong><p>Current Product Information</p></strong></h5></center>
+				<table>
+
+					<tr>
+						<td align="right">
+							Material:
+						</td>
+
+						<td align="left">
+							&nbsp;<strong id="modalMaterial">Kiln Dry</strong>
+						</td>
+					</tr>
+
+					<tr>
+						<td align="right">
+							Size:
+						</td>
+
+						<td align="center">
+							 &nbsp;<strong id="modalSize">2x2x10</strong>
+						</td>
+					</tr>
+
+					<tr>
+						<td align="right">
+							Current Stock Quantity:
+						</td>
+
+						<td align="right">
+							 &nbsp;<strong id="modalCurrentQuantity">700</strong>
+						</td>
+					</tr>
+
+					<tr>
+						<td align="right">
+							Current Quantity Requested:
+						</td>
+
+						<td align="right">
+							&nbsp;<strong id="modalQuantityRequested">500</strong>
+						</td>
+					</tr>
+
+					<tr>
+						<td align="right">
+							Reorder Point:
+						</td>
+
+						<td align="right">
+							&nbsp;<strong id="modalReorderPoint">620</strong>
+						</td>
+					</tr>
+
+				</table>
+
+				<h4><u>Quantity to request: </u>&nbsp;<strong id="modalRequestQuantity">99</strong></h4>
+      </div> <!-- modal-body -->
+      <div class="modal-footer">
+				<button id="ProcurementConfirmation" type="button" class="btn btn-success" data-dismiss="modal">Continue Request</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div><!-- modal-footer -->
+    </div><!-- model-dailog -->
+  </div><!-- modal-dialog -->
+</div> <!-- modal fade -->
+<!-- Modal -->
 @endsection
 
 @push('javascript')
@@ -96,29 +184,12 @@ Inventory List
 	<script type="text/javascript" src="/js/dynamic_table_init.js"></script>
 	<script type="text/javascript" src="/js/dynamic_table_init2.js "></script>
 
+	<script type="text/javascript" src="/js/inventory/InventoryListTable.js"></script>
 	<script type="text/javascript">
-	/*
-		$(".aguy").click(function(){
-			/*
-			$(this).closest("tr").children().each(function(){
-				console.log($(this).html());
-			});
-
-
-
-			//var x = $(this).closest("tr").find("td.AguyInput").find("input").val();
-			//Wconsole.log(x);
-
-		});
-		*/
-	</script>
-	<script>
-
 	  $(document).ready( function () {
 	      $("#request").click( function () {
 	          alert("PLACE HOLDER ALERT HERE");
 	      });
 	  });
-
 	</script>
 @endpush

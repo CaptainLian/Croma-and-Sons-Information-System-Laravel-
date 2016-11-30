@@ -5,6 +5,9 @@
     <meta name="description" content="">
     <meta name="author" content="Mosaddek">
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    @stack('meta')
+
     <link rel="shortcut icon" href="/img/favicon.html">
 
     <title>@yield('title', 'Inventory')</title>
@@ -19,7 +22,7 @@
     <!-- ???? -->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
-    
+
     @stack('css')
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media
@@ -45,7 +48,7 @@
           <!--state overview start-->
 
           @yield('main-content')
-         
+
         </section>
       </section>
       <!--main content end-->
@@ -74,9 +77,9 @@
       <script type="text/javascript" src="/js/jquery.customSelect.min.js"></script>
       <script type="text/javascript" src="/js/respond.min.js"></script>
       <script type="text/javascript" src="/js/slidebars.min.js"></script>
-      
+
       <script type="text/javascript" src="/js/common-scripts.js"></script>
-      
+
       @stack('javascript')
 
       <!-- Mirrored from thevectorlab.net/flatlab/index.html by HTTrack

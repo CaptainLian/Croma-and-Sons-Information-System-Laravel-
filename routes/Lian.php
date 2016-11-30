@@ -63,6 +63,12 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::get('EditInventory', ['as' => 'viewInventoryEdit', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryEdit']);
 
 	Route::get('InventoryResize', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);
+
+	Route::group(['prefix' => 'ajax'], function(){
+		Route::get('ProcurementRequest', ['as' => 'ProcurementRequest', 'uses' => 'BusinessControllers\InventoryFormController@requestProcurement']);
+
+		Route::get('testAJAX', ['as' => 'dummyRoute', 'uses' => 'BusinessControllers\InventoryFormController@testAjax']);
+	});
 });
 
 ?>
