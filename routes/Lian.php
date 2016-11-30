@@ -55,7 +55,7 @@ Route::group(['prefix' => 'procurement'], function(){
 	});
 });
 
-Route::group(['prefix' => '/inventory'], function(){
+Route::group(['prefix' => 'inventory'], function(){
 	Route::get('dashboard', ['as' => 'viewInventoryDashboard', 'uses' => 'BusinessControllers\InventoryPageController@viewDashboard']);
 
 	Route::get('InventoryList', ['as' => 'viewInventoryList', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryList']);

@@ -24,12 +24,12 @@ Inventory List
 						<thead>
 							<tr>
 								<th class="col-sm-1">Status </th>
-								<th class="col-sm-2">Material</th>
+								<th class="col-sm-1">Material</th>
 								<th class="col-sm-2">Size</th>
 								<th class="col-sm-1">Quantity</th>
-								<th class="col-sm-2">EOQ</th>
+								<th class="col-sm-1">EOQ</th>
 								<th class="col-sm-2">Reorder Point</th>
-								<th class="col-sm-3">Procurement Qty Request</th>
+								<th class="col-sm-3">Procurement Quantity Request</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -39,15 +39,15 @@ Inventory List
 											$threshold = $product->ReorderPoint + $product->ReorderPoint*0.2;
 										?>
 										@if($product->StockQuantity > $threshold )
-											<td style="padding-top: 1.5%;padding-left: 1.3%; width: 10%">
+											<td align="left" style="padding-top: 1.5%;padding-left: 1.3%; width: 10%">
 												<span class="label label-success label-mini" style="padding-left: 20%; padding-right: 20%">Above</span>
 											</td>
 										@elseif($product->StockQuantity == $product->ReorderPoint)
-											<td style="padding-top: 1.5%;padding-left: 1.3%">
+											<td class="StatusRow" style="padding-top: 1.5%;padding-left: 1.3%">
 												<span class="label label-info label-mini" style="padding-left: 20%; padding-right: 10%">Reorder</span>
 											</td>
 										@elseif($product->StockQuantity <= $threshold AND $product->StockQuantity > $product->ReorderPoint)
-											<td style="padding-top: 1.5%;padding-left: 1.3%">
+											<td class="StatusRow" style="padding-top: 1.5%;padding-left: 1.3%">
 												<span class="label label-warning label-mini" style="padding-left: 20%; padding-right: 10%">Nearing</span>
 											</td>
 										@else
@@ -55,22 +55,22 @@ Inventory List
 												<span class="label label-danger label-mini" style="padding-left: 20%; padding-right: 20%">Below</span>
 											</td>
 										@endif
-										<td>
+										<td class="MaterialRow">
 											{!!$product->Material!!}
 										</td>
-										<td>
+										<td class="SizeRow">
 											{!!$product->Size!!}
 										</td>
-										<td>
+										<td class="StockQuantityRow">
 											{!!$product->StockQuantity!!}
 										</td>
-										<td>
+										<td class="EOQRow">
 											{!!$product->EconomicOrderQuantity!!}
 										</td>
 										<td>
 											{!!$product->ReorderPoint!!}
 										</td>
-										<td class="AguyInput">
+										<td class="ProcureRequestRow">
 											<input class="form-control" type="text" style="width: 150px" />
 											<button class="btn btn-success btn-sm AguyButton">aguy</button>
 										</td>
@@ -103,7 +103,7 @@ Inventory List
 			$(this).closest("tr").children().each(function(){
 				console.log($(this).html());
 			});
-			*/
+
 
 
 			//var x = $(this).closest("tr").find("td.AguyInput").find("input").val();
