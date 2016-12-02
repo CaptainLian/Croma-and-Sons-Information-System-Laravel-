@@ -11,14 +11,42 @@ use App\SalesModel;
 use App\CustomerModel;
 use App\InventoryModel;
 
+use \stdClass;
+
 class InventoryPageController extends Controller
 {
     public function viewDashboard(){
+      $products = InventoryModel::getProductsRequireAttention();
 
-    	$pendingSalesOrders = SalesModel::getPendingSalesOrders();
+      $materials = [];
+      $stockQuantities = [];
+      $reorderPoints = [];
+      $safetyStocks = [];
+
+      foreach($products AS $product){
+        $material = new stdClass();
+
+        $material->Size = $product->Size;
+        $material->StockQuantity = $product->StockQuantity;
+        $material->ReorderPoint = $product->ReorderPoint;
+        $material->SafetyStock = $product->SafetyStock;
+
+        $materials[$product->Material][] = $material;
+      }
+
+      foreach($materials AS $material){
+        foreach($material AS $size){
+          $stockQuantities[] = $size->StockQuantity;
+          $reorderPoints[] = $size->ReorderPoint;
+          $safetyStocks[] = $size->SafetyStock;
+        }
+      }
 
     	$data = [
-    		'pendingSalesOrders' => $pendingSalesOrders,
+        'materials' => $materials,
+        'stockQuantities' => $stockQuantities,
+        'reorderPoints' => $reorderPoints,
+        'safetyStocks' => $safetyStocks
     	];
 
     	return view ('inventory.dashboard')->with($data);

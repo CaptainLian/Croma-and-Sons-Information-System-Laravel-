@@ -81,7 +81,6 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 							<li>Delivery Receipt Number :
 								<strong>69626</strong>
 							</li>
-
 							-->
 							<li>Purchase Order Number :
 								<strong>{!!$purchaseOrderDetails->PurchaseOrderID!!}</strong>
@@ -101,60 +100,56 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 							<th>Material</th>
 							<th class="">Size</th>
 							<th class="">Unit</th>
-							<th class="">Ordered Quantity</th>
-							<th class="">Quantity Recieved</th>
+							<th class="">Quantity Received</th>
 							<th class="">Quantity Rejected</th>
 							<th class="">B/F</th>
 							<th class="">Unit Price</th>
 							<th>Total</th>
 						</tr>
 					</thead>
+
 					<tbody>
 						<?php
 							$count = 1;
-							$sum = 0.0;
-
 						?>
 						@foreach($purchaseOrderItems as $item)
-							<input type="hidden" name="Material[]" value={!!$item->WoodTypeID!!} />
-							<input type="hidden" name="Thickness[]" value={!!$item->Thickness!!} />
-							<input type="hidden" name="Width[]" value={!!$item->Width!!} />
-							<input type="hidden" name="Length[]" value={!!$item->Length!!} />
-							<input type="hidden" name="Price[]" value={!!$item->UnitPrice!!} />
-							<input type="hidden" name="Discount[]" value="{!!$item->Discount!!}" />
+
 							<tr>
+								<input type="hidden" name="Material[]" value={!!$item->WoodTypeID!!} />
+								<input type="hidden" name="Thickness[]" value={!!$item->Thickness!!} />
+								<input type="hidden" name="Width[]" value={!!$item->Width!!} />
+								<input type="hidden" name="Length[]" value={!!$item->Length!!} />
+								<input type="hidden" name="Price[]" value={!!$item->UnitPrice!!} />
+								<!-- <input type="hidden" name="QuantityReceived[]" value="{!!$item->Quantity!!}"  /> -->
+
+
 								<td>{!!$count!!}</td>
 								<td><{!!$item->Material!!}/></td>
 								<td>{!!$item->Size!!}</td>
 								<td>piece</td>
-								<td>{!!$item->Quantity!!}</td>
-								<td><input type="number" min=0 required name="QuantityReceived[]" value={!!$item->Quantity!!} /></td>
-								<td><input type="number" min=0 required name="QuantityRejected[]" value=0 /></td>
+								<td><input type="number" min=0 required name="QuantityReceived[]" value="{!!$item->Quantity!!}" class="InputQuantityReceived" /></td>
+								<td><input type="number" min=0 max="{!!$item->Quantity!!}" required name="InputQuantityRejected[]" value=0  class="InputQuantityRejected" /></td>
 								<td>{!!$item->BoardFeet!!}</td>
-								<td>{!!$item->UnitPrice!!}</td>
-								<?php $sum += ($item->Quantity*$item->UnitPrice); ?>
+								<td class="UnitPrice">{!!$item->UnitPrice!!}</td>
+								<td><input type="text" class="Total col-md-8" disabled /></td>
 							</tr>
 
 							<?php $count++; ?>
 						@endforeach
-						<tr>
-
-
 					</tbody>
 				</table>
+
 				<div class="row">
 					<div class="col-lg-4 invoice-block pull-right">
 						<ul class="unstyled amounts">
-							<!--
 							<li>
-							<strong>Sub - Total amount :</strong>$6820</li>
+								<strong>Subtotal:</strong>&nbsp;<u id="subtotal">0.0</u>&nbsp;Php
+							</li>
 							<li>
-							<strong>Discount :</strong>10%</li>
+								<strong>Discount: %</strong><input name="discount" id="inputDiscount" type="number" step="any" min=0.0 max=100 value="{!!$purchaseOrderDetails->Discount!!}" />
+							</li>
 							<li>
-							<strong>VAT :</strong>-----</li>
-							-->
-							<li>
-								<u>Grand Total</u> : <strong>{!!$sum!!} Php</strong>
+								<strong>Grand Total :</strong>&nbsp;<u id="grandTotal">0.0</u>&nbsp;Php
 							</li>
 						</ul>
 					</div>
@@ -171,7 +166,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 @endsection
 
 @push('javascript')
-	<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
+		<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
     <script type="text/javascript" src="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
@@ -190,4 +185,5 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
     <script type="text/javascript" src="/assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
     <script type="text/javascript" language="javascript" src="/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" src="/js/procurement/DeliveryReceipt.js"></script>
 @endpush

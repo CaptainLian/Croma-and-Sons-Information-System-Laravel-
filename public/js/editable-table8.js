@@ -24,16 +24,16 @@ var EditableTable = function () {
                 jqTds[1].innerHTML = '<input name="Thickness[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[1] + '" />';
                 jqTds[2].innerHTML = '<input name="Width[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[2] + '" />';
                 jqTds[3].innerHTML = '<input name="Length[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[3] + '" />';
-                jqTds[4].innerHTML = '<input name="Quantity[]" autocomplete="on" type="number" step="1" min=0 required class="form-control columnAdjust9p" value="' + aData[4] + '" />';
+                jqTds[4].innerHTML = '<input name="Quantity[]" autocomplete="on" type="number" step="1" min=0 required class="form-control columnAdjust9p InputQuantity" value="' + aData[4] + '" />';
 
                 //jqTds[5].innerHTML = '<input type="text" class="form-control columnAdjust9p" value="' + aData[5] + '">';
                 jqTds[5].innerHTML = 'pc';
 
-                jqTds[6].innerHTML = '<input name="UnitPrice[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p" value="' + aData[6] + '" />';
+                jqTds[6].innerHTML = '<input name="UnitPrice[]" autocomplete="on" type="number" step="any" min=0 required class="form-control columnAdjust9p InputUnitPrice" value="' + aData[6] + '" />';
                // jqTds[7].innerHTML = '<input name="Unused[]" autocomplete="on" min=0 type="number" step="any" class="form-control columnAdjust9p" value="' + aData[7] + '" />';
 
                 //jqTds[8].innerHTML = '<a class="edit" href="">Edit</a>';
-                jqTds[7].innerHTML = '';
+                jqTds[7].innerHTML = '<input type="text" class="Amount columnAdjust9p form-control" step="any" min=0 disabled  value="'+ aData[7] + '" />';
                 jqTds[8].innerHTML = '<a class="delete" href="">Cancel</a>';
             }
 

@@ -6,7 +6,7 @@ Create Purchase Order
 
 @section('navbar-dropdown-content')
 <li class="sb-toggle-right">
- 	<i class="fa  fa-align-right"></i>
+ 	<i class="fa fa-align-right"></i>
 </li>
 @endsection
 
@@ -15,9 +15,10 @@ Create Purchase Order
 @endsection
 
 @push('css')
-    <link href="/css/invoice-print.css" rel="stylesheet" media="print">
-    <link rel="stylesheet" href="/assets/data-tables/DT_bootstrap.css">
-    <link href="/css/cloud.css" rel="stylesheet">
+    <link href="/css/invoice-print.css" rel="stylesheet" media="print" />
+    <link rel="stylesheet" href="/assets/data-tables/DT_bootstrap.css" />
+    <link href="/css/cloud.css" rel="stylesheet" />
+    <link href="/css/form.css" rel="stylesheet" />
 @endpush
 
 @section('main-content')
@@ -45,10 +46,10 @@ Create Purchase Order
 				</div>
 			@endif
 			<div class="row">
-				{!!Form::open(['action' => 'BusinessControllers\ProcurementFormController@inputPurchaseOrder'])!!}
+				{!!Form::open(['action' => 'BusinessControllers\ProcurementFormController@inputPurchaseOrder', 'id' => 'form'])!!}
 
 				<div class="row" id="newUserRow">
-					<div class="form-group ">
+					<div class="form-group">
 						<label class="control-label col-md-1">Requested Delivery Date</label>
 						<div class="col-md-3 col-xs-11">
 							<div data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="{!!date('Y-m-d')!!}" class="input-append date dpYears">
@@ -86,7 +87,7 @@ Create Purchase Order
 								<span class="input-group-btn">
 									<button class="btn btn-white" type="button" id="newUser">New Supplier</button>
 								</span>
-								<select onChange="onChangeSupplier(this.form.supplier)" name="supplier" id="supplier" required class="form-control m-bot15">
+								<select name="supplier" id="supplier" required class="form-control m-bot15">
 									<option></option>
 									@foreach($suppliers as $supplier)
 										<option id="supplier{!!$supplier->SupplierID!!}" data-address="{!!$supplier->Address!!}" value="{!!$supplier->SupplierID!!}">{!!$supplier->Name!!}</option>
@@ -165,7 +166,7 @@ Create Purchase Order
 										<th>Quantity</th>
 										<th>Unit</th>
 										<th>Unit Price</th>
-										<th>Amount</th>
+										<th>Total</th>
                     <th></th>
 									</tr>
 								</thead>
@@ -174,9 +175,9 @@ Create Purchase Order
                   <?php $hidden = ''; ?>
                   @if (isset($requestedProducts))
                     @foreach ($requestedProducts as $product)
-                      <?php $hidden .= Form::hidden('WoodType[]', $product->WoodTypeID); ?>
                       <tr>
                         <td>
+                          {!!Form::hidden('WoodType[]', $product->WoodTypeID);!!}
                           @if ($product->WoodTypeID === 1)
                             <input type="text" value="Kiln Dry" disabled class="form-control columnAdjust10p" />
                           @elseif($product->WoodTypeID === 2)
@@ -188,11 +189,11 @@ Create Purchase Order
                         <td>{!!Form::number('Thickness[]', $product->Thickness, ['readonly' => 'on', 'class' => 'form-control columnAdjust9p','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
                         <td>{!!Form::number('Width[]', $product->Width, ['readonly' => 'on', 'class' => 'form-control columnAdjust9p','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
                         <td>{!!Form::number('Length[]', $product->Length, ['readonly' => 'on','class' => 'form-control columnAdjust9p', 'step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
-                        <td>{!!Form::number('Quantity[]', $product->RequestedQuantity, [ 'class' => 'form-control columnAdjust9p','step' => '1', 'min' => 0, 'required' => 'required'] )!!}</td>
+                        <td>{!!Form::number('Quantity[]', $product->RequestedQuantity, [ 'class' => 'form-control columnAdjust9p InputQuantity','step' => '1', 'min' => 0, 'required' => 'required'] )!!}</td>
 
                         <td>pcs</td>
-                        <td>{!!Form::number('UnitPrice[]', 0.0, [ 'class' => 'form-control columnAdjust9p','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
-                        <td> </td> <!-- Amount -->
+                        <td>{!!Form::number('UnitPrice[]', 0.0, [ 'class' => 'form-control columnAdjust9p InputUnitPrice','step' => 'any', 'min' => 0, 'required' => 'required'] )!!}</td>
+                        <td><input type="text" class="Amount columnAdjust9p form-control" step="any" min=0 disabled /></td> <!-- Amount -->
                         <td><a class="delete" href="javascript:;">Cancel</a></td> <!-- delete -->
                       </tr>
                     @endforeach
@@ -208,13 +209,13 @@ Create Purchase Order
 				<div class="col-lg-4 invoice-block pull-right">
 					<ul class="unstyled amounts">
 						<li>
-							<strong>Sub - Total amount :</strong>$6820
+							<strong>Subtotal:</strong>&nbsp;<u id="subtotal">0.0</u>&nbsp;Php
 						</li>
 						<li>
-							<strong>Discount : %</strong><input name="discount" type="number" step="any" min=0.0 max=100 value=0.0 />
+							<strong>Discount: %</strong><input name="discount" id="inputDiscount" type="number" step="any" min=0.0 max=100 value=0.0 />
 						</li>
 						<li>
-							<strong>Grand Total :</strong>$6138
+							<strong>Grand Total :</strong>&nbsp;<u id="grandTotal">0.0</u>&nbsp;Php
 						</li>
 					</ul>
 				</div>
@@ -223,7 +224,6 @@ Create Purchase Order
 				<input type="Submit" class="btn btn-success btn-lg" value ="Submit Purchase Order"/>
 				<!-- <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a> -->
 			</div>
-      {!!$hidden!!}
 			{!!Form::close()!!}
 		</div>
 	</div>
@@ -256,7 +256,6 @@ Create Purchase Order
     						<td>
     							<font color="white">{!!$product->RequestedQuantity!!}</font>
     						</td>
-
     					</tr>
     				@endforeach
           @endif
@@ -291,6 +290,7 @@ Create Purchase Order
 
   <!--script for this page only-->
   <script src="/js/editable-table8.js"></script>
+
   <!--this page script only-->
   <!--right slidebar-->
 
@@ -310,21 +310,5 @@ Create Purchase Order
 	    EditableTable.init();
 	  });
 	 </script>
-
-	 <script>
-	 	function onChangeSupplier(dropdown){
-	 		return true;
-	 	}
-
-	 </script>
-
-	 <!--
-	 <script type="text/javascript">
-	 	function onChangeSupplier(dropdown){
-	 		document.getElementById('address').value = dropdown.options[dropdown.selectedIndex].getAttribute('data-address');
-			return true;
-	 	}
-
-	 </script>
-	 -->
+   <script type="text/javascript" src="/js/procurement/PurchaseOrder.js"></script>
 @endpush

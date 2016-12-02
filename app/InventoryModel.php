@@ -28,14 +28,33 @@ class InventoryModel extends Model{
     }
 
     public static function requestProcurement($woodTypeID, $thickness, $width, $length, $quantity){
-      $aguy = DB::table('CompanyInventory')
-        ->where([
-            ['WoodTypeID', '=', $woodTypeID],
-            ['Thickness', '=', $thickness],
-            ['Width', '=', $width],
-            ['Length', '=', $length],
-         ])
-         ->increment('RequestedQuantity', $quantity);
+      $aguy = DB::table('AUDIT_ProcurementRequests')
+                ->insert([
+                  'WoodTypeID' => $woodTypeID,
+                  'Thickness' => $thickness,
+                  'Width' => $width,
+                  'Length' => $length,
+                  'Quantity' => $quantity
+                ]);
       return $aguy;
+    }
+
+    public static function getProductsRequireAttention(){
+      $products = DB::table('CompanyInventory')
+                    ->select(DB::raw("CompanyInventory.WoodTypeID,
+                                      REF_WoodTypes.WoodType AS Material,
+                                      CONCAT(Thickness, 'x', Width, 'x', Length) AS Size,
+                                      StockQuantity,
+                                      ReorderPoint,
+                                      SafetyStock"))
+
+                    ->orWhere([
+                      ['StockQuantity', '<=', 'SafetStock'],
+                      ['StockQuantity', '<=', 'ReorderPoint']
+                    ])
+                    ->join('REF_WoodTypes', 'REF_WoodTypes.WoodTypeID', '=', 'CompanyInventory.WoodTypeID')
+                    ->orderBy('StockQuantity', 'ASC')
+                    ->limit(5);
+      return $products->get();
     }
 }
