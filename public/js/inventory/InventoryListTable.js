@@ -12,6 +12,7 @@ $(".aguy").click(function(){
 
 });
 */
+
 const FAILED = 0;
 const SUCCESS = 1;
 
@@ -62,15 +63,6 @@ $('#ProcurementConfirmation').click(function(){
 
   let token = $('meta[name="csrf-token"]').attr('content');
 
-  console.log('AGUY AGUY AGUY');
-  console.log('Quantity: ' + quantity);
-  console.log('WoodType: ' + selectedWoodTypeID);
-  console.log('Thickness: ' + selectedThickness);
-  console.log('Width: ' + selectedWidth);
-  console.log('Length: ' + selectedLength);
-
-  console.log('Sending AJAX request');
-
   $.ajax({
     url: '/inventory/ajax/ProcurementRequest',
     type: 'GET',
@@ -96,15 +88,14 @@ $('#ProcurementConfirmation').click(function(){
         alert.removeClass('alert alert-success');
         alert.removeClass('alert alert-danger');
 
-        alert.html('Success! Product request successfully filed.');
+        alert.html('<strong>Success!</strong> Product request successfully filed.');
         alert.addClass('alert alert-success');
       }else{
-
         let alert = $('#alert');
         alert.removeClass('alert alert alert alert-success');
         alert.removeClass('alert alert alert-danger');
 
-        alert.html('Failed! Internal server error occured.');
+        alert.html('<strong>Failed!</strong> Internal server error occured.');
         alert.addClass('alert alert-danger');
       }
     },
@@ -113,7 +104,7 @@ $('#ProcurementConfirmation').click(function(){
       alert.removeClass('alert alert alert alert-success');
       alert.removeClass('alert alert alert-danger');
 
-      alert.html('Failed! ' + errorThrown);
+      alert.html('<strong>Failed!</strong>&nbsp;' + errorThrown);
       alert.addClass('alert alert-danger');
 
     }

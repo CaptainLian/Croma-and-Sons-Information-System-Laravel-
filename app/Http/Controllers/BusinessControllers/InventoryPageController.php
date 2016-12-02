@@ -46,7 +46,8 @@ class InventoryPageController extends Controller
         'materials' => $materials,
         'stockQuantities' => $stockQuantities,
         'reorderPoints' => $reorderPoints,
-        'safetyStocks' => $safetyStocks
+        'safetyStocks' => $safetyStocks,
+        'productCount' => $products->count(),
     	];
 
     	return view ('inventory.dashboard')->with($data);

@@ -13,6 +13,36 @@ Inventory Dashboard
 <header class="panel-heading">
   <h2>Inventory Dashboard</h2>
 </header>
+<div class="row state-overview">
+  <div class="col-lg-3 col-sm-6">
+    <section class="panel">
+      <a href="/procurement/SelectProductPurchaseOrder">
+        <div class="symbol blue">
+            <i class="fa fa-file"></i>
+        </div><!-- symbo-blue -->
+      </a href="#">
+      <div class="value">
+        <h1></h1>
+        <p>Products to Procure</p>
+      </div>
+    </section>
+  </div>
+  <div class="col-lg-3 col-sm-6">
+    <section class="panel">
+      <a href="/procurement/DeliveryReceipt">
+        <div class="symbol blue">
+            <i class="fa fa-file-text-o"></i>
+        </div><!-- symbol-blue -->
+      </a>
+      <div class="value">
+      <!-- count -->
+        <h1></h1>
+        <p>Pending Purchase Orders</p>
+      </div>
+    </section>
+  </div>
+</div>
+
 <section class="panel">
   <div class="panel-body">
     <div class="container-fluid">
@@ -61,7 +91,7 @@ Inventory Dashboard
         },
         title: {
             useHTML: true,
-            text: '<span class="chart-title"><strong>Top 10 Products That Require Attention</strong></span>'
+            text: '<span class="chart-title"><strong>Top {!!$productCount!!} Products That Require Attention</strong></span>'
         },
         subtitle:{
           useHTML:true,

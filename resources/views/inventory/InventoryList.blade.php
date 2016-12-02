@@ -110,62 +110,66 @@ Inventory List
         <h4 class="modal-title">Confirm Procurement Request</h4>
       </div><!-- modal-header -->
       <div class="modal-body">
-				<center><h5><strong><p>Current Product Information</p></strong></h5></center>
-				<table>
+				<center>
+					<p><h3><strong>Current Product Information</strong></h3></p>
+				</center>
+				<table align="center">
 
 					<tr>
 						<td align="right">
-							Material:
+							<strong>Material:</strong>&nbsp;
 						</td>
 
-						<td align="left">
-							&nbsp;<strong id="modalMaterial">Kiln Dry</strong>
+						<td align="left" id="modalMaterial">
+
 						</td>
 					</tr>
 
 					<tr>
 						<td align="right">
-							Size:
+							<strong>Size:</strong>&nbsp;
 						</td>
 
-						<td align="center">
-							 &nbsp;<strong id="modalSize">2x2x10</strong>
-						</td>
-					</tr>
+						<td align="center" id="modalSize">
 
-					<tr>
-						<td align="right">
-							Current Stock Quantity:
-						</td>
-
-						<td align="right">
-							 &nbsp;<strong id="modalCurrentQuantity">700</strong>
 						</td>
 					</tr>
 
 					<tr>
 						<td align="right">
-							Current Quantity Requested:
+							<strong>Current Stock Quantity:</strong>&nbsp;
 						</td>
 
-						<td align="right">
-							&nbsp;<strong id="modalQuantityRequested">500</strong>
+						<td align="right" id="modalCurrentQuantity">
+
 						</td>
 					</tr>
 
 					<tr>
 						<td align="right">
-							Reorder Point:
+							<strong>Current Quantity Requested:</strong>&nbsp;
 						</td>
 
+						<td align="right" id="modalQuantityRequested">
+
+						</td>
+					</tr>
+
+					<tr>
 						<td align="right">
-							&nbsp;<strong id="modalReorderPoint">620</strong>
+							<strong>Reorder Point</strong>:&nbsp;
+						</td>
+
+						<td align="right" id="modalReorderPoint">
+
 						</td>
 					</tr>
 
 				</table>
 
-				<h4><u>Quantity to request: </u>&nbsp;<strong id="modalRequestQuantity">99</strong></h4>
+				<br />
+				<br />
+				<h4><strong>Quantity to request: </strong>&nbsp;<u id="modalRequestQuantity">99</u></h4>
       </div> <!-- modal-body -->
       <div class="modal-footer">
 				<button id="ProcurementConfirmation" type="button" class="btn btn-success" data-dismiss="modal">Continue Request</button>

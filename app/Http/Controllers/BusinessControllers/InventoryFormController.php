@@ -28,9 +28,23 @@ class InventoryFormController extends Controller{
     return $status ? 1 : 0 ;
   }
 
-  function testAjax(){
+  function editInventory(Request $request){
+    $woodTypeID = Input::get('woodTypeID');
+    $thickness = Input::get('thickness');
+    $width = Input::get('width');
+    $length = Input::get('length');
 
-    $status = InventoryModel::requestProcurement(1, 0.5 , 1.0, 1.0, 1);
+    $reasonID = Input::get('reasonID');
+    $newQuantity = Input::get('newQuantity');
+    $comments = Input::get('comments');
+
+    $status = InventoryModel::editInventory($woodTypeID, $thickness, $width, $length, $reasonID, $newQuantity, $comments);
+
+    return $status ? 1 : 0;
+  }
+
+  function testAjax(){
+    $status = InventoryModel::editInventory(1, 0.5, 1, 1, 7, 32, 'ASDASDSADSADSA');
     return $status ? 1 : 0 ;
 
   }

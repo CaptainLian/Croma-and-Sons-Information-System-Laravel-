@@ -57,4 +57,18 @@ class InventoryModel extends Model{
                     ->limit(5);
       return $products->get();
     }
+
+    public static function editInventory($woodTypeID, $thickness, $width, $length, $reasonID, $newQuantity, $comments){
+      $status = DB::table('AUDIT_CompanyStockChanges')
+                  ->insert([
+                    'WoodTypeID' => $woodTypeID,
+                    'Thickness' => $thickness,
+                    'Width' => $width,
+                    'Length' => $length,
+                    'ReasonID' => $reasonID,
+                    'ToStockQuantity' => $newQuantity,
+                    'Comments' => $comments
+                  ]);
+      return $status;
+    }
 }
