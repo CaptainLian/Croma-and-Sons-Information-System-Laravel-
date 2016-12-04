@@ -122,13 +122,12 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 								<input type="hidden" name="Price[]" value={!!$item->UnitPrice!!} />
 								<!-- <input type="hidden" name="QuantityReceived[]" value="{!!$item->Quantity!!}"  /> -->
 
-
 								<td>{!!$count!!}</td>
 								<td><{!!$item->Material!!}/></td>
 								<td>{!!$item->Size!!}</td>
 								<td>piece</td>
 								<td><input type="number" min=0 required name="QuantityReceived[]" value="{!!$item->Quantity!!}" class="InputQuantityReceived" /></td>
-								<td><input type="number" min=0 max="{!!$item->Quantity!!}" required name="InputQuantityRejected[]" value=0  class="InputQuantityRejected" /></td>
+								<td><input type="number" min=0 max="{!!$item->Quantity!!}" required name="QuantityRejected[]" value=0  class="InputQuantityRejected" /></td>
 								<td>{!!$item->BoardFeet!!}</td>
 								<td class="UnitPrice">{!!$item->UnitPrice!!}</td>
 								<td><input type="text" class="Total col-md-8" disabled /></td>

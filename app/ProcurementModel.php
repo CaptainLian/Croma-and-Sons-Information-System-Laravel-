@@ -338,7 +338,7 @@ class ProcurementModel extends Model{
 
     }
 
-    public static function createDeliveryReceipt($purchaseOrderID, $term, $deliveryAddress, $deliveryDate, $rows){
+    public static function createDeliveryReceipt($purchaseOrderID, $term, $deliveryAddress, $deliveryDate, $discount, $rows){
     	DB::beginTransaction();
 
     	try{
@@ -347,6 +347,7 @@ class ProcurementModel extends Model{
 	    				'PurchaseOrderID' => $purchaseOrderID,
 	    				'DateDelivered' => $deliveryDate,
 	    				'DeliveryAddress' => $deliveryAddress,
+							'Discount'=> $discount
 	    			]
     		);
 
@@ -362,8 +363,7 @@ class ProcurementModel extends Model{
 				    		  			'Length' => $row['length'],
 				    		  			'Quantity' => $row['quantityReceived'],
 				    		  			'RejectedQuantity' => $row['quantityRejected'],
-				    		  			'PurchasedUnitPrice' => $row['unitPrice'],
-				    		  			'Discount' => $row['discount']]);
+				    		  			'PurchasedUnitPrice' => $row['unitPrice']]);
 	    	}
     	}catch(\Exception $e){
     		//echo '<script> console.log('.$e->getMessage().')</script>';

@@ -49,9 +49,7 @@ Route::group(['prefix' => 'procurement'], function(){
 	Route::group(['prefix' => 'ajax'], function(){
 		Route::get('test', function(){
 			return 'aguy';
-		});
-
-
+		}); 
 	});
 });
 
@@ -68,7 +66,7 @@ Route::group(['prefix' => 'inventory'], function(){
 		Route::get('ProcurementRequest', ['as' => 'ProcurementRequest', 'uses' => 'BusinessControllers\InventoryFormController@requestProcurement']);
 
 		Route::get('EditInventory', ['as' => 'EditInventory', 'uses' => 'BusinessControllers\InventoryFormController@editInventory']);
-		
+
 		Route::get('testAJAX', ['as' => 'dummyRoute', 'uses' => 'BusinessControllers\InventoryFormController@testAjax']);
 	});
 });

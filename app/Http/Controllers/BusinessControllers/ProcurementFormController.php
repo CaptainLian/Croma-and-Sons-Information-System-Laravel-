@@ -112,6 +112,7 @@ class ProcurementFormController extends Controller{
         $purchaseOrderID = Input::get('PurchaseOrderID');
         $term = Input::get('Terms');
         $supplier = Input::get('SupplierID');
+        $discount = Input::get('discount');
         $deliveryAddress = Input::get('DeliveryAddress');
         $deliveryDate = Input::get('DeliveryDate');
 
@@ -122,7 +123,7 @@ class ProcurementFormController extends Controller{
         $quantitiesRejected = Input::get('QuantityRejected');
         $quantitiesRecieved = Input::get('QuantityReceived');
         $unitPrices = Input::get('Price');
-        $discounts = Input::get('Discount');
+
 
         $rows = [];
 
@@ -172,25 +173,7 @@ class ProcurementFormController extends Controller{
             $count++;
         }
 
-        $count = 0;
-        foreach($discounts as $discount){
-            $rows[$count]['discount'] = $discount;
-
-            $count++;
-        }
-
-        $status = ProcurementModel::createDeliveryReceipt($purchaseOrderID, $term, $deliveryAddress, $deliveryDate, $rows);
-
-        if(!$status){
-            //echo 'ADASDASDADASDAS';
-
-            //return Redirect::back()
-            //                ->withErrors(['error' => 'An unexpected error occured.'])
-             //               ->withInput(Input::all());
-
-
-            //return mysql_errno() ? "true" : "false";
-        }
+        $status = ProcurementModel::createDeliveryReceipt($purchaseOrderID, $term, $deliveryAddress, $deliveryDate, $discount, $rows);
 
         $pendingPO = ProcurementModel::getPendingPurchaseOrders();
 
@@ -223,7 +206,7 @@ class ProcurementFormController extends Controller{
         $data = [
             'pendingPO' => $pendingPO,
             'pendingPODetails' => $pendingPODetails,
-            'success' => 'Delivery receipt successfully created.',
+            'success' => 'Purchase order succesfully received.',
         ];
 
         return view('procurement.DeliveryReceiptInitial')->with($data);
