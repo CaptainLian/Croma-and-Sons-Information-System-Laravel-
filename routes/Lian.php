@@ -42,6 +42,7 @@ Route::group(['prefix' => 'procurement'], function(){
 
 	Route::get('PurchaseReport', ['as' => 'PurchaseReport', 'uses' => 'BusinessControllers\ProcurementPageController@viewPurchaseReport']);
 
+
 	//Route::post('CreatePurchaseOrder', ['as' => 'PurchaseOrderInput', 'uses' =>'BusinessControllers\ProcurementFormController@inputPurchaseOrder']);
 
 	Route::post('CreateDeliveryReceipt', ['as' => 'DeliveryReceiptInput', 'uses' => 'BusinessControllers\ProcurementFormController@inputDeliveryReceipt']);
@@ -49,7 +50,7 @@ Route::group(['prefix' => 'procurement'], function(){
 	Route::group(['prefix' => 'ajax'], function(){
 		Route::get('test', function(){
 			return 'aguy';
-		}); 
+		});
 	});
 });
 
@@ -61,6 +62,8 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::get('EditInventory', ['as' => 'viewInventoryEdit', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryEdit']);
 
 	Route::get('InventoryResize', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);
+
+	Route::get('ApproveSalesOrder', ['as'=> 'viewApproveSalesOrder', 'uses' => 'BusinessControllers\InventoryPageController@viewApproveSalesOrder']);
 
 	Route::group(['prefix' => 'ajax'], function(){
 		Route::get('ProcurementRequest', ['as' => 'ProcurementRequest', 'uses' => 'BusinessControllers\InventoryFormController@requestProcurement']);

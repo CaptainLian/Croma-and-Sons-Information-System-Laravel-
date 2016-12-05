@@ -71,4 +71,19 @@ class InventoryModel extends Model{
                   ]);
       return $status;
     }
+
+    public static function getPendingSalesOrder(){
+      $pendingSales = DB::table('SalesOrders')
+                        ->select(DB::raw("SalesOrders.SalesOrderID,
+                                          DATE_FORMAT(SalesOrders.DateCreated, '%b %d, %Y - %r') AS DateCreated,
+                                          SalesOrders.CustomerID,
+                                          SalesOrders.DeliveryAddress,
+                                          Customers.Name,
+                                          Customers.Address,
+                                          Customers.ContactPerson,
+                                          Customers.Landline"))
+                        ->where('SalesOrderStatusID' , '=', 1)
+                        ->join('Customers', 'Customers.CustomerID', '=', 'SalesOrders.CustomerID');
+      return $pendingSales->get();
+    }
 }

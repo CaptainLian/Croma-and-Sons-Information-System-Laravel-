@@ -79,14 +79,25 @@ class InventoryPageController extends Controller
 			'inventory' => $inventory
     	];
 
-		return view('inventory.InventoryEdit')->with($data);
+		    return view('inventory.InventoryEdit')->with($data);
+    }
+
+    public function viewApproveSalesOrder(){
+      $pendingSalesOrders = InventoryModel::getPendingSalesOrder();
+
+      $data = [
+        'pendingSalesOrders' => $pendingSalesOrders,
+    	];
+
+      return view('inventory.ApproveSalesOrder')->with($data);
+
     }
 
     public function view(){
     	$data = [
 
     	];
-		//return view('inventory.')->with($data);
+		  //return view('inventory.ApproveSalesOrder')->with($data);
 	}
 
     /*

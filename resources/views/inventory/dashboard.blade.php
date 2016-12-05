@@ -30,7 +30,7 @@ Inventory Dashboard
         <div class="col-md-6">
           <div id="graph2" style="background-color: blue; height: 40%;" >
 
-          </div><!-- graph -->
+          </div><!-- graph --> 
         </div><!-- col-md-6 -->
 
 

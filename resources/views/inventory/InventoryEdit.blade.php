@@ -9,7 +9,7 @@ Edit Inventory
 @endsection
 
 @push('css')
-	<link href="/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet">
+		<link href="/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet">
     <link href="/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/data-tables/DT_bootstrap.css">
 @endpush
