@@ -109,6 +109,7 @@ class SalesOrderList extends Controller
 
       return view('sales.SDRI',
         ['pendingSalesOrder' => $pendingSalesOrder,
+           'outcome'=>1,
          'active' => 'sdri']);
     }
 }

@@ -185,7 +185,7 @@
 
     </li>
     <li>Order Date : <strong>{{$now}} </strong></li>
-    <li>Prepared By : <strong>John Fisher</strong></li>
+    <li>Prepared By : <strong>Audrey Cobankiat</strong></li>
   </ul>
 </div>
 

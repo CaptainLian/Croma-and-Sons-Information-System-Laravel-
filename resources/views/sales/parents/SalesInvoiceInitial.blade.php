@@ -54,7 +54,7 @@
               <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                   <img alt="" src="img/avatar1_small.jpg">
-                  <span class="username">Jhon Doue</span>
+                  <span class="username">Audrey Cobankiat</span>
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu extended logout">
@@ -62,7 +62,7 @@
                   <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                   <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                   <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                  <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                  <li><a href="/logout"><i class="fa fa-key"></i> Log Out</a></li>
                 </ul>
               </li>
               <!-- user login dropdown end -->
@@ -92,6 +92,26 @@
                 </header>
                 <div class="panel-body">
                   <div class="adv-table">
+                   @if(isset($outcome) )
+                    <div class="alert alert-success alert-block fade in">
+ 
+
+    <button data-dismiss="alert" class="close close-sm" type="button">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4>
+      <i class="fa fa-ok-sign"></i>
+        Success
+
+    </h4>
+
+
+      
+
+  </div>
+
+                   
+                @endif
                     <table class="display table table-bordered table-striped" id="dynamic-table">
                       <thead>
                         <tr>

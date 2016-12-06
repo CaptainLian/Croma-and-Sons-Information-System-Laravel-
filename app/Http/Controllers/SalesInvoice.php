@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class SalesInvoice extends Controller
 {
-    public function list(){
+    public function aguy(){
 
     	$pd = DB::table('SalesDeliveryReceipts as SDR')
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')
@@ -57,6 +57,7 @@ class SalesInvoice extends Controller
     	return view('sales.SI',
             ['active' => 'si',
              'so' => $so,
+
             'discount'=>$discount[0],
           'id'=>$id ]);
     }
@@ -123,6 +124,7 @@ class SalesInvoice extends Controller
 
     	return view('sales.SII',
     		['active' => 'si',
+        'outcome'=>1,
     		 'pending'=>$pd
     		 ]);
 

@@ -1,4 +1,4 @@
-<html><head>
+  <html><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -47,7 +47,7 @@
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
-                <span class="username">Jhon Doue</span>
+                <span class="username">Audrey Cobankiat</span>
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu extended logout">
@@ -62,7 +62,7 @@
                   <a href="#"><i class="fa fa-bell-o"></i> Notification</a>
                 </li>
                 <li>
-                  <a href="login.html"><i class="fa fa-key"></i> Log Out</a>
+                  <a href="/logout"><i class="fa fa-key"></i> Log Out</a>
                 </li>
               </ul>
             </li>
@@ -90,9 +90,32 @@
                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                     <a href="javascript:;" class="fa fa-times"></a>
                   </span>
+
                 </header>
+
+               
                 <div class="panel-body">
                   <div class="adv-table">
+                   @if(isset($outcome) )
+                    <div class="alert alert-success alert-block fade in">
+ 
+
+    <button data-dismiss="alert" class="close close-sm" type="button">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4>
+      <i class="fa fa-ok-sign"></i>
+        Success
+
+    </h4>
+
+
+      
+
+  </div>
+
+                   
+                @endif
                     <table class="display table table-bordered table-striped" id="dynamic-table">
                       <thead>
                         <tr>
@@ -278,16 +301,18 @@
       <!--footer end-->
     </section>
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="{{URL::asset('js/jquery.js')}}"></script>
-    <script src="{{URL::asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
-    <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
-    <script src="{{URL::asset('js/bootstrap.min.js')}}></script>
-    <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
-    <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
-    <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
-    <script type="text/javascript" language="javascript" src="{{URL::asset('assets/advanced-datatable/media/js/jquery.dataTables.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script>
-    <script src="{{URL::asset('js/respond.min.js')}}"></script>
+      <script src="{{URL::asset('js/jquery.js')}}"></script>
+ 
+  <script src="{{URL::asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script>
+  <script src="{{URL::asset('js/jquery-migrate-1.2.1.min.js')}}"></script>
+  <script src="{{URL::asset('js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{URL::asset('js/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{URL::asset('js/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{URL::asset('js/jquery.nicescroll.js')}}" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="{{URL::asset('assets/advanced-datatable/media/js/jquery.dataTables.js')}}"></script>
+  <script type="text/javascript" src="{{URL::asset('assets/data-tables/DT_bootstrap.js')}}"></script>
+  <script src="{{URL::asset('js/respond.min.js')}}" ></script>
+
     <!--right slidebar-->
     <script src="{{URL::asset('js/slidebars.min.js')}}"></script>
     <!--dynamic table initialization -->
