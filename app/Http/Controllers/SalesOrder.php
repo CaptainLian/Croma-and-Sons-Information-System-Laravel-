@@ -20,6 +20,7 @@ class SalesOrder extends Controller
     	$customer = DB::table('Customers')
     				  ->select('CustomerID','Name')
               ->orderBy('Name','asc')
+              ->where('StatusID','1')
     				  ->get();
     	$customer = $customer->pluck('Name','CustomerID');
       $customer = array('null' => 'Please Select Customer') + $customer->toArray();
@@ -113,9 +114,10 @@ class SalesOrder extends Controller
 
 
         $customer = DB::table('Customers')
-        				  ->select('CustomerID','Name')
-                  ->orderBy('Name','asc')
-        				  ->get();
+              ->select('CustomerID','Name')
+              ->orderBy('Name','asc')
+              ->where('StatusID','1')
+              ->get();
       	$customer = $customer->pluck('Name','CustomerID');
         $customer = array('null' => 'Please Select Customer') + $customer->toArray();
 
@@ -270,9 +272,11 @@ class SalesOrder extends Controller
 
     public function check(Request $request){
 
-        $customer = DB::table('Customers')
-                  ->select('CustomerID','Name')
-                  ->get();
+       $customer = DB::table('Customers')
+              ->select('CustomerID','Name')
+              ->orderBy('Name','asc')
+              ->where('StatusID','1')
+              ->get();
         $customer = $customer->pluck('Name','CustomerID');
         $terms = DB::table('REF_Terms')
                    ->pluck("Terms","Terms");

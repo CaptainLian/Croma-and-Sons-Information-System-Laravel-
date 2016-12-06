@@ -71,5 +71,3 @@ Route::get('/try',function(){
 
 
 /*Routes::post('/sales','SalesOrder@check');*/
-
-require_once 'Lian.php';

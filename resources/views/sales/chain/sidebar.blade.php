@@ -19,7 +19,7 @@
       <li>
         <a  @if ($active == 'sdri')class="active" @endif href="/sales/deliveryReceiptInitial">
           <i class="fa fa-file-text"></i>
-          <span> Delivery Receipt</span>
+          <span> Create Delivery Receipt</span>
         </a>
       </li>
 

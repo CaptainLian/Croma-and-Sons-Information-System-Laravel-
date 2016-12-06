@@ -19,7 +19,7 @@ class SalesOrderList extends Controller
     						   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
     						   ->where('SalesDeliveryReceipts.DRStatusID', '2')->get();
 
-
+      
     	return view('sales.SDRI',
     		['pendingSalesOrder' => $pendingSalesOrder,
     		 'active' => 'sdri']);
@@ -76,7 +76,7 @@ class SalesOrderList extends Controller
           $insert =DB::table('SalesInvoice')
             ->insert([
               'SalesDeliveryReceiptID'=>$id,
-              'Discount'=>$request->input('discount')
+              'Discount'=>$request->input('discount')/100
 
               ]);
 
@@ -85,7 +85,8 @@ class SalesOrderList extends Controller
 
           $update = DB::table('SalesDeliveryReceipts')
           ->where('SalesDeliveryReceiptID',intval($id))
-          ->update(['DRStatusID' => intval(3),'DateDelivered' => $date]);
+          ->update(['DRStatusID' => intval(3),
+                    'DateDelivered' => $date]);
 
           /*echo $update.'Update';*/
 
@@ -95,7 +96,7 @@ class SalesOrderList extends Controller
             }
           }
           catch(\Exception $e){
-            // echo $e;
+            echo $e;
             DB::rollBack();
           }
           DB::commit();

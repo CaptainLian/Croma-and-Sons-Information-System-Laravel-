@@ -59,13 +59,11 @@
                   <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                   <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                   <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                  <li><a href="\logout"><i class="fa fa-key"></i> Log Out</a></li>
+                  <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
                 </ul>
               </li>
               <!-- user login dropdown end -->
-              <li class="sb-toggle-right">
-                <i class="fa  fa-align-right"></i>
-              </li>
+              
             </ul>
           </div>
         </header>
@@ -299,7 +297,7 @@
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">
-        2013 &copy; FlatLab by VectorLab.
+        2013 &copy; Croma and Sans
         <a href="#" class="go-top">
           <i class="fa fa-angle-up"></i>
         </a>

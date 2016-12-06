@@ -15,7 +15,13 @@
 			<td>{{$w->Name}}</td>
 			<td>{{$w->TOTALAMOUNT}}</td>
 			<td>{{$w->TOTALDISCOUNT}}</td>
-			<td>{{$w->TOTALREJECT}}</td>
+			<td>
+			@if($w->TOTALREJECT > 0)
+				{{$w->TOTALREJECT}}
+			@else
+				0.00 
+			@endif
+			</td>
 		</tr>
 	@endforeach
 @endsection
@@ -32,7 +38,11 @@
 		<td>{{$w->Name}}</td>
 		<td>{{$w->TOTALAMOUNT}}</td>
 		<td>{{$w->TOTALDISCOUNT}}</td>
-		<td>{{$w->TOTALREJECT}}</td>
+		<td>@if($w->TOTALREJECT > 0)
+				{{$w->TOTALREJECT}}
+			@else
+				0.00 
+			@endif</td>
 	</tr>
 	@endforeach
 @endsection
@@ -49,7 +59,11 @@
 		<td>{{$w->Name}}</td>
 		<td>{{$w->TOTALAMOUNT}}</td>
 		<td>{{$w->TOTALDISCOUNT}}</td>
-		<td>{{$w->TOTALREJECT}}</td>
+		<td>@if($w->TOTALREJECT > 0)
+				{{$w->TOTALREJECT}}
+			@else
+				0.00 
+			@endif</td>
 	</tr>
 	@endforeach
 @endsection

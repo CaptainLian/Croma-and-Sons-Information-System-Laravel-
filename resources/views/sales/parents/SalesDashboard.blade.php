@@ -65,7 +65,7 @@
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <li><a href="\logout"><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
                         </ul>
                     </li>
                    
@@ -98,7 +98,7 @@
                               <h1 class="count">
                                   0
                               </h1>
-                              <p>Pending Sales Order</p>
+                              <p>Sales Order Awaiting Approval</p>
                           </div>
                       </section>
                   </div>
@@ -111,7 +111,7 @@
                               <h1 class=" count2">
                                   0
                               </h1>
-                              <p>Approved Sales Order</p>
+                              <p>Pending Delivery Receipts </p>
                           </div>
                       </section>
                   </div>
@@ -124,7 +124,7 @@
                               <h1 class=" count3">
                                   0
                               </h1>
-                              <p>Pending Delivery Receipts</p>
+                              <p>Pending Sales Invoices </p>
                           </div>
                       </section>
                   </div>
@@ -289,17 +289,17 @@
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.name}: {point.y:.1f}%'
+                    format: '{point.name}: {point.y}'
                 }
             }
         },
 
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
         },
         series: [{
-            name: 'Brands',
+            name: 'Ratio',
             colorByPoint: true,
             data: [{
                 name: 'Success',
@@ -386,8 +386,18 @@
       //custom select box
 
       
-      
-
+$('.blue').click(function(){
+  console.log('asd');
+  window.location.href = '/sales/salesOrder';
+});
+$('.green').click(function(){
+  console.log('asd');
+  window.location.href = '/sales/deliveryReceiptInitial';
+});
+$('.yellow').click(function(){
+  console.log('asd');
+  window.location.href = '/sales/invoice';
+});
   </script>
 
   </body>

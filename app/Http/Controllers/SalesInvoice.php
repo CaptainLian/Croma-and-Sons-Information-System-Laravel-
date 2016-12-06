@@ -96,7 +96,7 @@ class SalesInvoice extends Controller
                      ->where('Length',$l)
                      ->where('Thickness',$t)
                      ->pluck('CurrentUnitPrice');
-          echo $price[0];
+          // echo $price[0];
 
           $suc = DB::table('SalesRejects')
                   ->insert([

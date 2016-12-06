@@ -20,7 +20,7 @@ class CustomerList extends Controller
                        on SO.SalesOrderID = SOI.SalesOrderID
  					left join CompanyInventory CI
                        on CI.WoodtypeID  = SOI.WoodtypeID and CI.Thickness = SOI.Thickness and CI.Width = SOI.Width and CI.Length = SOI.Length
-
+Where C.StatusID = 1
  Group By 1,2,3,4,5					"));
 
 
@@ -98,7 +98,7 @@ class CustomerList extends Controller
 
       $update = DB::table('Customers')
                  ->where('Name',$item[0])
-                 ->delete();
+                 ->update(['StatusID' => '2']);
        if($update){
             echo 'Success';
          }else{
