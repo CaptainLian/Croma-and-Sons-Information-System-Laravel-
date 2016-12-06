@@ -39,9 +39,7 @@
         <div class="nav notify-row" id="top_menu"></div>
         <div class="top-nav ">
           <ul class="nav pull-right top-menu">
-            <li>
-              <input type="text" class="form-control search" placeholder="Search">
-            </li>
+           
             <!-- user login dropdown start-->
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -80,7 +78,7 @@
         <section class="wrapper site-min-height">
           <!-- page start-->
           <section class="panel">
-            <header class="panel-heading">Editable Table</header>
+            <header class="panel-heading"> </header>
             <div class="panel-body">
               <div class="adv-table editable-table ">
                 <div class="clearfix">
@@ -90,9 +88,7 @@
                     </button>
                   </div>
                   <div class="btn-group pull-right">
-                    <button class="btn dropdown-toggle" data-toggle="dropdown">Tools
-                      <i class="fa fa-angle-down"></i>
-                    </button>
+                     
                     <ul class="dropdown-menu pull-right">
                       <li>
                         <a href="#">Print</a>
@@ -284,7 +280,7 @@
       <!-- Right Slidebar end -->
       <!--footer start-->
       <footer class="site-footer">
-        <div class="text-center">2013 © FlatLab by VectorLab.
+        <div class="text-center">2013 © Croma and Sans
           <a href="#" class="go-top">
             <i class="fa fa-angle-up"></i>
           </a>

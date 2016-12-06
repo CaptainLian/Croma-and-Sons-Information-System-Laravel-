@@ -289,17 +289,17 @@
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.name}: {point.y:.1f}%'
+                    format: '{point.name}: {point.y}'
                 }
             }
         },
 
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
         },
         series: [{
-            name: 'Brands',
+            name: 'Ratio',
             colorByPoint: true,
             data: [{
                 name: 'Success',
@@ -386,8 +386,18 @@
       //custom select box
 
       
-      
-
+$('.blue').click(function(){
+  console.log('asd');
+  window.location.href = '/sales/salesOrder';
+});
+$('.green').click(function(){
+  console.log('asd');
+  window.location.href = '/sales/deliveryReceiptInitial';
+});
+$('.yellow').click(function(){
+  console.log('asd');
+  window.location.href = '/sales/invoice';
+});
   </script>
 
   </body>

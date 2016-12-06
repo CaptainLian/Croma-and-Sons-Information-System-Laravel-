@@ -36,10 +36,12 @@ class Dashboard extends Controller
                         on SDR.SalesDeliveryReceiptID = SI.SalesDeliveryReceiptID
                       join SalesRejects SR
                         on SI.SalesInvoiceID = SR.SalesInvoiceID"));
-        // var_dump($temp);
-      
-        $success =  ($temp[0]->Success - $temp[0]->Failed);
-        $failed = $temp[0]->Failed;
+        $success = DB::table('SalesOrderItems')
+                     
+                     ->sum('Quantity');
+        $failed = DB::table('SalesRejects')
+                    ->sum('Quantity');
+        
 
 		 $monthlySales = DB::select(DB::raw("Select Month(SO.DateCreated) as MONTHID, SUM(CI.CurrentUnitPrice * SOI.Quantity) As MONTHLY
   From SalesInvoice SI join SalesDeliveryReceipts SDR

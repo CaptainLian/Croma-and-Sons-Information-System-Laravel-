@@ -274,7 +274,7 @@
     <!-- Right Slidebar end -->
     <!--footer start-->
     <footer class="site-footer">
-      <div class="text-center">2013 © FlatLab by VectorLab.
+      <div class="text-center">2013 © Croma and Sans  
         <a href="#" class="go-top">
           <i class="fa fa-angle-up"></i>
         </a>

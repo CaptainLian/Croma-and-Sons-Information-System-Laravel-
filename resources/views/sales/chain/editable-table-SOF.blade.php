@@ -22,13 +22,13 @@
 
                 var jqTds = $('>td', nRow);
                 jqTds[0].innerHTML = "<select style='width:100%'   class=\"form-control material columnAdjust9p\" name=\'material[]  \' ><option value=\'1\'>Kiln Dry</option><option value=\'2\'>Sun Dry</option></select>" ;
-                jqTds[1].innerHTML = '<input  style="width:100%" type="text" class="form-control thick columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" style="width:100%" class="form-control wid columnAdjust9p" name="width[]" value="' + aData[2] + '">';
-                jqTds[3].innerHTML = '<input type="text" style="width:100%" class="form-control len columnAdjust9p" name="length[]" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<input type="text" style="width:100%" ng-model="q" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="text" style="width:100%"  ng-model="p" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<input type="text" style="width:100%" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';
-                jqTds[7].innerHTML = '<input type="text" style="width:100%" class="form-control total2  columnAdjust9p" disabled=""   disabled="" value="' + aData[7] +'">';
+                jqTds[1].innerHTML = '<input  style="width:100%" type="number" step="any" class="form-control thick columnAdjust9p" name="thickness[]" value="' + aData[1] + '">';
+                jqTds[2].innerHTML = '<input type="number" step="any" style="width:100%" class="form-control wid columnAdjust9p" name="width[]" value="' + aData[2] + '">';
+                jqTds[3].innerHTML = '<input type="number" step="any" style="width:100%" class="form-control len columnAdjust9p" name="length[]" value="' + aData[3] + '">';
+                jqTds[4].innerHTML = '<input type="number" step="any" style="width:100%" ng-model="q" class="form-control quan columnAdjust9p"  name="qty[]" value="' + aData[4] + '">';
+                jqTds[5].innerHTML = '<input type="number" step="any" style="width:100%"  ng-model="p" class="form-control columnAdjust9p" disabled="" placeholder=\'pcs\' name="unit[]" value="' + aData[5] + '">';
+                jqTds[6].innerHTML = '<input type="number" step="any" style="width:100%" class="form-control price columnAdjust9p" disabled=""   name="unitprice[]" value="' + aData[6] + '">';
+                jqTds[7].innerHTML = '<input type="number" step="any" style="width:100%" class="form-control total2  columnAdjust9p" disabled=""   disabled="" value="' + aData[7] +'">';
                 jqTds[8].innerHTML = '<a style="width:100%"  class="delete" href="#">Cancel</a>';
             }
 

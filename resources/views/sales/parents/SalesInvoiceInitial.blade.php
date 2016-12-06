@@ -49,9 +49,7 @@
 
           <div class="top-nav ">
             <ul class="nav pull-right top-menu">
-              <li>
-                <input type="text" class="form-control search" placeholder="Search">
-              </li>
+               
               <!-- user login dropdown start-->
               <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -68,9 +66,7 @@
                 </ul>
               </li>
               <!-- user login dropdown end -->
-              <li class="sb-toggle-right">
-                <i class="fa  fa-align-right"></i>
-              </li>
+             
             </ul>
           </div>
         </header>
@@ -266,7 +262,7 @@
     <!--footer start-->
     <footer class="site-footer">
       <div class="text-center">
-        2013 &copy; FlatLab by VectorLab.
+        2013 &copy; Croma and Sans
         <a href="#" class="go-top">
           <i class="fa fa-angle-up"></i>
         </a>
