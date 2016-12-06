@@ -64,7 +64,6 @@ class InventoryPageController extends Controller
     }
 
     public function viewResizeInitial(){
-
     	$pendingSalesOrders = SalesModel::getPendingSalesOrders();
 
       $data = [

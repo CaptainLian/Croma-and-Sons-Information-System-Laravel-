@@ -62,7 +62,7 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::get('EditInventory', ['as' => 'viewInventoryEdit', 'uses' => 'BusinessControllers\InventoryPageController@viewInventoryEdit']);
 
 	Route::get('InventoryResizeInitial', ['as' => 'viewResizeInitial', 'uses' => 'BusinessControllers\InventoryPageController@viewResizeInitial']);
-	Route::get('InventoryResize\{$SalesOrderID}', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);
+	Route::get('InventoryResize/{SalesOrderID}', ['as' => 'viewResize', 'uses' => 'BusinessControllers\InventoryPageController@viewResize']);
 
 	Route::get('ApproveSalesOrder', ['as'=> 'viewApproveSalesOrder', 'uses' => 'BusinessControllers\InventoryPageController@viewApproveSalesOrder']);
 
