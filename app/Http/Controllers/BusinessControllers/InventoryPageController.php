@@ -65,7 +65,7 @@ class InventoryPageController extends Controller
 
     public function viewResizeInitial(){
 
-    	$pendingSalesOrders = InventoryModel::getPendingSalesOrder();
+    	$pendingSalesOrders = SalesModel::getPendingSalesOrders();
 
       $data = [
         'pendingSalesOrders' => $pendingSalesOrders,
@@ -74,9 +74,12 @@ class InventoryPageController extends Controller
 		  return view('inventory.InventoryResizeInitial')->with($data);
     }
 
-    public function viewResize(){
+    public function viewResize($SalesOrderID){
 
-      return 'AGOY';
+      $data = [
+
+      ];
+      return view('inventory.InventoryResize')->with($data);
     }
 
     public function viewInventoryEdit(){
@@ -90,7 +93,7 @@ class InventoryPageController extends Controller
     }
 
     public function viewApproveSalesOrder(){
-      $pendingSalesOrders = InventoryModel::getPendingSalesOrder();
+      $pendingSalesOrders = SalesModel::getPendingSalesOrders();
 
       $data = [
         'pendingSalesOrders' => $pendingSalesOrders,

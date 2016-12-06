@@ -61,7 +61,7 @@ Product Resizing
                     </td>
                     <td align="center"><button class="label label-success label-mini">Approve</button></td>
                     <td align="center">
-                      <a class="btn btn-info btn-md" href="/inventory/InventoryResize/{!!$salesOrder->SalesOrderID!!}"><i class="fa fa-check"></i>&nbsp;Resize</a>
+                      <a class="btn btn-info btn-mini" href="/inventory/InventoryResize/{!!$salesOrder->SalesOrderID!!}"><i class="fa fa-check"></i>&nbsp;Resize</a>
                     </td>
                   </tr>
                 @endforeach
