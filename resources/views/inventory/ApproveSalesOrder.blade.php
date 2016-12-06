@@ -27,8 +27,8 @@ Sales Order Approval
               <thead>
                 <tr>
                   <th class="col-md-1">Accomdation Status</th>
-                  <th class="col-md-1">Sales Order ID</th>
-                  <th class="col-md-1">Date Requested</th>
+                  <th class="col-md-2">Sales Order ID</th>
+                  <th class="col-md-3">Date Requested</th>
                   <th class="col-md-1">Details</th>
                   <th class="col-md-1">Approve</th>
                 </tr>
@@ -37,11 +37,11 @@ Sales Order Approval
               <tbody>
                 @foreach($pendingSalesOrders as $salesOrder)
                   <tr>
-                    <td align="center"></td>
+                    <td align="center"><span class="label label-success label-mini">Can Fully Accomodate</span></td>
                     <td align="right">{!!$salesOrder->SalesOrderID!!}</td>
                     <td align="center">{!!$salesOrder->DateCreated!!}</td>
-                    <td align="center"></td>
-                    <td align="center"></td>
+                    <td align="center"><span class="label label-info label-mini">View Details</span></td>
+                    <td align="center"><span class="label label-success label-mini">Approve</span></td>
                   </tr>
                 @endforeach
               </tbody>

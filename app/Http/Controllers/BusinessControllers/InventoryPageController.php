@@ -63,20 +63,27 @@ class InventoryPageController extends Controller
     	return view('inventory.InventoryList')->with($data);
     }
 
-    public function viewResize(){
+    public function viewResizeInitial(){
 
-    	$data = [
+    	$pendingSalesOrders = InventoryModel::getPendingSalesOrder();
 
+      $data = [
+        'pendingSalesOrders' => $pendingSalesOrders,
     	];
 
-		return view('inventory.InventoryResize')->with($data);
+		  return view('inventory.InventoryResizeInitial')->with($data);
+    }
+
+    public function viewResize(){
+
+      return 'AGOY';
     }
 
     public function viewInventoryEdit(){
     	$inventory = InventoryModel::getCompanyInventory();
 
 		  $data = [
-			'inventory' => $inventory
+			     'inventory' => $inventory
     	];
 
 		    return view('inventory.InventoryEdit')->with($data);

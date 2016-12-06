@@ -27,7 +27,7 @@
         </a>
       </li>
       <li>
-        <a @if($active == 'InventoryResize') class="active" @endif href="/inventory/InventoryResize">
+        <a @if($active == 'InventoryResize') class="active" @endif href="/inventory/InventoryResizeInitial">
           <i class="fa fa-file"></i>
           <span>Inventory Resize</span>
         </a>
