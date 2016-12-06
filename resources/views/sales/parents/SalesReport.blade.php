@@ -135,7 +135,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <section class="panel">
-                        <header class="panel-heading">Sales Report</header>
+                        <header class="panel-heading"><h1>Sales Report</h1></header>
                         <div class="panel-body">
                           <div class="adv-table">
                             <table class="display table table-bordered table-striped" id="dynamic-table">
@@ -163,7 +163,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <section class="panel">
-                        <header class="panel-heading">Sales Report</header>
+                        <header class="panel-heading"><h1>Sales Report</h1></header>
                         <div class="panel-body">
                           <div class="adv-table">
                             <table class="display table table-bordered table-striped" id="dynamic-table">

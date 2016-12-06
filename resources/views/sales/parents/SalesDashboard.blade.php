@@ -98,7 +98,7 @@
                               <h1 class="count">
                                   0
                               </h1>
-                              <p>Pending Sales Order</p>
+                              <p>Sales Order Awaiting Approval</p>
                           </div>
                       </section>
                   </div>
@@ -111,7 +111,7 @@
                               <h1 class=" count2">
                                   0
                               </h1>
-                              <p>Approved Sales Order</p>
+                              <p>Pending Delivery Receipts </p>
                           </div>
                       </section>
                   </div>
@@ -124,7 +124,7 @@
                               <h1 class=" count3">
                                   0
                               </h1>
-                              <p>Pending Delivery Receipts</p>
+                              <p>Pending Sales Invoices </p>
                           </div>
                       </section>
                   </div>

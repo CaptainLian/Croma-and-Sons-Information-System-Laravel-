@@ -53,6 +53,7 @@ class Dashboard extends Controller
             join CompanyInventory CI
                         on  SOI.Thickness = CI.Thickness and SOI.Width = CI.Width and SOI.Length = CI.Length and SOI.WoodTypeID = CI.WoodTypeID
 Where Year(SO.DateCreated) = Year(Now())
+and SDR.DRStatusID = 5
 Group by 1
 Order by 1"));
 
@@ -67,7 +68,6 @@ Order by 1"));
           }
        }
      }
-
 
 
  

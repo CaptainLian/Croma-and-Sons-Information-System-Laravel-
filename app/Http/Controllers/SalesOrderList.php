@@ -19,7 +19,7 @@ class SalesOrderList extends Controller
     						   ->join('Customers', 'SalesOrders.CustomerID','=','Customers.CustomerID')
     						   ->where('SalesDeliveryReceipts.DRStatusID', '2')->get();
 
-
+      
     	return view('sales.SDRI',
     		['pendingSalesOrder' => $pendingSalesOrder,
     		 'active' => 'sdri']);

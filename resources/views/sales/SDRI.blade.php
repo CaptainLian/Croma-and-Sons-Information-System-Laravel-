@@ -8,6 +8,7 @@
 
 	@foreach($pendingSalesOrder as $so)
 		<tr class="gradeX">
+			<td>{{$so->SalesDeliveryReceiptID}}</td>
 			<td>{{$so->SalesOrderID}}</td>
 			<td>{{$so->DateCreated}}</td>
 			<td>{{$so->Name}}</td>

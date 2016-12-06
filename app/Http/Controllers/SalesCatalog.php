@@ -14,7 +14,7 @@ class SalesCatalog extends Controller
    		$catalog = DB::table('CompanyInventory')
    					 ->select('WoodType','Thickness','Width','Length','CurrentUnitPrice')
    					 ->join('REF_WoodTypes','CompanyInventory.WoodTypeID','=','REF_WoodTypes.WoodTypeID')
-   					 /*->where('StockQuantity','>','0')*/
+   					 ->where('StatusID','1')
    					 ->get();
    		 
 
@@ -100,7 +100,7 @@ class SalesCatalog extends Controller
                            ['Width',$item[2]],
                            ['Length',$item[3]]
                            ])
-                  ->delete();
+                  ->update(['StatusId'=>'2']);
         if($update){
              echo 'Success';
           }else{
