@@ -62,7 +62,7 @@ Purchase History
                     <tbody>
                       @foreach($weekly as $item)
                         <tr>
-                          <td><a href="/procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td><a href="" data-toggle="modal" data-target="#myModal{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
                           <td>{!!$item->DeliveryDate!!}</td>
                           <td>{!!$item->Supplier!!}</td>
                           <td>{!!$item->PurchasedAmount!!}</td>
@@ -102,7 +102,7 @@ Purchase History
                     <tbody>
                       @foreach($monthly as $item)
                         <tr>
-                          <td><a href="/procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td><a href="" data-toggle="modal" data-target="#myModal{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
                           <td>{!!$item->DeliveryDate!!}</td>
                           <td>{!!$item->Supplier!!}</td>
                           <td>{!!$item->PurchasedAmount!!}</td>
@@ -142,7 +142,7 @@ Purchase History
                     <tbody>
                       @foreach($yearly as $item)
                         <tr>
-                          <td><a href="/procurement/DeliveryReceiptSpecificInputless/{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
+                          <td><a href="" data-toggle="modal" data-target="#myModal{!!$item->DeliveryReceipt!!}">{!!$item->DeliveryReceipt!!}</a></td>
                           <td>{!!$item->DeliveryDate!!}</td>
                           <td>{!!$item->Supplier!!}</td>
                           <td>{!!$item->PurchasedAmount!!}</td>
@@ -162,6 +162,50 @@ Purchase History
 </div>
 </section>
 <!-- page end-->
+@foreach($purchaseItems as $id => $items)
+  <div id="myModal{!!$id!!}" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>
+          <h4 class="modal-title"><strong>Purchase Order:&nbsp;{!!$id!!}</strong></h4>
+        </div><!-- .modal-header -->
+
+        <div class="modal-body">
+          <table align="center">
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th>Material&nbsp;</th>
+                <th>Size&nbsp;</th>
+                <th>Board Feet&nbsp;</th>
+                <th>Quantity&nbsp;</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                  <?php $count = 1; ?>
+                @foreach($items as $item)
+                  <td align="right">{!!$count!!}</td>
+                  <td align="left">{!!$item->Material!!}</td>
+                  <td align="center">{!!$item->Size!!}</td>
+                  <td align="right">{!!$item->BoardFeet!!}</td>
+                  <td align="right">{!!$item->Quantity!!}</td>
+                  <?php $count++; ?>
+                @endforeach
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- .modal-body-->
+        <div class="modal-footer">
+        </div><!-- .modal-footer -->
+      </div><!-- .modal-content -->
+    </div><!-- .modal-dialog -->
+  </div><!-- .modal fade-->  
+@endforeach
+
+
 @endsection
 
 @push('javascript')

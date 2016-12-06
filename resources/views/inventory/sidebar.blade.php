@@ -8,12 +8,14 @@
           <span>Dashboard</span>
         </a>
       </li>
+      <!--
       <li>
         <a @if($active === 'SalesOrder' ) class="active" @endif href="/inventory/ApproveSalesOrder">
           <i class="fa fa-file-text"></i>
           <span>Approve Sales Order</span>
         </a>
       </li>
+      -->
       <li>
         <a @if($active == 'InventoryList') class="active" @endif href="/inventory/InventoryList">
           <i class="fa fa-file-text"></i>

@@ -16,7 +16,6 @@ use View;
 
 class LoginController extends Controller{
 
-
 	const LOGIN_RULES = ['username' => 'bail|required|exists:Accounts,Username',
                			  'password' => 'bail|required'];
   const LOGIN_ERROR_MESSAGES = ['required' => 'Please input your :attribute.',

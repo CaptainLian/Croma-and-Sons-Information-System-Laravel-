@@ -72,18 +72,51 @@ class InventoryModel extends Model{
       return $status;
     }
 
-    public static function getPendingSalesOrder(){
-      $pendingSales = DB::table('SalesOrders')
-                        ->select(DB::raw("SalesOrders.SalesOrderID,
-                                          DATE_FORMAT(SalesOrders.DateCreated, '%b %d, %Y - %r') AS DateCreated,
-                                          SalesOrders.CustomerID,
-                                          SalesOrders.DeliveryAddress,
-                                          Customers.Name,
-                                          Customers.Address,
-                                          Customers.ContactPerson,
-                                          Customers.Landline"))
-                        ->where('SalesOrderStatusID' , '=', 1)
-                        ->join('Customers', 'Customers.CustomerID', '=', 'SalesOrders.CustomerID');
-      return $pendingSales->get();
+    public static function getProductStockQuantity($woodTypeID, $thickness, $width, $length){
+      $quantity = DB::table('CompanyInventory')
+                    ->select('StockQuantity')
+                    ->where([
+                      ['WoodTypeID', '=', $woodTypeID],
+                      ['Thickness', '=', $thickness],
+                      ['Width', '=',$width],
+                      ['Length', '=', $length]
+                    ]);
+        return $quantity->first()->StockQuantity;
+    }
+
+    public static function approveSalesOrder($salesOrderID, $approvedStocks){
+      DB::beginTransaction();
+      try{
+
+        $drid = DB::table('SalesDeliveryReceipts')
+                  ->select('SalesDeliveryReceiptID')
+                  ->where('SalesOrderID', '=', $salesOrderID)->first()->SalesDeliveryReceiptID;
+
+        DB::table('SalesDeliveryReceipts')
+                  ->where('SalesDeliveryReceiptID', '=', $drid)
+                  ->update(['DRStatusID' => 2]);
+
+        DB::table('SalesOrders')
+          ->where('SalesOrderID', '=', $salesOrderID)
+          ->update(['SalesOrderStatusID' => 2]);
+
+
+        foreach($approvedStocks as $stock){
+          DB::table('SalesDeliveryItems');
+            ->where([
+                ['SalesDeliveryReceiptID', '=', $drid],
+                ['WoodTypeID', '=' , $stock->WoodTypeID],
+                ['Thickness', '=', $stock->Thickness],
+                ['Width', '=', $stock->Width],
+                ['Length', '=', $stock->Length],
+              ])
+            ->update(['Quantity' => $stock->Quantity]);
+        }
+
+      }catch(\Exception $e){
+        DB::rollback();
+        return false;
+      }
+      DB::commit();
     }
 }

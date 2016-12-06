@@ -181,7 +181,7 @@ Create Purchase Order
                           @if ($product->WoodTypeID === 1)
                             <input type="text" value="Kiln Dry" disabled class="form-control columnAdjust10p" />
                           @elseif($product->WoodTypeID === 2)
-                            <input type="text" value="Sun Dry" disable class="form-control columnAdjust10p" />
+                            <input type="text" value="Sun Dry" disabled class="form-control columnAdjust10p" />
                           @endif
                         </td>
 
@@ -211,9 +211,11 @@ Create Purchase Order
 						<li>
 							<strong>Subtotal:</strong>&nbsp;<u id="subtotal">0.0</u>&nbsp;Php
 						</li>
+						<!--
 						<li>
 							<strong>Discount: %</strong><input name="discount" id="inputDiscount" type="number" step="any" min=0.0 max=100 value=0.0 />
 						</li>
+						-->
 						<li>
 							<strong>Grand Total :</strong>&nbsp;<u id="grandTotal">0.0</u>&nbsp;Php
 						</li>
@@ -244,21 +246,21 @@ Create Purchase Order
   				</tr>
   			</thead>
   			<tbody>
-          @if ($product != NULL)
-            @foreach($productRequests as $product)
-    					<tr class="gradeC">
-    						<td>
-    							<font color="white" >{!!$product->Material!!}</font>
-    						</td>
-    						<td>
-    							<font color="white" size="1.8">{!!$product->Size!!}</font>
-    						</td>
-    						<td>
-    							<font color="white">{!!$product->RequestedQuantity!!}</font>
-    						</td>
-    					</tr>
-    				@endforeach
-          @endif
+	          @if ($product != NULL)
+	            @foreach($productRequests as $product)
+						<tr class="gradeC">
+							<td>
+								<font color="white" >{!!$product->Material!!}</font>
+							</td>
+							<td>
+								<font color="white" size="1.8">{!!$product->Size!!}</font>
+							</td>
+							<td>
+								<font color="white">{!!$product->RequestedQuantity!!}</font>
+							</td>
+						</tr>
+	    		@endforeach
+	          @endif
   			</tbody>
   		</table>
   	</div>

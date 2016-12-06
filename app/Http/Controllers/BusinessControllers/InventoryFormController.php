@@ -48,5 +48,52 @@ class InventoryFormController extends Controller{
     return $status ? 1 : 0 ;
 
   }
+
+  function inputResize(Request $request){
+    $salesOrderID = Input::get('salesOrderID');
+    // approvals
+    $approvedWoodType = Input::get('ApprovedWoodTypeID');
+    $approvedThickness = Input::get('ApprovedThickness');
+    $approvedWidth = Input::get('ApprovedWidth');
+    $approvedLength = Input::get('ApprovedLength');
+    $approvedQuantity = Input::get('ApprovedQuantity');
+
+    $approvedRows = [];
+
+    $count = 0;
+    foreach($approvedWoodType as $woodType){
+      $approvedRows[$count] = new stdClass();
+      $approvedRows[$count]->WoodTypeID = $woodType;
+      $count++;
+    }
+
+    $count = 0;
+    foreach($approvedThickness as $thickness){
+      $approvedRows[$count]->Thickness = $thickness;
+      $count++;
+    }
+
+    $count = 0;
+    foreach($approvedWidth as $width){
+      $approvedRows[$count]->Width = $width;
+      $count++;
+    }
+
+    $count = 0;
+    foreach($approvedLength as $length){
+      $approvedRows[$count]->Length = $length;
+      $count++;
+    }
+
+    $count = 0;
+    foreach($approvedQuantity as $quantity){
+      $approvedRows[$count]->Quantity = $quantity;
+      $count++;
+    }
+
+
+
+
+  }
 }
 ?>

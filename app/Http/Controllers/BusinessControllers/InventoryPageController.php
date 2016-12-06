@@ -65,19 +65,48 @@ class InventoryPageController extends Controller
 
     public function viewResizeInitial(){
     	$pendingSalesOrders = SalesModel::getPendingSalesOrders();
+      $pendingItems = [];
+
+      foreach($pendingSalesOrders as $salesOrder){
+            $salesOrderItems = SalesModel::getSalesOrderItems($salesOrder->SalesOrderID);
+            $salesOrder->canAccomodate = TRUE;
+            foreach($salesOrderItems as  $item){
+                $pendingItem = new stdClass();
+
+                $pendingItem->Material = $item->WoodType;
+                $pendingItem->WoodTypeID = $item->WoodTypeID;
+
+                $pendingItem->Size = $item->Size;
+                $pendingItem->Thickness = $item->Thickness;
+                $pendingItem->Width = $item->Width;
+                $pendingItem->Length = $item->Length;
+
+                $pendingItem->Quantity = $item->Quantity;
+                $pendingItems[$item->SalesOrderID][] = $pendingItem;
+                if($pendingItem->Quantity > InventoryModel::getProductStockQuantity($pendingItem->WoodTypeID,  $pendingItem->Thickness, $pendingItem->Width,  $pendingItem->Length)){
+                  $salesOrder->canAccomodate = FALSE;
+                }
+
+             }
+      }
 
       $data = [
         'pendingSalesOrders' => $pendingSalesOrders,
+        'pendingItems' => $pendingItems,
     	];
 
 		  return view('inventory.InventoryResizeInitial')->with($data);
     }
 
-    public function viewResize($SalesOrderID){
-
+    public function viewResize($salesOrderID){
+      $salesOrderItems = SalesModel::getSalesOrderItems($salesOrderID);
+      $inventory = InventoryModel::getCompanyInventory();
       $data = [
-
+        'orderItems' => $salesOrderItems,
+        'inventory' => $inventory,
+        'salesOrderID' => $salesOrderID
       ];
+      
       return view('inventory.InventoryResize')->with($data);
     }
 
@@ -94,6 +123,14 @@ class InventoryPageController extends Controller
     public function viewApproveSalesOrder(){
       $pendingSalesOrders = SalesModel::getPendingSalesOrders();
 
+      $items = [];
+
+      foreach($pendingSalesOrders as $salesOrder){
+            $salesOrderItems = SalesModel::getSalesOrderItems($salesOrder->SalesOrderID);
+            foreach($salesOrderItems as $item){
+
+            }
+      }
       $data = [
         'pendingSalesOrders' => $pendingSalesOrders,
     	];

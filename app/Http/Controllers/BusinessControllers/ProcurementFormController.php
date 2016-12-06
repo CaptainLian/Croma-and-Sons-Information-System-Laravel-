@@ -25,9 +25,9 @@ class ProcurementFormController extends Controller{
     	$term = Input::get('terms');
     	$supplier = Input::get('supplier');
     	$address = Input::get('address');
-      $deliveryDate = Input::get('deliveryDate');
+         $deliveryDate = Input::get('deliveryDate');
 
-      $discount = ((float)Input::get('discount'));
+        $discount = 0.0;
     	//table rows
     	$woodTypes = Input::get('WoodType');
     	$thicknesses = Input::get('Thickness');
@@ -112,7 +112,7 @@ class ProcurementFormController extends Controller{
         $purchaseOrderID = Input::get('PurchaseOrderID');
         $term = Input::get('Terms');
         $supplier = Input::get('SupplierID');
-        $discount = Input::get('discount');
+        $discount = ((float)Input::get('discount'))/100.0;
         $deliveryAddress = Input::get('DeliveryAddress');
         $deliveryDate = Input::get('DeliveryDate');
 

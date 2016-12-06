@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use DB;
+
 class ProcurementModel extends Model{
 
 	public static function getRequestedProducts(){
@@ -69,7 +70,14 @@ class ProcurementModel extends Model{
 	}
 
 	public static function getYearlyQuantityProductPurchase(){
-		$eh = DB::select(DB::raw("SELECT WoodType AS Material, Size, QuantityOrdered, QuantityRejected, TotalQuantity, AmountPurchased, AmountRejected
+		$eh = DB::select(DB::raw("SELECT 
+									WoodType AS Material, 
+									Size, 
+									QuantityOrdered, 
+									QuantityRejected, 
+									TotalQuantity, 
+									AmountPurchased, 
+									AmountRejected
 									FROM (SELECT WoodTypeID, CONCAT(Thickness, 'x', Width, 'x', Length) AS Size, SUM(Quantity) AS QuantityOrdered, SUM(IFNULL(RejectedQuantity,0)) AS QuantityRejected, SUM(Quantity - IFNULL(RejectedQuantity, 0)) AS TotalQuantity, SUM((Quantity - IFNULL(RejectedQuantity, 0 ))*PurchasedUnitPrice) AS AmountPurchased, SUM(IFNULL(RejectedQuantity, 0)*PurchasedUnitPrice) AS AmountRejected
 										    FROM PurchaseDeliveryItems
 										   WHERE PurchaseDeliveryReceiptID IN (SELECT PurchaseDeliveryReceiptID

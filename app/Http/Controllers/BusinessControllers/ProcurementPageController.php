@@ -254,12 +254,42 @@ class ProcurementPageController extends Controller{
         $monthlyPurchase = ProcurementModel::getPurchaseReportMonthly();
         $yearlyPurchase = ProcurementModel::getPurchaseReportYearly();
 
+        $purchaseItems = [];
+
+        $purchaseItems = $this->addPurchaseItems($yearlyPurchase, $purchaseItems);
+        $purchaseItems = $this->addPurchaseItems($monthlyPurchase, $purchaseItems);
+        $purchaseItems = $this->addPurchaseItems($weeklyPurchase, $purchaseItems);
+        
         $data = [
             'weekly' => $weeklyPurchase,
             'monthly' => $monthlyPurchase,
             'yearly' => $yearlyPurchase,
+            'purchaseItems' => $purchaseItems,
         ];
 
         return view('procurement.PurchaseReport')->with($data);
+    }
+
+    private function addPurchaseItems($purchases, $purchaseItems){
+      foreach($purchases as $purchase){
+        $id = $purchase->DeliveryReceipt;
+        if(empty($purchaseItems[$id])){
+          $items = ProcurementModel::getPurchaseOrderItems($id);
+          
+          foreach($items as $item){
+            $purchaseItem = new stdClass();
+
+            $purchaseItem->Material = $item->Material;
+            $purchaseItem->Size = $item->Size;
+            $purchaseItem->Quantity = $item->Quantity;
+            $purchaseItem->BoardFeet = $item->BoardFeet;
+            $purchaseItem->UnitPrice = $item->UnitPrice;
+
+            $purchaseItems[$id][] = $purchaseItem;
+          } 
+        }
+      }
+
+      return $purchaseItems;
     }
 }

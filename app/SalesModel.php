@@ -14,7 +14,7 @@ class SalesModel extends Model{
 																				DATE_FORMAT(SalesOrders.DateCreated, '%b %d, %Y - %r') AS DateCreated,
 																				SalesOrders.CustomerID,
 																				SalesOrders.DeliveryAddress,
-																				Customers.Name,
+																				Customers.Name AS CustomerName,
 																				Customers.Address,
 																				Customers.ContactPerson,
 																				Customers.Landline"))
@@ -31,7 +31,26 @@ class SalesModel extends Model{
 
 	public static function getSalesOrderItems($salesOrderID){
 		$salesOrderItems = DB::table('SalesOrderItems')
-												->where('SalesOrderID', '=', $salesOrderID);
+												->select(DB::raw(
+														"SalesOrderItems.SalesOrderID,
+														SalesOrderItems.WoodTypeID,
+														REF_WoodTypes.WoodType,
+														SalesOrderItems.Thickness,
+														SalesOrderItems.Width,
+														SalesOrderItems.Length,
+														CONCAT(SalesOrderItems.Thickness, 'x', SalesOrderItems.Width, 'x', SalesOrderItems.Length) AS Size,
+														SalesOrderItems.Quantity,
+														SalesOrderItems.BoardFeet"
+													))
+												->where('SalesOrderID', '=', $salesOrderID)
+												->join('REF_WoodTypes', 'REF_WoodTypes.WoodTypeID', '=', 'SalesOrderItems.WoodTypeID');
 		return $salesOrderItems->get();
+	}
+
+	public static function getDeliveryReceiptOfSalesOrder($salesOrderID){
+		$drid = DB::table('SalesDeliveryReceipts')
+							->select(DB::raw('SalesOrderID, SalesDeliveryReceiptID AS AGUY'))
+							->where('SalesOrderID', '=', $salesOrderID);
+		return $drid->first();
 	}
 }

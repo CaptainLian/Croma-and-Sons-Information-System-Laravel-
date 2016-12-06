@@ -10,9 +10,9 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 
 
-class SalesInvoice extends Controller
-{
-    public function list(){
+class SalesInvoice extends Controller{
+
+    public function Aguy(){
 
     	$pd = DB::table('SalesDeliveryReceipts as SDR')
     			->join('SalesOrders as SO', 'SDR.SalesOrderID','=','SO.SalesOrderID')

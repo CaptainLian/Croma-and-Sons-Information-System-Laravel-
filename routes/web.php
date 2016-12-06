@@ -39,7 +39,7 @@ Route::post('/sales/catalog/edit','SalesCatalog@edit');
 
 Route::post('/sales/catalog/delete','SalesCatalog@delete');
 
-Route::get('/sales/invoice','SalesInvoice@list');
+Route::get('/sales/invoice','SalesInvoice@Aguy');
 
 Route::get('/sales/invoice/{sdrid}', 'SalesInvoice@create');
 
@@ -68,6 +68,6 @@ Route::get('/try',function(){
 	return view('sales.SII');
 });
 
-
+require_once 'Lian.php';
 
 /*Routes::post('/sales','SalesOrder@check');*/
