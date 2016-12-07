@@ -10,39 +10,39 @@ use \stdClass;
 
 class InventoryModel extends Model{
     public static function getCompanyInventory(){
-    	$inventory = DB::select(DB::raw("SELECT  
-                                        wt.WoodType AS Material, 
-                                        ci.WoodTypeID,
-                                        ci.Thickness, 
-                                        ci.Width,
-                                        ci.Length, 
-                                        CONCAT(ci.WoodTypeID, 'x', ci.Thickness, 'x', ci.Length) AS Size, 
-                                        ci.StockQuantity, 
-                                        ci.RequestedQuantity,
-                                        TRUNCATE(IFNULL(rp.ReorderPoint, 0), 0) AS ReorderPoint,
-                                        ci.LatestDateUpdated
-                                      FROM CompanyInventory ci LEFT JOIN (SELECT ac.WoodTypeID, ac.Thickness, ac.Width, ac.Length, ac.AverageConsumption, mc.MaxConsumption, (ac.AverageConsumption)*2 + (mc.MaxConsumption + ac.AverageConsumption)*2 AS ReorderPoint
-                                                                            FROM (SELECT WoodTypeID, Thickness, Width, Length, SUM(FromStockQuantity - ToStockQuantity)/90 AS AverageConsumption
-                                                                                    FROM AUDIT_CompanyStockChanges
-                                                                                   WHERE ReasonID = 1
-                                                                                     AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
-                                                                                     AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
-                                                                                GROUP BY 1, 2, 3, 4) ac JOIN (SELECT WoodTypeID, Thickness, Width, Length, MAX(FromStockQuantity - ToStockQuantity) AS MaxConsumption
-                                                                                                                FROM AUDIT_CompanyStockChanges
-                                                                                                               WHERE ReasonID = 1
-                                                                                                                 AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
-                                                                                                                 AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
-                                                                                                            GROUP BY 1, 2, 3, 4)  mc
-                                                                                                  ON ac.WoodTypeID = mc.WoodTypeID
-                                                                                                 AND ac.Thickness = mc.Thickness
-                                                                                                 AND ac.Width = mc.Width
-                                                                                                 AND ac.Length = mc.Length) rp
-                                                                       ON ci.WoodTypeID = rp.WoodTypeID
-                                                                                    AND ci.Thickness = rp.Thickness
-                                                                                    AND ci.Width = rp.Width
-                                                                                    AND ci.Length = rp.Length
-                                                                       JOIN REF_WoodTypes wt
-                                                                                     ON ci.WoodTypeID = wt.WoodTypeID;"));
+      	$inventory = DB::select(DB::raw("SELECT  
+                                          wt.WoodType AS Material, 
+                                          ci.WoodTypeID,
+                                          ci.Thickness, 
+                                          ci.Width,
+                                          ci.Length, 
+                                          CONCAT(ci.WoodTypeID, 'x', ci.Thickness, 'x', ci.Length) AS Size, 
+                                          ci.StockQuantity, 
+                                          ci.RequestedQuantity,
+                                          TRUNCATE(IFNULL(rp.ReorderPoint, 0), 0) AS ReorderPoint,
+                                          ci.LatestDateUpdated
+                                        FROM CompanyInventory ci LEFT OUTER JOIN (SELECT ac.WoodTypeID, ac.Thickness, ac.Width, ac.Length, ac.AverageConsumption, mc.MaxConsumption, (ac.AverageConsumption)*2 + (mc.MaxConsumption + ac.AverageConsumption)*2 AS ReorderPoint
+                                                                              FROM (SELECT WoodTypeID, Thickness, Width, Length, SUM(FromStockQuantity - ToStockQuantity)/90 AS AverageConsumption
+                                                                                      FROM AUDIT_CompanyStockChanges
+                                                                                     WHERE ReasonID = 1
+                                                                                       AND YEAR(DateChanged) = YEAR(DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 YEAR))
+                                                                                       AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
+                                                                                  GROUP BY 1, 2, 3, 4) ac JOIN (SELECT WoodTypeID, Thickness, Width, Length, MAX(FromStockQuantity - ToStockQuantity) AS MaxConsumption
+                                                                                                                  FROM AUDIT_CompanyStockChanges
+                                                                                                                 WHERE ReasonID = 1
+                                                                                                                   AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
+                                                                                                                   AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
+                                                                                                              GROUP BY 1, 2, 3, 4)  mc
+                                                                                                    ON ac.WoodTypeID = mc.WoodTypeID
+                                                                                                   AND ac.Thickness = mc.Thickness
+                                                                                                   AND ac.Width = mc.Width
+                                                                                                   AND ac.Length = mc.Length) rp
+                                                                         ON ci.WoodTypeID = rp.WoodTypeID
+                                                                                      AND ci.Thickness = rp.Thickness
+                                                                                      AND ci.Width = rp.Width
+                                                                                      AND ci.Length = rp.Length
+                                                                         JOIN REF_WoodTypes wt
+                                                                                       ON ci.WoodTypeID = wt.WoodTypeID;"));
     	return $inventory ? $inventory : [];
     }
 
@@ -73,7 +73,7 @@ class InventoryModel extends Model{
                                                                             FROM (SELECT WoodTypeID, Thickness, Width, Length, SUM(FromStockQuantity - ToStockQuantity)/90 AS AverageConsumption
                                                                                     FROM AUDIT_CompanyStockChanges
                                                                                    WHERE ReasonID = 1
-                                                                                     AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
+                                                                                     AND YEAR(DateChanged) = YEAR(DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 YEAR))
                                                                                      AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
                                                                                 GROUP BY 1, 2, 3, 4) ac JOIN (SELECT WoodTypeID, Thickness, Width, Length, MAX(FromStockQuantity - ToStockQuantity) AS MaxConsumption
                                                                                                                 FROM AUDIT_CompanyStockChanges
