@@ -134,7 +134,6 @@ class ProcurementFormController extends Controller{
         $count = 0;
         foreach($thicknesses as $thickness){
             $rows[$count]['thickness'] = $thickness;
-
             $count++;
         }
 

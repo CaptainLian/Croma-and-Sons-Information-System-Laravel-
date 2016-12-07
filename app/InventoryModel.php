@@ -10,21 +10,40 @@ use \stdClass;
 
 class InventoryModel extends Model{
     public static function getCompanyInventory(){
-    	$inventory = DB::table('CompanyInventory')
-    				  ->select(DB::raw("REF_WoodTypes.WoodType AS Material,
-                                CompanyInventory.WoodTypeID,
-                                Thickness,
-                                Width,
-                                Length,
-                                CONCAT(Thickness, 'x', Width, 'x', Length) AS Size,
-                                StockQuantity,
-                                SafetyStock,
-                                IFNULL(ReorderPoint, 0) AS ReorderPoint,
-                                EconomicOrderQuantity,
-                                RequestedQuantity"))
-    				  ->join('REF_WoodTypes', 'CompanyInventory.WoodTypeID', '=', 'REF_WoodTypes.WoodTypeID' );
-    				  //join('REF_WoodTypes', 'PurchaseOrderItems.WoodTypeID', '=', 'REF_WoodTypes.WoodTypeID');
-    	return $inventory->get();
+    	$inventory = DB::select(DB::raw("SELECT  
+                                        wt.WoodType AS Material, 
+                                        ci.WoodTypeID,
+                                        ci.Thickness, 
+                                        ci.Width,
+                                        ci.Length, 
+                                        CONCAT(ci.WoodTypeID, 'x', ci.Thickness, 'x', ci.Length) AS Size, 
+                                        ci.StockQuantity, 
+                                        ci.RequestedQuantity,
+                                        TRUNCATE(IFNULL(rp.ReorderPoint, 0), 0) AS ReorderPoint,
+                                        ci.LatestDateUpdated
+                                      FROM CompanyInventory ci LEFT JOIN (SELECT ac.WoodTypeID, ac.Thickness, ac.Width, ac.Length, ac.AverageConsumption, mc.MaxConsumption, (ac.AverageConsumption)*2 + (mc.MaxConsumption + ac.AverageConsumption)*2 AS ReorderPoint
+                                                                            FROM (SELECT WoodTypeID, Thickness, Width, Length, SUM(FromStockQuantity - ToStockQuantity)/90 AS AverageConsumption
+                                                                                    FROM AUDIT_CompanyStockChanges
+                                                                                   WHERE ReasonID = 1
+                                                                                     AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
+                                                                                     AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
+                                                                                GROUP BY 1, 2, 3, 4) ac JOIN (SELECT WoodTypeID, Thickness, Width, Length, MAX(FromStockQuantity - ToStockQuantity) AS MaxConsumption
+                                                                                                                FROM AUDIT_CompanyStockChanges
+                                                                                                               WHERE ReasonID = 1
+                                                                                                                 AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
+                                                                                                                 AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
+                                                                                                            GROUP BY 1, 2, 3, 4)  mc
+                                                                                                  ON ac.WoodTypeID = mc.WoodTypeID
+                                                                                                 AND ac.Thickness = mc.Thickness
+                                                                                                 AND ac.Width = mc.Width
+                                                                                                 AND ac.Length = mc.Length) rp
+                                                                       ON ci.WoodTypeID = rp.WoodTypeID
+                                                                                    AND ci.Thickness = rp.Thickness
+                                                                                    AND ci.Width = rp.Width
+                                                                                    AND ci.Length = rp.Length
+                                                                       JOIN REF_WoodTypes wt
+                                                                                     ON ci.WoodTypeID = wt.WoodTypeID;"));
+    	return $inventory ? $inventory : [];
     }
 
     public static function requestProcurement($woodTypeID, $thickness, $width, $length, $quantity){
@@ -40,22 +59,41 @@ class InventoryModel extends Model{
     }
 
     public static function getProductsRequireAttention(){
-      $products = DB::table('CompanyInventory')
-                    ->select(DB::raw("CompanyInventory.WoodTypeID,
-                                      REF_WoodTypes.WoodType AS Material,
-                                      CONCAT(Thickness, 'x', Width, 'x', Length) AS Size,
-                                      StockQuantity,
-                                      ReorderPoint,
-                                      SafetyStock"))
-
-                    ->orWhere([
-                      ['StockQuantity', '<=', 'SafetStock'],
-                      ['StockQuantity', '<=', 'ReorderPoint']
-                    ])
-                    ->join('REF_WoodTypes', 'REF_WoodTypes.WoodTypeID', '=', 'CompanyInventory.WoodTypeID')
-                    ->orderBy('StockQuantity', 'ASC')
-                    ->limit(5);
-      return $products->get();
+      $products = DB::select(DB::raw(" SELECT  
+                                        wt.WoodType AS Material, 
+                                        ci.WoodTypeID,
+                                        ci.Thickness, 
+                                        ci.Width,
+                                        ci.Length, 
+                                        CONCAT(ci.WoodTypeID, 'x', ci.Thickness, 'x', ci.Length) AS Size, 
+                                        ci.StockQuantity, 
+                                        TRUNCATE(IFNULL(rp.ReorderPoint, 0), 0) AS ReorderPoint, 
+                                        ci.LatestDateUpdated
+                                      FROM CompanyInventory ci LEFT JOIN (SELECT ac.WoodTypeID, ac.Thickness, ac.Width, ac.Length, ac.AverageConsumption, mc.MaxConsumption, (ac.AverageConsumption)*2 + (mc.MaxConsumption + ac.AverageConsumption)*2 AS ReorderPoint
+                                                                            FROM (SELECT WoodTypeID, Thickness, Width, Length, SUM(FromStockQuantity - ToStockQuantity)/90 AS AverageConsumption
+                                                                                    FROM AUDIT_CompanyStockChanges
+                                                                                   WHERE ReasonID = 1
+                                                                                     AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
+                                                                                     AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
+                                                                                GROUP BY 1, 2, 3, 4) ac JOIN (SELECT WoodTypeID, Thickness, Width, Length, MAX(FromStockQuantity - ToStockQuantity) AS MaxConsumption
+                                                                                                                FROM AUDIT_CompanyStockChanges
+                                                                                                               WHERE ReasonID = 1
+                                                                                                                 AND YEAR(DateChanged) = YEAR(CURRENT_TIMESTAMP) - 1
+                                                                                                                 AND QUARTER(DateChanged) = QUARTER(CURRENT_TIMESTAMP)
+                                                                                                            GROUP BY 1, 2, 3, 4)  mc
+                                                                                                  ON ac.WoodTypeID = mc.WoodTypeID
+                                                                                                 AND ac.Thickness = mc.Thickness
+                                                                                                 AND ac.Width = mc.Width
+                                                                                                 AND ac.Length = mc.Length) rp
+                                                                               ON ci.WoodTypeID = rp.WoodTypeID
+                                                                                            AND ci.Thickness = rp.Thickness
+                                                                                            AND ci.Width = rp.Width
+                                                                                            AND ci.Length = rp.Length
+                                                                               JOIN REF_WoodTypes wt
+                                                                                             ON ci.WoodTypeID = wt.WoodTypeID
+                                    WHERE ci.StockQuantity <= IFNULL(rp.ReorderPoint + rp.ReorderPoint*.2, 0.0)
+                                    LIMIT 5;"));
+      return $products ? $products: [];
     }
 
     public static function editInventory($woodTypeID, $thickness, $width, $length, $reasonID, $newQuantity, $comments){
@@ -158,5 +196,12 @@ class InventoryModel extends Model{
       }
 
       
+    }
+
+    public static function getPendingSalesOrderCount(){
+      $count = DB::table('SalesOrders')
+                ->where('SalesOrderStatusID', '=', 1);
+
+      return $count->count();
     }
 } 

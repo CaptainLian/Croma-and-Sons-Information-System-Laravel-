@@ -13,6 +13,20 @@ Inventory Dashboard
 <header class="panel-heading">
   <h2>Inventory Dashboard</h2>
 </header>
+<div class="row state-overview">
+    <div class="col-lg-3 col-sm-6">
+      <section class="panel">
+        <a href="/inventory/InventoryResizeInitial">
+          <div class="symbol blue">
+              <i class="fa fa-file"></i>
+          </div><!-- symbo-blue -->
+        </a href="#">
+        <div class="value">
+          <h1>{!!$pendingSalesCount!!}</h1>
+          <p>Pending Sales Orders</p>
+        </div>
+      </section>
+    </div>
 
 <section class="panel">
   <div class="panel-body">
@@ -20,28 +34,11 @@ Inventory Dashboard
 
       <div class="row">
         <div class="col-md-12">
-          <div id="graph1" style="background-color: white; height: 40%;">
+          <div id="graph1" style="background-color: white; height: 50%;">
 
           </div><!-- graph -->
         </div><!-- col-md-12 -->
       </div><!-- row -->
-
-      <div class="row">
-        <div class="col-md-6">
-          <div id="graph2" style="background-color: blue; height: 40%;" >
-
-          </div><!-- graph --> 
-        </div><!-- col-md-6 -->
-
-
-        <div class="col-md-6">
-          <div id="graph3" style="background-color: white; height: 40%;" >
-
-          </div><!-- graph -->
-        </div><!-- col-md-6 -->
-
-      </div><!-- row -->
-
     </div><!-- container-fluid -->
   </div><!-- panel-body -->
 </section>
@@ -86,15 +83,6 @@ Inventory Dashboard
             name: 'Reorder Point',
             type: 'column',
             data:[@foreach($reorderPoints as $quantity)
-              {!!$quantity!!},
-            @endforeach],
-            tooltip: {
-                valueSuffix: ' pieces'
-            }
-        }, {
-            name: 'Safety Stock',
-            type: 'column',
-            data: [@foreach($safetyStocks as $quantity)
               {!!$quantity!!},
             @endforeach],
             tooltip: {

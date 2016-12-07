@@ -1,7 +1,7 @@
 @extends('procurement.main')
 
 @section('title')
-Purchase History
+Purchase Report
 @endsection
 
 @section('sidebar')

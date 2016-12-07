@@ -17,6 +17,7 @@ class InventoryPageController extends Controller
 {
     public function viewDashboard(){
       $products = InventoryModel::getProductsRequireAttention();
+      $pendingSalesOrderCount = InventoryModel::getPendingSalesOrderCount();
 
       $materials = [];
       $stockQuantities = [];
@@ -29,7 +30,6 @@ class InventoryPageController extends Controller
         $material->Size = $product->Size;
         $material->StockQuantity = $product->StockQuantity;
         $material->ReorderPoint = $product->ReorderPoint;
-        $material->SafetyStock = $product->SafetyStock;
 
         $materials[$product->Material][] = $material;
       }
@@ -38,7 +38,6 @@ class InventoryPageController extends Controller
         foreach($material AS $size){
           $stockQuantities[] = $size->StockQuantity;
           $reorderPoints[] = $size->ReorderPoint;
-          $safetyStocks[] = $size->SafetyStock;
         }
       }
 
@@ -47,7 +46,8 @@ class InventoryPageController extends Controller
         'stockQuantities' => $stockQuantities,
         'reorderPoints' => $reorderPoints,
         'safetyStocks' => $safetyStocks,
-        'productCount' => $products->count(),
+        'productCount' => count($products),
+        'pendingSalesCount' => $pendingSalesOrderCount
     	];
 
     	return view ('inventory.dashboard')->with($data);

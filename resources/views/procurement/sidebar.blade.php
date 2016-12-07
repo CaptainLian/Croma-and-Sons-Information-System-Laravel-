@@ -33,7 +33,7 @@
 <li>
 	<a @if($active == 'PurchaseReport') class="active" @endif href="\procurement\PurchaseReport">
 		<i class="fa fa-file"></i>
-		<span>Purchase History</span>
+		<span>Purchase Report</span>
 	</a>
 </li>
 <!--

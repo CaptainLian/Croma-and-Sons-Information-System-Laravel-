@@ -32,11 +32,10 @@ Inventory List
 							<tr>
 								<th class="col-sm-1">Status </th>
 								<th class="col-sm-1">Material</th>
-								<th class="col-sm-2">Size</th>
+								<th class="col-sm-1">Size</th>
 								<th class="col-sm-1">Quantity</th>
-								<th class="col-sm-1">Quantity Requested</th>
-								<th class="col-sm-1">EOQ</th>
-								<th class="col-sm-1">Reorder Point</th>
+								<th class="col-sm-2">Quantity Requested</th>
+								<th class="col-sm-2">Reorder Point</th>
 								<th class="col-sm-3">Procurement Quantity Request</th>
 							</tr>
 						</thead>
@@ -69,9 +68,6 @@ Inventory List
 										</td>
 										<td align="right" class="RequestedQuantityCell">
 											{!!$product->RequestedQuantity!!}
-										</td>
-										<td align="right" class="EOQCell">
-											{!!$product->EconomicOrderQuantity!!}
 										</td>
 										<td align="right" class="ReorderPointCell">
 											{!!$product->ReorderPoint!!}
