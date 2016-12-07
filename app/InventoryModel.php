@@ -16,7 +16,7 @@ class InventoryModel extends Model{
                                           ci.Thickness, 
                                           ci.Width,
                                           ci.Length, 
-                                          CONCAT(ci.WoodTypeID, 'x', ci.Thickness, 'x', ci.Length) AS Size, 
+                                          CONCAT(ci.Thickness, 'x', ci.Width, 'x', ci.Length) AS Size, 
                                           ci.StockQuantity, 
                                           ci.RequestedQuantity,
                                           TRUNCATE(IFNULL(rp.ReorderPoint, 0), 0) AS ReorderPoint,
@@ -65,7 +65,7 @@ class InventoryModel extends Model{
                                         ci.Thickness, 
                                         ci.Width,
                                         ci.Length, 
-                                        CONCAT(ci.WoodTypeID, 'x', ci.Thickness, 'x', ci.Length) AS Size, 
+                                        CONCAT(ci.Thickness, 'x', ci.Width, 'x', ci.Length) AS Size, 
                                         ci.StockQuantity, 
                                         TRUNCATE(IFNULL(rp.ReorderPoint, 0), 0) AS ReorderPoint, 
                                         ci.LatestDateUpdated
