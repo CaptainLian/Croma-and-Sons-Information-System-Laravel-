@@ -154,7 +154,7 @@ Delivery Receipt for PO: {!!$purchaseOrderDetails->PurchaseOrderID!!}
 					</div>
 				</div>
 				<div class="text-center invoice-btn">
-					<input type="submit" value="Submit Delivery Receipt" class="btn btn-success btn-lg" />
+					<input type="submit" value="Receive Purchase Order" class="btn btn-success btn-lg" />
 					<!-- <a class="btn btn-info btn-lg" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print </a> -->
 				</div>
 			</div>

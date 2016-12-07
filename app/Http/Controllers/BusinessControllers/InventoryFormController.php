@@ -119,7 +119,7 @@ class InventoryFormController extends Controller{
 
       $count = 0;
       foreach($outputQuantity as $quantity){
-        $resizeRows[$count]->output = $quantity;
+        $resizeRows[$count]->outputQuantity = $quantity;
         $count++;
       }
 

@@ -51,7 +51,7 @@ Purchase History
                   <table class="display table table-bordered table-striped" id="dynamic-table">
                     <thead>
                       <tr>
-                        <th>Delivery Receipt #</th>
+                        <th>Purchase Order #</th>
                         <th>Delivery Date (Year-Month-Day)</th>
                         <th>Supplier</th>
                         <th>Purchased Amount (Php)</th>
@@ -91,7 +91,7 @@ Purchase History
                   <table class="display table table-bordered table-striped" id="dynamic-table">
                     <thead>
                       <tr>
-                        <th>Delivery Receipt #</th>
+                        <th>Purchase Order #</th>
                         <th>Delivery Date (Year-Month-Day)</th>
                         <th>Supplier</th>
                         <th>Purchased Amount (Php)</th>
@@ -131,7 +131,7 @@ Purchase History
                 <table class="display table table-bordered table-striped" id="dynamic-table">
                   <thead>
                       <tr>
-                        <th>Delivery Receipt #</th>
+                        <th>Purchase Order #</th>
                         <th>Delivery Date (Year-Month-Day)</th>
                         <th>Supplier</th>
                         <th>Purchased Amount (Php)</th>

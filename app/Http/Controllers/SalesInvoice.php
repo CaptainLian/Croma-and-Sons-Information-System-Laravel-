@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class SalesInvoice extends Controller
 {
-    public function aguy(){
-
     public function Aguy(){
 
     	$pd = DB::table('SalesDeliveryReceipts as SDR')

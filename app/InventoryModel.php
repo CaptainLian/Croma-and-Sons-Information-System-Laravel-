@@ -110,11 +110,22 @@ class InventoryModel extends Model{
                 ['Length', '=', $stock->Length],
               ])
             ->update(['Quantity' => $stock->Quantity]);
+
+            DB::table('SalesOrderItems')
+            ->where([ 
+                ['SalesOrderID', '=', $salesOrderID],
+                ['WoodTypeID', '=' , $stock->WoodTypeID],
+                ['Thickness', '=', $stock->Thickness],
+                ['Width', '=', $stock->Width],
+                ['Length', '=', $stock->Length],
+              ])
+            ->update(['Quantity' => $stock->Quantity]);
         } 
 
         DB::commit();
       }catch(\Exception $e){
         DB::rollback();
+        die($e->getMessage());
         return false;
       }
       
@@ -142,6 +153,7 @@ class InventoryModel extends Model{
         DB::commit();
       }catch(\Exception $e){
         DB::rollback();
+        die($e->getMessage());
         return false;
       }
 
