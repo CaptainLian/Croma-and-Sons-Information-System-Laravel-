@@ -73,13 +73,15 @@ Product Resizing
                                 </thead>
 
                                 <tbody>
-                                  <tr>
+                                  
                                     @foreach($pendingItems[$salesOrder->SalesOrderID] as $item)
+                                    <tr>
                                       <td align="left">{!!$item->Material!!}</td>
                                       <td align="center">{!!$item->Size!!}</td>
                                       <td align="right">{!!$item->Quantity!!}</td>
+                                    </tr>
                                     @endforeach
-                                  </tr>
+                                  
                                 </tbody>
                               </table>
 
