@@ -10,7 +10,9 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 
 
-class SalesInvoice extends Controller{
+class SalesInvoice extends Controller
+{
+    public function aguy(){
 
     public function Aguy(){
 
@@ -57,6 +59,7 @@ class SalesInvoice extends Controller{
     	return view('sales.SI',
             ['active' => 'si',
              'so' => $so,
+
             'discount'=>$discount[0],
           'id'=>$id ]);
     }
@@ -123,6 +126,7 @@ class SalesInvoice extends Controller{
 
     	return view('sales.SII',
     		['active' => 'si',
+        'outcome'=>1,
     		 'pending'=>$pd
     		 ]);
 

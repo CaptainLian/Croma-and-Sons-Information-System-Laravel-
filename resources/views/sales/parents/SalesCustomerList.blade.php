@@ -43,7 +43,7 @@
             <!-- user login dropdown start-->
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <span class="username">Jhon Doue</span>
+                <span class="username">Audrey Cobankiat</span>
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu extended logout">
@@ -58,7 +58,7 @@
                   <a href="#"><i class="fa fa-bell-o"></i> Notification</a>
                 </li>
                 <li>
-                  <a href="login.html"><i class="fa fa-key"></i> Log Out</a>
+                  <a href="/logout"><i class="fa fa-key"></i> Log Out</a>
                 </li>
               </ul>
             </li>

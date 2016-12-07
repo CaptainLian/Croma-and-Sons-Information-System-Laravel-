@@ -12,16 +12,19 @@ class CustomerList extends Controller
 {
     public function index(){
     $customers =DB::select( DB::raw("SELECT  C.CustomerID,C.Name,C.Address,C.MobileNumber,C.ContactPerson, SUM(SOI.Quantity * CI.CurrentUnitPrice) as 'TOTALSALES'
-  FROM  Customers C left join (Select *
-								From SalesOrders
-							   Where Year(DateCreated) = 2016 ) SO
-					  on C.CustomerID = SO.CustomerID
-					left join SalesOrderItems SOI
-                       on SO.SalesOrderID = SOI.SalesOrderID
- 					left join CompanyInventory CI
-                       on CI.WoodtypeID  = SOI.WoodtypeID and CI.Thickness = SOI.Thickness and CI.Width = SOI.Width and CI.Length = SOI.Length
+  FROM  Customers C left join (Select SO.SalesOrderID,SO.CustomerID
+                From SalesOrders SO join SalesDeliveryReceipts SDR
+                           on SO.SalesOrderID = SDR.SalesOrderID
+                 Where Year(SO.DateCreated) = 2016
+                                 and SDR.DRStatusID = 5 ) SO
+               on C.CustomerID = SO.CustomerID
+          left join SalesOrderItems SOI
+                           on SO.SalesOrderID = SOI.SalesOrderID
+          left join CompanyInventory CI
+                           on CI.WoodtypeID  = SOI.WoodtypeID and CI.Thickness = SOI.Thickness and CI.Width = SOI.Width and CI.Length = SOI.Length
 Where C.StatusID = 1
- Group By 1,2,3,4,5					"));
+
+ Group By 1,2,3,4,5   "));
 
 
    	$totalPrice= DB::table('SalesOrderItems')

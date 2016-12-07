@@ -39,7 +39,7 @@ Route::post('/sales/catalog/edit','SalesCatalog@edit');
 
 Route::post('/sales/catalog/delete','SalesCatalog@delete');
 
-Route::get('/sales/invoice','SalesInvoice@Aguy');
+Route::get('/sales/invoice','SalesInvoice@aguy');
 
 Route::get('/sales/invoice/{sdrid}', 'SalesInvoice@create');
 

@@ -26,7 +26,7 @@ var EditableTable = function () {
                 jqTds[3].innerHTML =  '<input style="width:100%"  disabled="" type="text" class="form-control small" value="' + aData[3] + '">' ; ;
                 jqTds[4].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[4] + '">'; 
                 jqTds[5].innerHTML = '<a style="width:100%"  class="edit" href="">Save</a>';
-                jqTds[6].innerHTML = '<a style="width:100%"  class="delete" href="">Cancel</a>';
+                jqTds[6].innerHTML = '<a style="width:100%"  class="cancel" href="">Cancel</a>';
 
             }
 
@@ -40,7 +40,7 @@ var EditableTable = function () {
                 jqTds[3].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[3] + '">';
                 jqTds[4].innerHTML = '<input style="width:100%"  type="text" class="form-control small" value="' + aData[4] + '">'; 
                 jqTds[5].innerHTML = '<a style="width:100%"  class="edit" href="">Save</a>';
-                jqTds[6].innerHTML = '<a style="width:100%"  class="delete" href="">Cancel</a>';
+                jqTds[6].innerHTML = '<a style="width:100%"  class="cancel" href="">Cancel</a>';
 
             }
             function editRealRow(oTable, nRow) {
@@ -50,7 +50,7 @@ var EditableTable = function () {
               
                 jqTds[4].innerHTML = '<input type="text" class="form-control small" value="' + aData[4] + '">'; 
                 jqTds[5].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[6].innerHTML = '<a class="delete" href="">Cancel</a>';
+                jqTds[6].innerHTML = '<a class="cancel" href="">Cancel</a>';
 
             }
             function saveEditedRow(oTable, nRow) {
