@@ -85,16 +85,15 @@ class InventoryModel extends Model{
     }
 
     public static function approveSalesOrder($salesOrderID, $approvedStocks){
-      DB::beginTransaction();
       try{
-
+        DB::beginTransaction();
         $drid = DB::table('SalesDeliveryReceipts')
                   ->select('SalesDeliveryReceiptID')
                   ->where('SalesOrderID', '=', $salesOrderID)->first()->SalesDeliveryReceiptID;
 
         DB::table('SalesDeliveryReceipts')
-                  ->where('SalesDeliveryReceiptID', '=', $drid)
-                  ->update(['DRStatusID' => 2]);
+          ->where('SalesDeliveryReceiptID', '=', $drid)
+          ->update(['DRStatusID' => 2]);
 
         DB::table('SalesOrders')
           ->where('SalesOrderID', '=', $salesOrderID)
@@ -102,8 +101,8 @@ class InventoryModel extends Model{
 
 
         foreach($approvedStocks as $stock){
-          DB::table('SalesDeliveryItems');
-            ->where([
+          DB::table('SalesDeliveryItems')
+            ->where([ 
                 ['SalesDeliveryReceiptID', '=', $drid],
                 ['WoodTypeID', '=' , $stock->WoodTypeID],
                 ['Thickness', '=', $stock->Thickness],
@@ -111,12 +110,41 @@ class InventoryModel extends Model{
                 ['Length', '=', $stock->Length],
               ])
             ->update(['Quantity' => $stock->Quantity]);
-        }
+        } 
 
+        DB::commit();
       }catch(\Exception $e){
         DB::rollback();
         return false;
       }
-      DB::commit();
+      
     }
-}
+
+    public static function resize($resizeRows){
+      try{
+        DB::beginTransaction();
+
+        foreach ($resizeRows as $resize) {
+          DB::table('AUDIT_Resizes')
+            ->insert([
+                'WoodTypeID' => $resize->woodType,
+                'InputThickness' => $resize->inputThickness,
+                'InputWidth' => $resize->inputWidth,
+                'InputLength' => $resize->inputLength,
+                'InputQuantity' => $resize->inputQuantity,
+
+                'OutputThickness' => $resize->outputThickness,
+                'OutputWidth' => $resize->outputWidth,
+                'OutputLength' => $resize->outputLength,
+                'OutputQuantity' => $resize->outputQuantity
+              ]);
+        }
+        DB::commit();
+      }catch(\Exception $e){
+        DB::rollback();
+        return false;
+      }
+
+      
+    }
+} 

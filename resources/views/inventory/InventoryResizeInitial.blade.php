@@ -12,6 +12,11 @@ Product Resizing
 @endpush
 
 @section('main-content')
+  @if(isset($success))
+    <div class = "alert alert-success alert-dismissable" id="alert">
+        {!!$success!!}
+    </div>
+  @endif
   <!-- page start-->
   <div class="row">
     <div class="col-sm-12">
@@ -30,7 +35,7 @@ Product Resizing
                   <th class="col-md-2">Customer</th>
                   <th class="col-md-3">Date Requested</th>
                   <th class="col-md-1">Details</th>
-                  <th class="col-md-1">Approve</th>
+                  <!-- <th class="col-md-1">Approve</th> -->
                   <th class="col-md-1">Resize</th>
                 </tr>
               </thead>
@@ -87,7 +92,7 @@ Product Resizing
                         </div><!-- .modal-dialog -->
                       </div><!-- .modal fade-->
                     </td>
-                    <td align="center"><button class="label label-success label-mini">Approve</button></td>
+                    <!-- <td align="center"><button class="label label-success label-mini">Approve</button></td> -->
                     <td align="center">
                       <a class="btn btn-info btn-md" href="/inventory/InventoryResize/{!!$salesOrder->SalesOrderID!!}"><i class="fa fa-check"></i>&nbsp;Resize</a>
                     </td>

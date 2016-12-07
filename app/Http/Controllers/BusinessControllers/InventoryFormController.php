@@ -13,6 +13,8 @@ use \stdClass;
 use Redirect;
 use Session;
 
+use App\SalesModel;
+use App\CustomerModel;
 use App\InventoryModel;
 
 class InventoryFormController extends Controller{
@@ -51,6 +53,80 @@ class InventoryFormController extends Controller{
 
   function inputResize(Request $request){
     $salesOrderID = Input::get('salesOrderID');
+
+    $inputWoodType = Input::get('InputWoodTypeID');
+    $inputThickness = Input::get('InputThickness');
+    $inputWidth = Input::get('InputWidth');
+    $inputLength = Input::get('InputLength');
+    $inputQuantity = Input::get('InputQuantity');
+
+    $outputThickness = Input::get('OutputThickness');
+    $outputWidth = Input::get('OutputWidth');
+    $outputLength = Input::get('OutputLength');
+    $outputQuantity = Input::get('OutputQuantity');
+
+    $resizeRows = [];
+    $count = 0;
+    if(isset($inputWoodType)){
+      foreach($inputWoodType as $woodType){
+        $resizeRows[$count] = new stdClass();
+
+        $resizeRows[$count]->woodType = $woodType;
+        $count++;
+      }
+
+      $count = 0;
+      foreach($inputThickness as $thickness){
+        $resizeRows[$count]->inputThickness = $thickness;
+        $count++;
+      }
+
+       $count = 0;
+      foreach($inputWidth as $width){
+        $resizeRows[$count]->inputWidth = $width;
+        $count++;
+      }
+
+      $count = 0;
+      foreach($inputLength as $length){
+        $resizeRows[$count]->inputLength = $length;
+        $count++;
+      }
+
+       $count = 0;
+      foreach($inputQuantity as $quantity){
+          $resizeRows[$count]->inputQuantity = $quantity;
+          $count++;
+      }
+
+       $count = 0;
+      foreach($outputThickness as $thickness){
+        $resizeRows[$count]->outputThickness = $thickness;
+        $count++;
+      }
+
+      $count = 0;
+      foreach($outputWidth as $width){
+        $resizeRows[$count]->outputWidth = $width;
+        $count++;
+      }
+
+      $count = 0;
+      foreach($outputLength as $length){
+        $resizeRows[$count]->outputLength = $length;
+        $count++;
+      }
+
+      $count = 0;
+      foreach($outputQuantity as $quantity){
+        $resizeRows[$count]->output = $quantity;
+        $count++;
+      }
+
+      InventoryModel::resize($resizeRows);
+    }
+
+
     // approvals
     $approvedWoodType = Input::get('ApprovedWoodTypeID');
     $approvedThickness = Input::get('ApprovedThickness');
@@ -92,8 +168,43 @@ class InventoryFormController extends Controller{
     }
 
 
+    InventoryModel::approveSalesOrder($salesOrderID, $approvedRows);
 
+    $pendingSalesOrders = SalesModel::getPendingSalesOrders();
+    $pendingItems = [];
 
+    foreach($pendingSalesOrders as $salesOrder){
+      $salesOrderItems = SalesModel::getSalesOrderItems($salesOrder->SalesOrderID);
+      $salesOrder->canAccomodate = TRUE;
+      foreach($salesOrderItems as  $item){
+            $pendingItem = new stdClass();
+
+            $pendingItem->Material = $item->WoodType;
+            $pendingItem->WoodTypeID = $item->WoodTypeID;
+
+            $pendingItem->Size = $item->Size;
+            $pendingItem->Thickness = $item->Thickness;
+            $pendingItem->Width = $item->Width;
+            $pendingItem->Length = $item->Length;
+
+            $pendingItem->Quantity = $item->Quantity;
+            $pendingItems[$item->SalesOrderID][] = $pendingItem;
+            if($pendingItem->Quantity > InventoryModel::getProductStockQuantity($pendingItem->WoodTypeID,  $pendingItem->Thickness, $pendingItem->Width,  $pendingItem->Length)){
+              $salesOrder->canAccomodate = FALSE;
+            }
+
+         }
+      }
+
+      $data = [
+        'pendingSalesOrders' => $pendingSalesOrders,
+        'pendingItems' => $pendingItems,
+        'success' => '<strong>Success!</strong>&nbsp;Sales order has been approved and resizing is recorded.'
+      ];
+
+      return view('inventory.InventoryResizeInitial')->with($data);
+
+    
   }
 }
 ?>

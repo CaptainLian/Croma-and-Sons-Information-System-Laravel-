@@ -9,6 +9,9 @@ Inventory Resize
 @endpush
 
 @section('main-content')
+
+
+
 <!-- page start-->
 <div class="row">
   <div class="col-lg-12">
@@ -30,7 +33,7 @@ Inventory Resize
             </li>
           </ul>
         </div>
-        {!!Form::open(['class' => '$form-horizontal', 'id'=>'default', 'action' => 'BusinessControllers\InventoryFormController@inputResize', 'method' => 'GET'])!!}
+        {!!Form::open(['class' => 'form-horizontal', 'id'=>'default', 'action' => 'BusinessControllers\InventoryFormController@inputResize', 'method' => 'GET'])!!}
           <fieldset title="Step1" class="step" id="default-step-0">
             <legend> </legend>
             <table class="table table-striped table-hover" id="approveTable">
@@ -48,15 +51,15 @@ Inventory Resize
               <tbody>
                 @foreach($orderItems as $item)
                 <tr>
-                  <input type="hidden" name="ApprovedWoodTypeID[]"  value="{!!$item->WoodTypeID!!}"/>
-                  <input type="hidden" name="ApprovedThickness[]"  value="{!!$item->Thickness!!}"/>
-                  <input type="hidden" name="ApprovedWidth[]"  value="{!!$item->Width!!}"/>
-                  <input type="hidden" name="ApprovedLength[]"  value="{!!$item->Length!!}"/>
+                  <input type="hidden" name="AWoodTypeID[]"  value="{!!$item->WoodTypeID!!}"/>
+                  <input type="hidden" name="AThickness[]"  value="{!!$item->Thickness!!}"/>
+                  <input type="hidden" name="AWidth[]"  value="{!!$item->Width!!}"/>
+                  <input type="hidden" name="ALength[]"  value="{!!$item->Length!!}"/>
 
                   <td>{!!$item->WoodType!!}</td>
                   <td>{!!$item->Size!!}</td>
                   <td>{!!$item->Quantity!!}</td>
-                  <td> <input name="ApprovedQuantity[]" class="form-control" type="number" min="0" max="{!!$item->Quantity!!}" step="1"  /> </td>
+                  <td> <input name="AQuantity[]" class="form-control" type="number" min="0" max="{!!$item->Quantity!!}" step="1"  /> </td>
                 </tr>
                 @endforeach
               </tbody>
@@ -92,7 +95,7 @@ Inventory Resize
                     <td>{!!$product->Material!!}</td>
                     <td>{!!$product->Size!!}</td>
                     <td>{!!$product->StockQuantity!!}</td>
-                    <td><input name="InputQuantity[]" type="number" value="0" min="0" step="1" max="{!!$product->StockQuantity!!}" /></td>
+                    <td><input name="IQuantity[]" type="number" value="0" min="0" step="1" max="{!!$product->StockQuantity!!}" /></td>
                   </tr>
                 @endforeach
               </tbody>
@@ -198,13 +201,13 @@ Inventory Resize
                   $('#approveTable tbody > tr').each(function(index, element){
                     let currentRow = $(this);
 
-                    let approvedWoodTypeID = currentRow.find('input[name="ApprovedWoodTypeID[]"]').val();
-                    let approvedThickness = currentRow.find('input[name="ApprovedThickness[]"]').val();
-                    let approvedWidth = currentRow.find('input[name="ApprovedWidth[]"]').val();
-                    let approvedLength = currentRow.find('input[name="ApprovedLength[]"]').val();
-                    let approvedQuantity = currentRow.find('input[name="ApprovedQuantity[]"]').val();
+                    let approvedWoodTypeID = currentRow.find('input[name="AWoodTypeID[]"]').val();
+                    let approvedThickness = currentRow.find('input[name="AThickness[]"]').val();
+                    let approvedWidth = currentRow.find('input[name="AWidth[]"]').val();
+                    let approvedLength = currentRow.find('input[name="ALength[]"]').val();
+                    let approvedQuantity = currentRow.find('input[name="AQuantity[]"]').val();
 
-                      let hidden = '';
+                    let hidden = '';
                     
                       hidden += '<input type="hidden" name="ApprovedWoodTypeID[]" value="' + approvedWoodTypeID + '" />';
                       hidden += '<input type="hidden" name="ApprovedThickness[]" value="' + approvedThickness + '" />';
@@ -229,9 +232,9 @@ Inventory Resize
                     let width = currentRow.find('input[name="Width[]"]').val();
                     let length = currentRow.find('input[name="Length[]"]').val();
 
-                    let inputQuantity = currentRow.find('input[name="InputQuantity[]"]').val();
+                    let inputQuantity = currentRow.find('input[name="IQuantity[]"]').val();
 
-                    if(inputQuantity > 0 ){
+                    if(parseInt(inputQuantity) > 0 ){
 
                       let hidden = '';
                       
